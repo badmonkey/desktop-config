@@ -1,0 +1,14 @@
+[user]
+	name = Michael Fagan
+	email = michael.fagan@penten.com
+[push]
+	default = simple
+[core]
+	editor = emacsclient
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+

@@ -1,0 +1,61 @@
+#!/bin/bash
+
+APP=`basename ${0}`
+MODE=
+WAIT="-n"
+
+
+function set_mode () {
+	if [ -z "${MODE}" ]; then
+		EXT="${1##*.}"
+		if [ "${EXT}" != "${1}" ]; then
+			MODE="${EXT}"
+			echo "mode ${MODE}"
+		elif [ "${1}" == "edit" ]; then
+			# skip it
+			:
+		elif [ "${1:(-4)}" == "edit" ]; then
+			MODE="${APP:0:-4}"
+			echo "mode ${MODE}"
+		fi
+	fi
+}
+
+set_mode "${APP}"
+
+
+function assert_have_mode () {
+	if [ -z "${MODE}" ]; then
+		echo "No mode set, use --XXX to use use XXX as extension "
+		exit
+	fi
+}
+
+
+
+while [ -n "${1}" ]; do
+	if [ "${1:0:2}" == "--" ]; then
+		MODE="${1:2}"
+		echo "Changing mode ${MODE}"
+	elif [ "${1}" == "-n" ]; then
+		WAIT="-n"
+	elif [ "${1}" == "-w" ]; then
+		WAIT=""
+	elif [ -f "${1}" ]; then
+		set_mode `basename ${1}`
+		echo "Edit ${1} ..."
+		emacsclient ${WAIT} -q "${1}"
+	elif [ -d "${1}" ]; then
+		assert_have_mode
+		echo "Edit files from ${1}/*.${MODE}"
+		find ${1} -type f \! -empty -iname "*.${MODE}" -print0 | xargs -0 emacsclient -nq
+	elif ! [ -e "${1}" ]; then
+		set_mode ${1}
+		echo "Creating ${1} ..."
+		touch ${1}
+		emacsclient ${WAIT} -q "${1}"
+	else
+		echo "Not sure what to do with ${1}  skipping"
+	fi
+	shift
+done
