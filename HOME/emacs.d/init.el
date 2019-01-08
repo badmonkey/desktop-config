@@ -1,4 +1,7 @@
 
+;;; Code:
+(setq gc-cons-threshold 100000000)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Initialize the package system.
 
@@ -18,6 +21,7 @@
 
 ;; Add custom code to the load path. `contrib' contains Lisp code that I didn't
 ;; write but that is not in melpa, while `lisp' is for Lisp code I wrote.
+(setq contrib-load-path (expand-file-name "contrib" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "contrib" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
@@ -86,6 +90,10 @@
 ;; clipboard mode
 (setq x-select-enable-clipboard t
       x-select-enable-primary t)
+
+
+;; transient mode
+(setq-default transient-mark-mode t)
 
 
 ;; Frame movement (shift arrow)
@@ -165,21 +173,20 @@
 		))
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(hl-line ((t (:background "gray5"))))
-  '(whitespace-line ((t (:foreground unspecified :underline "DarkRed"))))
-  '(whitespace-newline ((t (:foreground "blue" :background "black"))))
-  '(whitespace-tab ((t (:foreground "blue" :background "black"))))
-  '(whitespace-space ((t (:foreground "gray25" :background "black"))))
-  '(whitespace-trailing ((t (:bold t :foreground "red" :background "black"))))
-  '(whitespace-space-before-tab ((t (:foreground "red" :background "black"))))
-  '(whitespace-space-after-tab ((t (:foreground "yellow" :background "black"))))
-  '(whitespace-indentation ((t (:foreground "yellow" :background "black"))))
-  '(whitespace-empty ((t (:foreground "red" :background "red"))))
-  )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(hl-line ((t (:background "gray5"))))
+ '(whitespace-empty ((t (:foreground "red" :background "red"))))
+ '(whitespace-indentation ((t (:foreground "yellow" :background "black"))))
+ '(whitespace-line ((t (:foreground unspecified :underline "DarkRed"))))
+ '(whitespace-newline ((t (:foreground "blue" :background "black"))))
+ '(whitespace-space ((t (:foreground "gray25" :background "black"))))
+ '(whitespace-space-after-tab ((t (:foreground "yellow" :background "black"))))
+ '(whitespace-space-before-tab ((t (:foreground "red" :background "black"))))
+ '(whitespace-tab ((t (:foreground "blue" :background "black"))))
+ '(whitespace-trailing ((t (:bold t :foreground "red" :background "black")))))
 
 (global-whitespace-mode 1)
 
@@ -209,6 +216,51 @@
            (kill-buffer buffer)))))
 
 
+(defun kill-orphan-buffers ()
+  "Kills all buffers where the matching file doesn't exist."
+  (interactive)
+  (save-window-excursion
+    (dolist (buffer (buffer-list))
+      (and (buffer-live-p buffer)
+           (not (buffer-modified-p buffer))
+           (not (file-exists-p (buffer-file-name buffer)))
+           (kill-buffer buffer)))))
+
+
+(defun git-difftool (file-a file-b)
+  (ediff-files file-a file-b))
+
+(defun git-mergetool (file-a file-b file-out &optional file-ancestor)
+  (if (and file-ancestor
+           (file-exists-p file-ancestor)
+           (file-readable-p file-ancestor))
+      (ediff-merge-files-with-ancestor file-a file-b file-ancestor nil file-out)
+    (ediff-merge-files file-a file-b nil file-out)))
+
+
+(defun comment-or-uncomment-line ()
+  "Comment or uncomment current line."
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+
+(defun indent-code-region (beginning end)
+  "If there is an active region use indent-code-rigidly else indent-for-tab-command."
+  (interactive "r")
+  (if (use-region-p)
+	  (indent-code-rigidly beginning end tab-width)
+	(indent-for-tab-command)))
+
+
+(defadvice indent-rigidly (after deactivate-mark-nil activate)
+     (if (called-interactively-p 'any)
+         (setq deactivate-mark nil)))
+
+(defadvice indent-code-rigidly (after deactivate-mark-nil activate)
+     (if (called-interactively-p 'any)
+         (setq deactivate-mark nil)))
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup keybindings
 
@@ -216,31 +268,77 @@
 (global-unset-key (kbd "C-x C-c"))
 (global-unset-key (kbd "C-z"))
 
-;; remove default bindings
-;(global-unset-key (kbd "C-x C-b"))
+;; Stop uppercase-region warning from fucking with undo
+(global-unset-key (kbd "C-x C-u"))
 
 
-;; M-s  search commands (extend)
-(global-set-key (kbd "M-s s") 'isearch-forward)
-(global-set-key (kbd "M-s C-s") 'isearch-forward-regexp)
-(global-set-key (kbd "M-s r") 'isearch-backward)
-(global-set-key (kbd "M-s C-r") 'isearch-backward-regexp)
-; "M-s C-t"  counsel-etags-grep-symbol-at-point
-; "M-s t"  counsel-etags-find-tag
+(global-set-key (kbd "<C-tab>") 'indent-code-region)
 
 
-;; M-g  goto commands (extend)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; q w e r t y u i o p [ ] \
+
+;; M-` tmm-menubar
+;; M-,
+;; map for buffer (content) commands
+;; flycheck-buffer
+;; flycheck-next-error
+;; flycheck-previous-error
 
 
-;; M-r  replace commands
+;;; M-r  replace commands ;;;
 (define-prefix-command 'replace-keymap)
 (global-set-key (kbd "M-r") 'replace-keymap)
 
 (global-set-key (kbd "M-r r") 'query-replace)
 (global-set-key (kbd "M-r C-r") 'query-replace-regexp)
+(global-set-key (kbd "M-r b") 'crux-rename-buffer-and-file)
 
 
-;; M-k  kill commands
+;;; M-o facemenu commands (replace? todo) ;;;
+
+
+;;; M-p  project commands ;;;
+(define-prefix-command 'project-keymap)
+(global-set-key (kbd "M-p") 'project-keymap)
+
+(global-set-key (kbd "M-p r") 'revbufs)
+(global-set-key (kbd "M-p g") 'magit-status)
+(global-set-key (kbd "M-p o") 'counsel-find-file)
+(global-set-key (kbd "M-p b") 'ibuffer)
+(global-set-key (kbd "M-p l") 'flycheck-buffer)
+(global-set-key (kbd "M-p t") 'hl-todo-occur)
+;; M-p f        neotree
+;; M-p TAB      helm-projectile-find-file
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;
+;; a s d f g h j k l ; '
+
+;;; M-s  search commands (extend) ;;;
+(global-set-key (kbd "M-s s") 'isearch-forward)
+(global-set-key (kbd "M-s C-s") 'isearch-forward-regexp)
+(global-set-key (kbd "M-s r") 'isearch-backward)
+(global-set-key (kbd "M-s C-r") 'isearch-backward-regexp)
+;; M-s C-t      counsel-etags-grep-symbol-at-point
+;; M-s t        counsel-etags-find-tag
+;; M-s .        isearch-forward-symbol-at-point
+;; M-s w        isearch-forward-word
+;; M-s o        occur
+
+
+;;; M-g  goto commands ;;;
+(global-set-key (kbd "M-g 1") 'flycheck-first-error)
+(global-set-key (kbd "M-g t") 'hl-todo-next)
+(global-set-key (kbd "M-g C-t") 'hl-todo-previous)
+;; M-g g        goto-line
+;; M-g c        goto-char
+;; M-g TAB      move-to-column
+;; M-g n        next-error
+;; M-g p        previous-error
+
+
+;;; M-k  kill commands ;;;
 (define-prefix-command 'kill-keymap)
 (global-set-key (kbd "M-k") 'kill-keymap)
 
@@ -248,35 +346,60 @@
 (global-set-key (kbd "M-k a") 'kill-all-buffers)
 (global-set-key (kbd "M-k 1") 'kill-other-buffers)
 (global-set-key (kbd "M-k u") 'kill-unmodified-buffers)
+(global-set-key (kbd "M-k o") 'kill-orphan-buffers)
+(global-set-key (kbd "M-k DEL") 'crux-delete-file-and-buffer)
 
 
-;; M-p  project commands
-(define-prefix-command 'project-keymap)
-(global-set-key (kbd "M-p") 'project-keymap)
+;;; M-;  comment commands ;;;
+(define-prefix-command 'comment-keymap)
+(global-set-key (kbd "M-;") 'comment-keymap)
 
-(global-set-key (kbd "M-p r") 'revbufs)
-(global-set-key (kbd "M-p b") 'list-buffers)
-(global-set-key (kbd "M-p o") 'counsel-find-file)
-; M-p f  neotree
+(global-set-key (kbd "M-; TAB") 'comment-dwim)
+(global-set-key (kbd "M-; ;") 'comment-or-uncomment-line)
+(global-set-key (kbd "M-; SPC") 'comment-or-uncomment-region)
 
 
-;; M-.  at-point commands
+;;;;;;;;;;;;;;;;;;;;;;
+;; z x c v b n m , . /
+
+
+;;; M-x  execute command -> counsel-M-x ;;;
+
+
+;;; M-.  at-point commands ;;;
 (define-prefix-command 'at-point-keymap)
 (global-set-key (kbd "M-.") 'at-point-keymap)
 
 (global-set-key (kbd "M-. z") 'zeal-at-point)
-; "M-. t"  counsel-etags-find-tag-at-point
+(global-set-key (kbd "M-. g") 'google-this)
+(global-set-key (kbd "M-. TAB") 'completion-at-point)
+(global-set-key (kbd "M-. x") 'exchange-point-and-mark)
+(global-set-key (kbd "M-. d") 'pydoc-at-point)
+(global-set-key (kbd "M-. e") 'flycheck-display-error-at-point)
+;; M-. t        counsel-etags-find-tag-at-point
+;; M-. SPC      helm-dash-at-point
+
+
+;;; M-SPC  region commands ;;;
+(define-prefix-command 'buffer-action-keymap)
+(global-set-key (kbd "M-SPC") 'buffer-action-keymap)
+
+(global-set-key (kbd "M-SPC 1") 'just-one-space)
+(global-set-key (kbd "M-SPC SPC") 'set-mark-command)
+(global-set-key (kbd "M-SPC w") 'kill-region)
+(global-set-key (kbd "M-SPC M-w") 'kill-ring-save)
+(global-set-key (kbd "M-SPC ;") 'comment-or-uncomment-region)
+(global-set-key (kbd "M-SPC TAB") 'my-indent-rigidly)
 
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; install extra packages
 
-;; from local
-(require 'revbufs)
 
-
-;; use-packages
+(use-package revbufs
+  :load-path contrib-load-path
+  :config)
 
 (use-package diminish
   :config
@@ -309,13 +432,31 @@
               (setq-local fill-column 80)
               (turn-on-auto-fill))))
 
-(use-package erlang
-  :disabled t
+(use-package python
   :init
-  (add-to-list 'auto-mode-alist '("\\.P\\'" . erlang-mode))
-  (add-to-list 'auto-mode-alist '("\\.E\\'" . erlang-mode))
-  (add-to-list 'auto-mode-alist '("\\.S\\'" . erlang-mode))
+  (setq-default python-indent-offset 4))
+
+(use-package blacken
   :config
+  (setq blacken-line-length '100)
+  (setq blacken-allow-py36 t)
+  (add-hook 'python-mode-hook 'blacken-mode))
+
+(use-package py-isort
+  :init
+  (setq py-isort-options '("--lines=100" "--multi-line=3"))
+  (add-hook 'before-save-hook 'py-isort-before-save))
+
+(use-package erlang
+  :init
+  :mode (("\\.erl\\'" . erlang-mode)
+         ("\\.hrl\\'" . erlang-mode)
+         ("\\.xrl\\'" . erlang-mode)
+         ("sys\\.config\\'" . erlang-mode)
+         ("rebar\\.config\\'" . erlang-mode)
+         ("\\.app\\(\\.src\\)?\\'" . erlang-mode))
+  :config
+  (setq erlang-indent-level 4)
   (add-hook 'erlang-mode-hook
             (lambda ()
               (setq mode-name "erl"
@@ -333,12 +474,70 @@
   :init (beacon-mode 1)
   :diminish beacon-mode)
 
+(use-package hl-todo
+  :load-path contrib-load-path
+  :config
+  (global-hl-todo-mode))
+
+(use-package electric
+  :hook (prog-mode . electric-indent-mode))
+
+(use-package google-this)
+
+(use-package legalese)
+
+(use-package ediff
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally))
+
 (use-package magit
   :disabled t
   :bind (("C-x g" . magit-status)))
 
 (use-package ibuffer
   :bind ("C-x C-b" . ibuffer))
+
+(use-package cython-mode
+  :mode ("\\.pyd\\'" "\\.pyi\\'" "\\.pyx\\'"))
+
+(use-package python-docstring
+  :hook (python-mode . python-docstring-mode))
+
+;;(use-package pydoc
+;;  :after anaconda-mode
+;;  :bind (:map anaconda-mode-map
+;;			  ("M-?" . pydoc-at-point)))
+
+(use-package pydoc)
+
+(use-package pip-requirements
+  :mode (("\\.pip\\'" . pip-requirements-mode)
+         ("requirements.*\\.txt\\'" . pip-requirements-mode)
+         ("requirements\\.in" . pip-requirements-mode)))
+
+(use-package crux
+  :bind (("C-c u" . crux-view-url)
+         ("C-c f c" . write-file)
+         ("C-c f r" . crux-rename-buffer-and-file)
+         ("C-c f d" . crux-delete-file-and-buffer)
+         ;;("s-k"   . crux-kill-whole-line)
+         ;;("s-o"   . crux-smart-open-line-above)
+         ("C-a"   . crux-move-beginning-of-line)
+         ([(shift return)] . crux-smart-open-line)
+         ([(control shift return)] . crux-smart-open-line-above)))
+
+(use-package flycheck
+  :config
+  (setq-default flycheck-check-syntax-automatically '(save mode-enabled))
+  :init
+  (setq flycheck-python-pylint-executable "pylava-emacs-shim")
+  (setq flycheck-pylintrc "pylava.ini")
+  (setq flycheck-indication-mode 'left-fringe)
+  (setq flycheck-highlighting-mode 'lines)
+  (global-flycheck-mode))
+
+;;(use-package flycheck-pyre)
 
 (use-package neotree
   :bind ("M-p f" . neotree)
@@ -358,25 +557,70 @@
   :config
   (setq projectile-switch-project-action 'projectile-dired)
   (setq projectile-mode-line
-	'(:eval (if (file-remote-p default-directory)
-		    " Prj[*remote*]"
-			(format " Prj[%s]" (projectile-project-name))))))
+    '(:eval (if (file-remote-p default-directory)
+				" Prj[*remote*]"
+			  (format " Prj[%s]" (projectile-project-name))))
+	))
 
-(use-package ivy
-  :commands (ivy-mode)
+(use-package helm
+  :diminish helm-mode
+  :bind (("M-a" . helm-M-x)
+         ("C-x C-f" . helm-find-files)
+         ("C-x f" . helm-recentf)
+         ;("C-SPC" . helm-dabbrev)
+         ("M-y" . helm-show-kill-ring)
+         ("C-h i" . 'helm-info-at-point)
+         ("C-x b" . helm-buffers-list))
+  :bind (:map helm-map
+         ("M-i" . helm-previous-line)
+         ("M-k" . helm-next-line)
+         ("M-I" . helm-previous-page)
+         ("M-K" . helm-next-page)
+         ("M-h" . helm-beginning-of-buffer)
+         ("M-H" . helm-end-of-buffer))
+  :config (progn
+         (setq helm-split-window-in-side-p           t
+			   helm-move-to-line-cycle-in-source     t
+			   helm-ff-search-library-in-sexp        t
+			   helm-scroll-amount                    8
+			   helm-ff-file-name-history-use-recentf t
+			   helm-move-to-line-cycle-in-source     t
+			   helm-prevent-escaping-from-minibuffer t
+			   helm-bookmark-show-location           t)
+		 (helm-mode 1)
+		 (helm-adaptive-mode 1))
+  )
+
+(use-package helm-projectile
+  :bind ("M-p TAB" . helm-projectile-find-file)
   :config
-  (require 'ivy)
-  (ivy-mode t)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (setq ivy-wrap t)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  ;; Show #/total when scrolling buffers
-  (setq ivy-count-format "%d/%d "))
+  (helm-projectile-on))
 
-(use-package swiper
-  :bind (("C-s" . swiper)
-         ("C-r" . swiper)) )
+(use-package helm-pydoc
+  :config
+  (with-eval-after-load "python"
+	(define-key python-mode-map (kbd "C-c C-d") 'helm-pydoc)))
+
+(use-package helm-dash
+  :init
+  (global-set-key (kbd "M-. SPC") 'helm-dash-at-point)
+  (defun c-doc ()
+	(setq helm-dash-docsets '("C")))
+  (defun c++-doc ()
+	(setq helm-dash-docsets '("C" "C++")))
+  (add-hook 'c-mode-hook 'c-doc)
+  (add-hook 'c++-mode-hook 'c++-doc))
+
+(use-package swiper-helm
+  :bind ("C-s" . swiper-helm))
+
+(use-package virtualenvwrapper
+  ;; Automatically switch python venv
+  :hook (projectile-after-switch-project . venv-projectile-auto-workon)
+  :config
+  (venv-initialize-interactive-shells) ;; if you want interactive shell support
+  (venv-initialize-eshell) ;; if you want eshell support
+  (setq venv-location "/home/mfagan/.virtualenvs/"))
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
@@ -402,8 +646,7 @@
             "rg -i -M 120 --no-heading --line-number --color never %s .")
       (warn "\nWARNING: Could not find the ripgrep executable. It "
             "is recommended you install ripgrep.")
-  )
-)
+  ))
 
 ;; Use universal ctags to build the tags database for the project.
 ;; When you first want to build a TAGS database run 'touch TAGS'
@@ -520,6 +763,17 @@
   :after spaceline-config
   :config)
 
+;(use-package ein
+;  :commands (ein:notebooklist-open))
+
+;(use-package ein
+;    :ensure t
+;    :defer t
+;    :config
+;    (setq ein:jupyter-default-notebook-directory "~/Workspace/jupyter")
+;    (setq ein:jupyter-default-server-command "~/anaconda3/bin/jupyter")
+;    (setq ein:jupyter-server-args (list "--no-browser")))
+
 ;; ein - ipython notebooks in gui emacs
 (if (and my:jupyter_location
          my:jupyter_start_dir)
@@ -572,7 +826,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Server mode
 
-(setq server-log t)
+(when (display-graphic-p)
+  (toggle-frame-maximized))
+
 
 ;; Start server (but don't restart).
 (require 'server)
@@ -584,7 +840,7 @@
 (add-hook 'server-visit-hook 'raise-frame)
 
 
-(message "done")
+(message "init.el loaded")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -595,6 +851,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-	(counsel-etags counsel swiper ivy rainbow-delimiters magit
-         erlang pandoc-mode json-mode diminish use-package projectile
-         flx-ido))))
+	(hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido))))
