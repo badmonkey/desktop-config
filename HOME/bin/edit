@@ -3,6 +3,10 @@
 APP=`basename ${0}`
 MODE=
 WAIT="-n"
+EDEMPTY=
+
+
+# ack --type=python -l  match  dir/
 
 
 function set_mode () {
@@ -41,6 +45,8 @@ while [ -n "${1}" ]; do
 		WAIT="-n"
 	elif [ "${1}" == "-w" ]; then
 		WAIT=""
+	elif [ "${1}" == "-z" ]; then
+		EDEMPTY="z"
 	elif [ -f "${1}" ]; then
 		set_mode `basename ${1}`
 		echo "Edit ${1} ..."
@@ -48,7 +54,11 @@ while [ -n "${1}" ]; do
 	elif [ -d "${1}" ]; then
 		assert_have_mode
 		echo "Edit files from ${1}/*.${MODE}"
-		find ${1} -type f \! -empty -iname "*.${MODE}" -print0 | xargs -0 emacsclient -nq
+		if [ -z "${EDEMPTY}" ] ; then
+			find ${1} -type f \! -empty -iname "*.${MODE}" -print0 | xargs -r -n 8 -0 emacsclient -nq
+		else
+			find ${1} -type f -iname "*.${MODE}" -print0 | xargs -r -n 8 -0 emacsclient -nq
+		fi
 	elif ! [ -e "${1}" ]; then
 		set_mode ${1}
 		echo "Creating ${1} ..."

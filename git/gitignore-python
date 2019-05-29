@@ -1,0 +1,52 @@
+# Project/IDE files, editor backups
+/.project
+/.projectile
+/.pydevproject
+/.vscode/settings.json
+/.venv
+/tmp
+TAGS
+*~
+*.save
+\#*\#
+.\#*
+
+# Cruft
+.DS_Store
+
+
+# Language artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+
+# Environment artifacts/configs
+/.env
+.python-version
+
+
+# Distribution / packaging
+.Python
+/.eggs/
+/build/
+/dist/
+/*.egg-info/
+
+
+# Unit test / coverage reports
+/htmlcov/
+/.tox/
+/.coverage
+/.cache
+/nosetests.xml
+/coverage.xml
+
+# Translations
+*.mo
+*.pot
+
+# Sphinx documentation
+/docs/_build/
+/docs/README.rst

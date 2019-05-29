@@ -1,0 +1,44 @@
+#!/bin/bash
+set -e
+
+
+# test arguments
+if [ $# -lt  2 ]; then
+    echo "Usage: $0 LOCAL REMOTE [MERGED BASE]" 1>&2
+    exit 1
+elif [ $# -ge 3 ]; then
+    EDIFF_MODE=merge
+else
+    EDIFF_MODE=diff
+fi
+
+FILE_LOCAL=$1
+FILE_REMOTE=$2
+FILE_MERGED=$3
+FILE_BASE=$4
+
+
+case "$EDIFF_MODE" in
+    diff)
+        emacsclient -e "(git-difftool \"$FILE_LOCAL\" \"$FILE_REMOTE\")"
+        RETURN=$?
+        ;;
+    merge)
+        # http://stackoverflow.com/questions/1817370/using-ediff-as-git-mergetool
+        emacsclient -e "(git-mergetool `for var in $@; do echo \\\"$var\\\"; done`)"
+        RETURN=$?
+        if [ ! $(egrep -c '^(<<<<<<<|=======|>>>>>>>|####### Ancestor)' $FILE_MERGED) = 0 ]; then
+            FILE_MERGEDSAVE=$(mktemp --tmpdir `$BASENAME $FILE_MERGED`.XXXXXXXXXX)
+            cp $FILE_MERGED $FILE_MERGEDSAVE
+            echo "Oops! Conflict markers detected in $_MERGED." 1>&2
+            echo "Saved your changes to ${FILE_MERGEDSAVE}" 1>&2
+            echo "Exiting with code 1." 1>&2
+            RETURN=1
+        fi
+        ;;
+    *)
+        echo "Unable to determine mode(diff|merge) to run" 1>&2
+        RETURN=1
+        ;;
+esac
+exit $RETURN

@@ -226,14 +226,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+export EDITOR="emacsclient -q"
 
+export PIP_CERT=/usr/share/ca-certificates/extra/penten-low-ca.crt
+export REQUESTS_CA_BUNDLE="$PIP_CERT"
 
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME=/opt/projects
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
+export VIRTUALENVWRAPPER_PYTHON=/home/mfagan/.pyenv/shims/python
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 
@@ -244,4 +247,3 @@ pyenv virtualenvwrapper
 if [ "$SSH_IP" != "" ]; then
 	export LIBGL_ALWAYS_INDIRECT=1
 fi
-
