@@ -4,7 +4,7 @@
 
 
 
-(global-set-key (kbd "<M-backspace>") 'region-delete-back-word)
+(global-set-key (kbd "M-TAB") 'region-delete-back-word)
 
 ;; M-TAB        spellcheck??
 
@@ -15,11 +15,13 @@
 
 (global-set-key (kbd "M-SPC 1") 'just-one-space)
 (global-set-key (kbd "M-SPC SPC") 'set-mark-command)
-(global-set-key (kbd "M-SPC w") 'kill-region)
-(global-set-key (kbd "M-SPC M-w") 'kill-ring-save)
+(global-set-key (kbd "M-SPC DEL") 'delete-region)
+(global-set-key (kbd "M-SPC w") 'region-copy-line)
+(global-set-key (kbd "M-SPC k") 'region-kill-whole-line)
 (global-set-key (kbd "M-SPC ;") 'comment-or-uncomment-region)
-(global-set-key (kbd "M-SPC TAB") 'my-indent-rigidly)
+(global-set-key (kbd "M-SPC TAB") 'indent-rigidly)
 (global-set-key (kbd "M-SPC p") 'mark-paragraph)
+(global-set-key (kbd "M-SPC M-w") 'kill-ring-save)
 
 
 ;; M-!				shell-command
@@ -43,8 +45,8 @@
 (global-set-key (kbd "M-. x") 'exchange-point-and-mark)
 (global-set-key (kbd "M-. d") 'pydoc-at-point)
 (global-set-key (kbd "M-. e") 'flycheck-display-error-at-point)
+(global-set-key (kbd "M-. SPC") 'helm-dash-at-point)
 ;; M-. t        counsel-etags-find-tag-at-point
-;; M-. SPC      helm-dash-at-point
 
 
 ;; M-/				dabbrev-expand
@@ -123,8 +125,8 @@
 (global-set-key (kbd "M-p l") 'flycheck-buffer)
 (global-set-key (kbd "M-p t") 'hl-todo-occur)
 (global-set-key (kbd "M-p p") 'projectile-switch-project)
+(global-set-key (kbd "M-p TAB") 'helm-projectile-find-file)
 ;; M-p f        neotree
-;; M-p TAB      helm-projectile-find-file
 
 
 ;; M-q

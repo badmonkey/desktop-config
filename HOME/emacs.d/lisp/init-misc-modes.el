@@ -36,10 +36,6 @@
               (setq-local fill-column 80)
               (turn-on-auto-fill))))
 
-(use-package whole-line-or-region
-  :config (whole-line-or-region-mode t)
-  :diminish whole-line-or-region-mode)
-
 
 (provide 'init-misc-modes)
 ;;; init-misc-modes.el ends here

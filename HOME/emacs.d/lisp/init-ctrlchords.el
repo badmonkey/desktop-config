@@ -17,11 +17,12 @@
 ;; { | } ~ DEL
 
 
-(global-set-key (kbd "<C-backspace>") 'region-kill-to-left-margin)
-(global-set-key (kbd "<C-tab>") 'indent-code-region)
+(global-set-key (kbd "C-DEL") 'region-kill-to-left-margin)
+(global-set-key (kbd "C-TAB") 'region-indent-code)
 
 
-(global-set-key (kbd "C-k") 'kill-region-or-line)
+(global-set-key (kbd "C-k") 'region-kill-line)
+(global-set-key (kbd "C-w") 'region-copy-whole-line)
 
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)

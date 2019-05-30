@@ -33,7 +33,6 @@
   )
 
 (use-package helm-projectile
-  :bind ("M-p TAB" . helm-projectile-find-file)
   :config
   (helm-projectile-on))
 
@@ -44,7 +43,6 @@
 
 (use-package helm-dash
   :init
-  (global-set-key (kbd "M-. SPC") 'helm-dash-at-point)
   (defun c-doc ()
 	(setq helm-dash-docsets '("C")))
   (defun c++-doc ()
