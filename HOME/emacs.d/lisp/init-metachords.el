@@ -23,7 +23,9 @@
   ";"       'region-toggle-comment
   "TAB"     'indent-rigidly
   "p"       'mark-paragraph
-  "M-w"     'kill-ring-save)
+  "M-w"     'kill-ring-save
+  "m"       'mc/mark-all-like-this
+  "e"       'mc/edit-lines)
 
 
 ;; M-!				shell-command
@@ -59,7 +61,7 @@
 
 ;;; M-;  comment commands ;;;
 (general-define-key
-  :prefix "M-."
+  :prefix "M-;"
   :prefix-command 'comment-keymap
   "TAB"     'comment-dwim
   ";"       'region-toggle-comment)

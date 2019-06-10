@@ -21,6 +21,11 @@
 ;;         which-key-idle-delay 0.05))
 
 
+;; WIP
+(use-package multiple-cursors)
+
+(use-package mc-extras)
+
 (use-package revbufs
   :load-path contrib-load-path
   :config)

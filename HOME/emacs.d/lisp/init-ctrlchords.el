@@ -35,7 +35,10 @@
   "C-k"           'region-kill-line
   "C-w"           'region-copy-whole-line
 
-  "C-s"           'swiper-helm)
+  "C-s"           'swiper-helm
+
+  "C->"           'mc/mark-next-like-this
+  "C-<"           'mc/mark-previous-like-this)
 
 
 ;; C-c
