@@ -33,7 +33,8 @@
    'lunaryorn
    ;; Left side of the mode line (all the important stuff)
    '(((buffer-modified buffer-size input-method) :face highlight-face)
-     '(buffer-id remote-host buffer-encoding-abbrev)
+     '(buffer-id)
+	 ;; '(buffer-id buffer-encoding-abbrev)
      ((point-position line-column buffer-position selection-info) :separator " | ")
      major-mode
      process

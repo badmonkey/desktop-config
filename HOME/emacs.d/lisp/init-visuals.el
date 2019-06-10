@@ -18,7 +18,7 @@
 ;; Indent setting
 (setq-default tab-always-indent nil)
 
-(defun my-generate-tab-stops (&optional width max)
+(defun monkey-generate-tab-stops (&optional width max)
   "Return a sequence suitable for `tab-stop-list'."
   (let* ((max-column (or max 200))
          (tab-width (or width tab-width))
@@ -27,7 +27,7 @@
 
 (setq-default tab-width 4)
 (setq-default c-basic-offset 4)
-(setq tab-stop-list (my-generate-tab-stops))
+(setq tab-stop-list (monkey-generate-tab-stops))
 
 (set-variable 'python-indent-offset 4)
 (set-variable 'python-indent-guess-indent-offset nil)
@@ -75,6 +75,14 @@
  '(whitespace-trailing ((t (:bold t :foreground "red" :background "black")))))
 
 (global-whitespace-mode 1)
+
+
+;; clean up the status bar
+(use-package diminish
+  :config
+  :diminish 'global-whitespace-mode)
+  ;; (progn (add-hook 'whitespace-mode-hook (lambda () (diminish 'whitespace-mode)))))
+
 
 
 (provide 'init-visuals)

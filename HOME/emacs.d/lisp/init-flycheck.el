@@ -4,6 +4,7 @@
 
 
 (use-package flycheck
+  :diminish 'flycheck-mode
   :config
   (setq-default flycheck-check-syntax-automatically '(save mode-enabled))
   :init

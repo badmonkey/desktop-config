@@ -16,6 +16,7 @@
   :mode ("\\.pyd\\'" "\\.pyi\\'" "\\.pyx\\'"))
 
 (use-package python-docstring
+  :diminish (python-docstring-mode . " Doc")
   :hook (python-mode . python-docstring-mode))
 
 (use-package blacken

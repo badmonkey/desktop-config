@@ -41,6 +41,28 @@
   (with-eval-after-load "python"
 	(define-key python-mode-map (kbd "C-c C-d") 'helm-pydoc)))
 
+(use-package bm
+  :init
+  (setq bm-restore-repository-on-load t)
+
+  :config
+  (setq bm-highlight-style 'bm-highlight-only-fringe)
+  (setq bm-marker 'bm-marker-left)
+
+  (setq bm-cycle-all-buffers t)
+  (setq bm-repository-file "~/.emacs.d/bookmarks")
+  (setq-default bm-buffer-persistence t)
+
+  (add-hook 'after-init-hook 'bm-repository-load)
+
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  (add-hook 'after-save-hook #'bm-buffer-save)
+
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore))
+
+(use-package helm-bm)
+
 (use-package helm-dash
   :init
   (defun c-doc ()
@@ -50,8 +72,9 @@
   (add-hook 'c-mode-hook 'c-doc)
   (add-hook 'c++-mode-hook 'c++-doc))
 
-(use-package swiper-helm
-  :bind ("C-s" . swiper-helm))
+(use-package swiper-helm)
+
+(use-package ac-helm)
 
 
 (provide 'init-helm)

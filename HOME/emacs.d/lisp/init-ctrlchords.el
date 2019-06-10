@@ -3,29 +3,49 @@
 ;;; Code:
 
 
+
+(general-unbind
 ;; So you can't accidently quit or suspend the emacs server
-(global-unset-key (kbd "C-x C-c"))
-(global-unset-key (kbd "C-z"))
+  "C-x C-c"
+  "C-z"
 
 ;; Stop uppercase-region warning from fucking with undo
-(global-unset-key (kbd "C-x C-u"))
+  "C-x C-u")
 
 
+
+;; (global-set-key (kbd "C-x u") 'undo-tree-visualize)
 
 ;; TAB SPC ! $ % & ' ( ) , - . / : ; < = > ? @ \ ^ `
 ;; abcdefghijklmnopqrstuvwxyz
 ;; { | } ~ DEL
 
 
-(global-set-key (kbd "C-DEL") 'region-kill-to-left-margin)
-(global-set-key (kbd "C-TAB") 'region-indent-code)
+(general-define-key
+  "C-=" 'er/expand-region
+
+  "<C-return>"    'crux-smart-open-line
+  "<S-return>"    'crux-smart-open-line-above
+  "<C-backspace>" 'region-kill-to-left-margin
+  "<C-tab>"       'region-indent-code
 
 
-(global-set-key (kbd "C-k") 'region-kill-line)
-(global-set-key (kbd "C-w") 'region-copy-whole-line)
+  "C-a"           'crux-move-beginning-of-line
+
+  "C-k"           'region-kill-line
+  "C-w"           'region-copy-whole-line
+
+  "C-s"           'swiper-helm)
 
 
-(global-set-key (kbd "C-x C-b") 'ibuffer)
+;; C-c
+
+
+(general-define-key
+  :prefix "C-x"
+
+  "C-b"           'ibuffer
+  "<left>"        'switch-to-last-buffer)
 
 
 (provide 'init-ctrlchords)

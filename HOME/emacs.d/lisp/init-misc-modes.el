@@ -3,9 +3,8 @@
 ;;; Code:
 
 
-(use-package diminish
-  :config
-  (progn (add-hook 'whitespace-mode-hook (lambda () (diminish 'whitespace-mode)))))
+(add-hook 'emacs-lisp-mode-hook (lambda () (setq mode-name "λ")))
+
 
 (use-package json-mode)
 

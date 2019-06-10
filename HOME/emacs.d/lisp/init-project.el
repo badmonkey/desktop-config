@@ -16,8 +16,8 @@
 
 
 (use-package projectile
-  :init (projectile-global-mode)
-  :bind ("s-p" . projectile-command-map)
+  :init
+  (projectile-global-mode)
   :config
   (setq projectile-switch-project-action
 		'(lambda ()

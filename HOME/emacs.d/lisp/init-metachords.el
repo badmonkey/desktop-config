@@ -3,25 +3,27 @@
 ;;; Code:
 
 
+(general-define-key
+  "M-DEL"   'region-delete-back-word
+  "<M-tab>" 'ac-complete-with-helm)
 
-(global-set-key (kbd "M-TAB") 'region-delete-back-word)
 
 ;; M-TAB        spellcheck??
 
 
 ;;; M-SPC  region commands ;;;
-(define-prefix-command 'buffer-action-keymap)
-(global-set-key (kbd "M-SPC") 'buffer-action-keymap)
-
-(global-set-key (kbd "M-SPC 1") 'just-one-space)
-(global-set-key (kbd "M-SPC SPC") 'set-mark-command)
-(global-set-key (kbd "M-SPC DEL") 'delete-region)
-(global-set-key (kbd "M-SPC w") 'region-copy-line)
-(global-set-key (kbd "M-SPC k") 'region-kill-whole-line)
-(global-set-key (kbd "M-SPC ;") 'comment-or-uncomment-region)
-(global-set-key (kbd "M-SPC TAB") 'indent-rigidly)
-(global-set-key (kbd "M-SPC p") 'mark-paragraph)
-(global-set-key (kbd "M-SPC M-w") 'kill-ring-save)
+(general-define-key
+  :prefix "M-SPC"
+  :prefix-command 'bufferaction-keymap
+  "1"       'just-one-space
+  "SPC"     'set-mark-command
+  "DEL"     'delete-region
+  "w"       'region-copy-line
+  "k"       'region-kill-whole-line
+  ";"       'region-toggle-comment
+  "TAB"     'indent-rigidly
+  "p"       'mark-paragraph
+  "M-w"     'kill-ring-save)
 
 
 ;; M-!				shell-command
@@ -36,17 +38,19 @@
 
 
 ;;; M-.  at-point commands ;;;
-(define-prefix-command 'at-point-keymap)
-(global-set-key (kbd "M-.") 'at-point-keymap)
-
-(global-set-key (kbd "M-. z") 'zeal-at-point)
-(global-set-key (kbd "M-. g") 'google-this)
-(global-set-key (kbd "M-. TAB") 'completion-at-point)
-(global-set-key (kbd "M-. x") 'exchange-point-and-mark)
-(global-set-key (kbd "M-. d") 'pydoc-at-point)
-(global-set-key (kbd "M-. e") 'flycheck-display-error-at-point)
-(global-set-key (kbd "M-. SPC") 'helm-dash-at-point)
-;; M-. t        counsel-etags-find-tag-at-point
+(general-define-key
+  :prefix "M-."
+  :prefix-command 'at-point-keymap
+  "z"       'zeal-at-point
+  "g"       'google-this
+  "TAB"     'completion-at-point
+  "x"       'exchange-point-and-mark
+  "p"       'pydoc-at-point
+  "e"       'flycheck-display-error-at-point
+  "SPC"     'helm-dash-at-point
+  "\\"      'bm-toggle
+  "u"       'crux-view-url)
+;; t        counsel-etags-find-tag-at-point
 
 
 ;; M-/				dabbrev-expand
@@ -54,12 +58,11 @@
 
 
 ;;; M-;  comment commands ;;;
-(define-prefix-command 'comment-keymap)
-(global-set-key (kbd "M-;") 'comment-keymap)
-
-(global-set-key (kbd "M-; TAB") 'comment-dwim)
-(global-set-key (kbd "M-; ;") 'comment-or-uncomment-line)
-(global-set-key (kbd "M-; SPC") 'comment-or-uncomment-region)
+(general-define-key
+  :prefix "M-."
+  :prefix-command 'comment-keymap
+  "TAB"     'comment-dwim
+  ";"       'region-toggle-comment)
 
 
 ;; M-<				beginning-of-buffer
@@ -67,7 +70,11 @@
 ;; M->				end-of-buffer
 ;; M-?				xref-find-references
 ;; M-@				mark-word
-;; M-\				delete-horizontal-space
+
+
+(general-define-key "M-\\" 'helm-bm)
+
+
 ;; M-^				delete-indentation
 ;; M-`				tmm-menubar
 ;; M-a
@@ -79,14 +86,16 @@
 
 
 ;;; M-g  goto commands ;;;
-(global-set-key (kbd "M-g 1") 'flycheck-first-error)
-(global-set-key (kbd "M-g t") 'hl-todo-next)
-(global-set-key (kbd "M-g C-t") 'hl-todo-previous)
-;; M-g g        goto-line
-;; M-g c        goto-char
-;; M-g TAB      move-to-column
-;; M-g n        next-error
-;; M-g p        previous-error
+(general-define-key
+  :prefix "M-g"
+  "1"       'flycheck-first-error
+  "t"       'hl-todo-next
+  "C-t"     'hl-todo-previous)
+;; g        goto-line
+;; c        goto-char
+;; TAB      move-to-column
+;; n        next-error
+;; p        previous-error
 
 
 ;; M-h
@@ -95,15 +104,15 @@
 
 
 ;;; M-k  kill buffer commands ;;;
-(define-prefix-command 'killbuffer-keymap)
-(global-set-key (kbd "M-k") 'killbuffer-keymap)
-
-(global-set-key (kbd "M-k k") 'kill-buffer)
-(global-set-key (kbd "M-k a") 'kill-all-buffers)
-(global-set-key (kbd "M-k 1") 'kill-other-buffers)
-(global-set-key (kbd "M-k u") 'kill-unmodified-buffers)
-(global-set-key (kbd "M-k o") 'kill-orphan-buffers)
-(global-set-key (kbd "M-k DEL") 'crux-delete-file-and-buffer)
+(general-define-key
+  :prefix "M-k"
+  :prefix-command 'killbuffer-keymap
+  "k"       'kill-buffer
+  "a"       'kill-all-buffers
+  "1"       'kill-other-buffers
+  "u"       'kill-unmodified-buffers
+  "o"       'kill-orphan-buffers
+  "DEL"     'crux-delete-file-and-buffer)
 
 
 ;; M-l
@@ -115,42 +124,47 @@
 
 
 ;;; M-p  project commands ;;;
-(define-prefix-command 'project-keymap)
-(global-set-key (kbd "M-p") 'project-keymap)
+(general-define-key
+  :prefix "M-p"
+  :prefix-command 'project-keymap
+  "r"       'revbufs
+  "g"       'magit-status
+  "o"       'counsel-find-file
+  "f"       'neotree
+  "b"       'ibuffer
+  "l"       'flycheck-buffer
+  "t"       'hl-todo-occur
+  "p"       'projectile-switch-project
+  "TAB"     'helm-projectile-find-file)
 
-(global-set-key (kbd "M-p r") 'revbufs)
-(global-set-key (kbd "M-p g") 'magit-status)
-(global-set-key (kbd "M-p o") 'counsel-find-file)
-(global-set-key (kbd "M-p b") 'ibuffer)
-(global-set-key (kbd "M-p l") 'flycheck-buffer)
-(global-set-key (kbd "M-p t") 'hl-todo-occur)
-(global-set-key (kbd "M-p p") 'projectile-switch-project)
-(global-set-key (kbd "M-p TAB") 'helm-projectile-find-file)
-;; M-p f        neotree
+
 
 
 ;; M-q
 
 
 ;;; M-r  replace commands ;;;
-(define-prefix-command 'replace-keymap)
-(global-set-key (kbd "M-r") 'replace-keymap)
+(general-define-key
+  :prefix "M-r"
+  :prefix-command 'replace-keymap
+  "r"       'query-replace-from-region
+  "x"       'query-replace-regexp
+  "b"       'crux-rename-buffer-and-file
+  "k"       'query-kill-matching-lines)
 
-(global-set-key (kbd "M-r r") 'query-replace)
-(global-set-key (kbd "M-r x") 'query-replace-regexp)
-(global-set-key (kbd "M-r b") 'crux-rename-buffer-and-file)
 
-
-;;; M-s  search commands (extend) ;;;
-(global-set-key (kbd "M-s s") 'isearch-forward)
-(global-set-key (kbd "M-s x") 'isearch-forward-regexp)
-(global-set-key (kbd "M-s r") 'isearch-backward)
-(global-set-key (kbd "M-s C-r") 'isearch-backward-regexp)
-;; M-s C-t      counsel-etags-grep-symbol-at-point
-;; M-s t        counsel-etags-find-tag
-;; M-s .        isearch-forward-symbol-at-point
-;; M-s w        isearch-forward-word
-;; M-s o        occur
+;;; M-s  search commands;;;
+(general-define-key
+  :prefix "M-g"
+  "s"       'isearch-forward
+  "x"       'isearch-forward-regexp
+  "r"       'isearch-backward
+  "C-r"     'isearch-backward-regexp)
+;; C-t      counsel-etags-grep-symbol-at-point
+;; t        counsel-etags-find-tag
+;; .        isearch-forward-symbol-at-point
+;; w        isearch-forward-word
+;; o        occur
 
 
 ;; M-t          transpose-words
@@ -159,11 +173,12 @@
 
 
 ;;; M-w  kill-ring commands ;;;
-(define-prefix-command 'killring-keymap)
-(global-set-key (kbd "M-w") 'killring-keymap)
-
-(global-set-key (kbd "M-w w") 'region-copy-whole-line)
-(global-set-key (kbd "M-w k") 'kill-whole-line)
+(general-define-key
+  :prefix "M-w"
+  :prefix-command 'killring-keymap
+  "w"       'region-copy-line
+  "C-w"     'region-copy-whole-line
+  "k"       'kill-whole-line)
 
 
 ;; M-x          execute command -> counsel-M-x?
