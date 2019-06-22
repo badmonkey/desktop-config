@@ -19,6 +19,25 @@
   :diminish (python-docstring-mode . " Doc")
   :hook (python-mode . python-docstring-mode))
 
+(use-package pydoc)
+
+(use-package virtualenvwrapper
+  :config
+  ;; (setq venv-postactivate-hook
+  ;;       '(lambda ()
+  ;;          (message (format "Activating venv %s via %s" (venv-display-name) venv-current-name))))
+  (setq venv-location "/home/mfagan/.virtualenvs/")
+  (add-hook 'python-mode-hook (lambda () activate-dot-venv))
+  (add-hook 'switch-buffer-functions
+            (lambda (prev cur)
+              (when (eq major-mode 'python-mode)
+                (activate-dot-venv))))
+  (venv-initialize-interactive-shells) ;; if you want interactive shell support
+  (venv-initialize-eshell)) ;; if you want eshell support
+
+
+
+
 (use-package blacken
   :config
   (setq blacken-line-length '100)
@@ -29,27 +48,6 @@
   (setq py-isort-options '("--lines=100"))
   (add-hook 'before-save-hook 'py-isort-before-save))
 
-;;(use-package pydoc
-;;  :after anaconda-mode
-;;  :bind (:map anaconda-mode-map
-;;			  ("M-?" . pydoc-at-point)))
-
-(use-package pydoc)
-
-(use-package virtualenvwrapper
-  :config
-  (setq venv-postactivate-hook
-        '(lambda () (message (format "Activating venv %s via %s" (venv-display-name) venv-current-name))))
-  (setq venv-location "/home/mfagan/.virtualenvs/")
-  (add-hook 'python-mode-hook (lambda () activate-dot-venv))
-  (venv-initialize-interactive-shells) ;; if you want interactive shell support
-  (venv-initialize-eshell)) ;; if you want eshell support
-
-
-(add-hook 'switch-buffer-functions
-          (lambda (prev cur)
-            (when (eq major-mode 'python-mode)
-                (activate-dot-venv))))
 
 
 (provide 'init-python)

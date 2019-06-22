@@ -39,7 +39,7 @@
       ((point-position line-column buffer-position selection-info) :separator " | ")
       major-mode
       process
-      ("Lint" flycheck-error flycheck-warning flycheck-info)
+      (("!?" flycheck-error flycheck-warning flycheck-info) :when flycheck-current-errors)
       (python-venvwrap :fallback python-pyvenv)
       projectile-root
       ((minor-modes :separator spaceline-minor-modes-separator) :when active))
