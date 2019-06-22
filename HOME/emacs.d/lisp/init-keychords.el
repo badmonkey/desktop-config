@@ -7,6 +7,9 @@
   :init
   (key-chord-mode 1))
 
+;; (general-define-key
+;;   "H-p"	'point-to-buffer-start)
+
 
 (general-define-key
   (general-chord "[[")   'bm-previous
@@ -17,8 +20,9 @@
   (general-chord "//")   'ac-complete-with-helm
   (general-chord "``")   'switch-to-last-buffer
   (general-chord ";;")   'region-toggle-comment
-  (general-chord "==")   'er/expand-region
-  (general-chord "++")   'er/contract-region)
+  ;; (general-chord "==")   'er/expand-region
+  (general-chord "++")   'er/contract-region
+  (general-chord "``")   'point-to-buffer-start)
 
 
 

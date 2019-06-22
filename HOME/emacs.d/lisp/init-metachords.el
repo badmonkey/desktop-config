@@ -4,6 +4,11 @@
 
 
 (general-define-key
+  :prefix "ESC"
+  "ESC" 'keyboard-quit)
+
+
+(general-define-key
   "M-DEL"   'region-delete-back-word
   "<M-tab>" 'ac-complete-with-helm)
 
@@ -26,6 +31,7 @@
   "M-w"     'kill-ring-save
   "m"       'mc/mark-all-like-this
   "e"       'mc/edit-lines)
+
 
 
 ;; M-!				shell-command
@@ -53,6 +59,13 @@
   "\\"      'bm-toggle
   "u"       'crux-view-url)
 ;; t        counsel-etags-find-tag-at-point
+
+;; (general-define-key
+;;   :prefix "M-."
+;;   :keymaps 'emacs-lisp-mode-map
+;;   "f"       'srefactor-lisp-format-sexp)
+
+
 
 
 ;; M-/				dabbrev-expand
@@ -134,11 +147,11 @@
   "o"       'counsel-find-file
   "f"       'neotree
   "b"       'ibuffer
+  "v"       'venv-workon
   "l"       'flycheck-buffer
   "t"       'hl-todo-occur
   "p"       'projectile-switch-project
   "TAB"     'helm-projectile-find-file)
-
 
 
 

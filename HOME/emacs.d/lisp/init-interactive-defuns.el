@@ -1,4 +1,5 @@
-;;; init-custom-defuns --- Custom behaviour
+;;; init-interactive-defuns --- Interactive funs that require packages are loaded and
+;;; are use by key bindings
 ;;; Commentary:
 ;;; Code:
 
@@ -15,6 +16,11 @@
 (defun kill-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
+
+
+(defun activate-dot-venv ()
+  (interactive)
+  (venv-projectile-auto-workon))
 
 
 (defun kill-other-buffers ()
@@ -44,25 +50,13 @@
            (kill-buffer buffer)))))
 
 
-;;
-;; Interactive prompts for regions/lines
-;;
+(defun point-to-buffer-start ()
+  (interactive)
+  (goto-char (point-min)))
 
-(defun input-region-or-point ()
-  (if (region-active-p)
-     (list (region-beginning) (region-end))
-	(list (point))))
-
-(defun input-region-or-line ()
-  (if (region-active-p)
-     (list (region-beginning) (region-end))
-	(list (line-beginning-position) (line-end-position))))
-
-(defun input-region-from-to-args (prompt regexp-flag)
-  (if (region-active-p)
-      (let ((region-text (buffer-substring (region-beginning) (region-end))))
-		(list region-text (query-replace-read-to region-text prompt regexp-flag)))
-	(query-replace-read-args prompt regexp-flag)))
+(defun point-to-buffer-end ()
+  (interactive)
+  (goto-char (point-max)))
 
 
 ;;
@@ -138,7 +132,7 @@
 	(backward-kill-word 1)))
 
 
-(defun query-replace-from-region (from-string to-string)
+(defun query-replace-from-region (from-string to-string &optional start end interactive)
   (interactive (input-region-from-to-args "Query replace" nil))
   (progn
 	(when mark-active
@@ -196,5 +190,7 @@
 
 
 
-(provide 'init-custom-defuns)
-;;; init-custom-defuns.el ends here
+
+
+(provide 'init-interactive-defuns)
+;;; init-interactive-defuns.el ends here

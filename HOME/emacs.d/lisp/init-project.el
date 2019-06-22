@@ -21,13 +21,13 @@
   :config
   (setq projectile-switch-project-action
 		'(lambda ()
-		 (message "Change project")
-         (venv-projectile-auto-workon)
-         (projectile-dired)))
+		   (message "Change project")
+		   (venv-projectile-auto-workon)
+		   (projectile-dired)))
   (setq projectile-mode-line
-    '(:eval (if (file-remote-p default-directory)
-				" Prj*remote" "Prj"))
-	))
+		'(:eval (if (file-remote-p default-directory)
+					" Prj*remote" "Prj"))
+		))
 
 
 (provide 'init-project)

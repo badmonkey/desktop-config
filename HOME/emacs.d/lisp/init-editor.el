@@ -5,10 +5,6 @@
 
 (use-package general)
 
-(general-define-key
-  :prefix "ESC"
-  "ESC" 'keyboard-quit)
-
 
 ;; (use-package which-key
 ;;   :init
@@ -19,6 +15,8 @@
 ;;   (setq which-key-sort-order 'which-key-key-order-alpha
 ;;         which-key-side-window-max-width 0.33
 ;;         which-key-idle-delay 0.05))
+
+(use-package switch-buffer-functions)
 
 
 ;; WIP

@@ -2,18 +2,20 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Fiddle with Garbage Collection
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; Fiddle with Garbage Collection
+
+(defvar gc-cons-threshold-large)
 (defvar gc-cons-threshold-original)
 
+(setq gc-cons-threshold-large (* 1024 1024 100))
 (setq gc-cons-threshold-original gc-cons-threshold)
-(setq gc-cons-threshold (* 1024 1024 100))
+(setq gc-cons-threshold gc-cons-threshold)
 
 (run-with-idle-timer 5 nil
   (lambda ()
@@ -21,7 +23,7 @@
 	(message "gc-cons-threshold restored")))
 
 (defun my-minibuffer-setup-hook ()
-  (setq gc-cons-threshold most-positive-fixnum))
+  (setq gc-cons-threshold gc-cons-threshold-large))
 
 (defun my-minibuffer-exit-hook ()
   (setq gc-cons-threshold gc-cons-threshold-original))
@@ -44,17 +46,27 @@
 (require 'init-package)
 (require 'init-settings)
 (require 'init-visuals)
-(require 'init-defuns)
-(require 'init-misc-modes)
-(require 'init-lang-modes)
-(require 'init-python)
+
+;; start loading packages
+(require 'init-general-defuns)
+
 (require 'init-editor)
 (require 'init-project)
 (require 'init-flycheck)
 (require 'init-helm)
+
+(require 'init-modes)
+
+(require 'init-python)
+
+;; init that requires most packages are loaded
+(require 'init-interactive-defuns)
+(require 'init-spaceline)
+
 (require 'init-ctrlchords)
 (require 'init-metachords)
-(require 'init-spaceline)
+(require 'init-keychords)
+
 (require 'init-server)
 
 
@@ -81,7 +93,7 @@
 	("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-	(spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido)))
+	(switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -105,3 +117,18 @@
 	 (340 . "#94BFF3")
 	 (360 . "#DC8CC3"))))
  '(vc-annotate-very-old-color "#DC8CC3"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(hl-line ((t (:background "gray5"))))
+ '(whitespace-empty ((t (:foreground "red" :background "red"))))
+ '(whitespace-indentation ((t (:foreground "yellow" :background "black"))))
+ '(whitespace-line ((t (:foreground unspecified :underline "DarkRed"))))
+ '(whitespace-newline ((t (:foreground "blue" :background "black"))))
+ '(whitespace-space ((t (:foreground "gray25" :background "black"))))
+ '(whitespace-space-after-tab ((t (:foreground "yellow" :background "black"))))
+ '(whitespace-space-before-tab ((t (:foreground "red" :background "black"))))
+ '(whitespace-tab ((t (:foreground "blue" :background "black"))))
+ '(whitespace-trailing ((t (:bold t :foreground "red" :background "black")))))
