@@ -5,18 +5,13 @@
 
 (use-package general)
 
+(use-package key-chord
+  :init
+  (key-chord-mode 1))
 
-;; (use-package which-key
-;;   :init
-;;   (which-key-mode)
-;;   :diminish which-key-mode
-;;   :config
-;;   (which-key-setup-side-window-right-bottom)
-;;   (setq which-key-sort-order 'which-key-key-order-alpha
-;;         which-key-side-window-max-width 0.33
-;;         which-key-idle-delay 0.05))
+;; (use-package hydra)
+;; (use-package pretty-hydra)
 
-(use-package switch-buffer-functions)
 
 
 ;; WIP
@@ -65,6 +60,9 @@
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally))
+
+;; (use-package muban)
+
 
 ;; (use-package undo-tree
 ;;   :diminish (undo-tree-mode)

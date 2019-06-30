@@ -60,7 +60,7 @@
 
 ;; Frame movement (shift arrow)
 (windmove-default-keybindings)
-(setq windmove-wrap-around t )
+(setq windmove-wrap-around t)
 
 
 ;;; utf-8

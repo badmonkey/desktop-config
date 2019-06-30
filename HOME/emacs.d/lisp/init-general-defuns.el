@@ -52,14 +52,18 @@ The return value is the new value of LIST-VAR."
           (venv-dir-to-name tmp-venv-name)
         venv-current-name))))
 
-          ;;      (if (file-directory-p venv-current-name)
-          ;;      (venv-dir-to-name venv-current-name)
-          ;;    (venv-current-name)))
-          ;; (venv-display-name (tmp-venv-name)))
 
-    ;; (if (file-directory-p venv-current-name)
-               ;;     (venv-dir-to-name (file-name-directory venv-current-name))
-               ;;   venv-current-name)))  )
+(defun load-buffer (&optional buffer)
+  (interactive "b")
+  (let ((buffer-path (buffer-file-name (get-buffer buffer))))
+    (when buffer-path
+      (load-file buffer-path))))
+
+(defun load-current-buffer ()
+  (interactive)
+  (let ((buffer-path (buffer-file-name)))
+    (when buffer-path
+      (load-file buffer-path))))
 
 
 

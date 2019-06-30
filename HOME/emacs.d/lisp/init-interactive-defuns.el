@@ -18,7 +18,7 @@
   (mapc 'kill-buffer (buffer-list)))
 
 
-(defun activate-dot-venv ()
+(defun activate-venv ()
   (interactive)
   (venv-projectile-auto-workon))
 
@@ -79,7 +79,9 @@
 
 (defun region-toggle-comment (start end)
   (interactive (input-region-or-line))
-  (comment-or-uncomment-region start end))
+  (if (eq start end)
+      (comment-dwim nil)
+    (comment-or-uncomment-region start end)))
 
 
 (defun region-indent-code (start &optional end)
@@ -139,6 +141,31 @@
 	  (goto-char (mark))
 	  (deactivate-mark))
 	(query-replace from-string to-string)))
+
+
+;; WIP
+(defun select-at-point ()
+  (interactive)
+  (setq default (thing-at-point 'word))
+  (setq bds (bounds-of-thing-at-point 'word))
+  (setq p1 (car bds))
+  (setq p2 (cdr bds))
+  (set-mark p1)
+  (goto-char p2))
+
+(defun next-like-this-region (arg)
+  (interactive "p")
+  (if (not (region-active-p))
+      (select-at-point)
+    (mc/mark-next-like-this arg)))
+
+(defun previous-like-this-region (arg)
+  (interactive "p")
+  (if (not (region-active-p))
+      (select-at-point)
+    (mc/mark-previous-like-this arg)))
+
+
 
 
 ;; still WIP

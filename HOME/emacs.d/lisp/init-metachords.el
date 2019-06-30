@@ -5,12 +5,14 @@
 
 (general-define-key
   :prefix "ESC"
-  "ESC" 'keyboard-quit)
+  "ESC" 'keyboard-quit
+  )
 
 
 (general-define-key
   "M-DEL"   'region-delete-back-word
-  "<M-tab>" 'ac-complete-with-helm)
+  "<M-tab>" 'ac-complete-with-helm
+  )
 
 
 ;; M-TAB        spellcheck??
@@ -20,18 +22,22 @@
 (general-define-key
   :prefix "M-SPC"
   :prefix-command 'bufferaction-keymap
-  "1"       'just-one-space
   "SPC"     'set-mark-command
   "DEL"     'delete-region
-  "w"       'region-copy-line
-  "k"       'region-kill-whole-line
-  ";"       'region-toggle-comment
   "TAB"     'indent-rigidly
-  "p"       'mark-paragraph
-  "M-w"     'kill-ring-save
-  "m"       'mc/mark-all-like-this
-  "e"       'mc/edit-lines)
+  ";"       'region-toggle-comment
 
+  "M-w"     'kill-ring-save
+
+  "1"       'just-one-space
+  "d"       (general-predicate-dispatch nil
+              (derived-mode-p 'python-mode) 'py-pyment-region)
+  "e"       'mc/edit-lines
+  "k"       'region-kill-whole-line
+  "m"       'mc/mark-all-like-this
+  "p"       'mark-paragraph
+  "w"       'region-copy-line
+  )
 
 
 ;; M-!				shell-command
@@ -49,16 +55,21 @@
 (general-define-key
   :prefix "M-."
   :prefix-command 'at-point-keymap
-  "z"       'zeal-at-point
-  "g"       'google-this
   "TAB"     'completion-at-point
-  "x"       'exchange-point-and-mark
-  "p"       'pydoc-at-point
-  "e"       'flycheck-display-error-at-point
   "SPC"     'helm-dash-at-point
   "\\"      'bm-toggle
-  "u"       'crux-view-url)
+
+  "d"       (general-predicate-dispatch nil
+              (derived-mode-p 'python-mode) 'py-pyment-generate-docstring-at-point)
+  "e"       'flycheck-display-error-at-point
+  "g"       'google-this
+  "p"       'pydoc-at-point
 ;; t        counsel-etags-find-tag-at-point
+  "u"       'crux-view-url
+  "x"       'exchange-point-and-mark
+  "z"       'zeal-at-point
+  )
+
 
 ;; (general-define-key
 ;;   :prefix "M-."
@@ -66,18 +77,11 @@
 ;;   "f"       'srefactor-lisp-format-sexp)
 
 
-
-
 ;; M-/				dabbrev-expand
 ;; M-:				eval-expression
 
 
-;;; M-;  comment commands ;;;
-(general-define-key
-  :prefix "M-;"
-  :prefix-command 'comment-keymap
-  "TAB"     'comment-dwim
-  ";"       'region-toggle-comment)
+(general-define-key "M-;" 'comment-dwim)
 
 
 ;; M-<				beginning-of-buffer
@@ -103,14 +107,17 @@
 ;;; M-g  goto commands ;;;
 (general-define-key
   :prefix "M-g"
-  "1"       'flycheck-first-error
-  "t"       'hl-todo-next
-  "C-t"     'hl-todo-previous)
-;; g        goto-line
-;; c        goto-char
 ;; TAB      move-to-column
+
+  "C-t"     'hl-todo-previous
+
+  "1"       'flycheck-first-error
+;; c        goto-char
+;; g        goto-line
 ;; n        next-error
 ;; p        previous-error
+  "t"       'hl-todo-next
+  )
 
 
 ;; M-h
@@ -122,12 +129,14 @@
 (general-define-key
   :prefix "M-k"
   :prefix-command 'killbuffer-keymap
-  "k"       'kill-buffer
-  "a"       'kill-all-buffers
+  "DEL"     'crux-delete-file-and-buffer
+
   "1"       'kill-other-buffers
-  "u"       'kill-unmodified-buffers
+  "a"       'kill-all-buffers
+  "k"       'kill-buffer
   "o"       'kill-orphan-buffers
-  "DEL"     'crux-delete-file-and-buffer)
+  "u"       'kill-unmodified-buffers
+  )
 
 
 ;; M-l
@@ -142,17 +151,22 @@
 (general-define-key
   :prefix "M-p"
   :prefix-command 'project-keymap
-  "r"       'revbufs
-  "g"       'magit-status
-  "o"       'counsel-find-file
-  "f"       'neotree
-  "b"       'ibuffer
-  "v"       'venv-workon
-  "l"       'flycheck-buffer
-  "t"       'hl-todo-occur
-  "p"       'projectile-switch-project
-  "TAB"     'helm-projectile-find-file)
+  "TAB"     'helm-projectile-find-file
+  "]"       'flycheck-buffer
+  "["       'hl-todo-occur
 
+  "b"       'ibuffer
+  "d"       (general-predicate-dispatch nil
+              (derived-mode-p 'python-mode) 'py-pyment-buffer)
+  "f"       'neotree
+  "g"       'magit-status
+  "l"       (general-predicate-dispatch nil
+              (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer)
+  "o"       'counsel-find-file
+  "p"       'projectile-switch-project
+  "r"       'revbufs
+  "v"       'venv-workon
+  )
 
 
 ;; M-q
@@ -162,24 +176,28 @@
 (general-define-key
   :prefix "M-r"
   :prefix-command 'replace-keymap
+  "b"       'crux-rename-buffer-and-file
+  "k"       'query-kill-matching-lines
   "r"       'query-replace-from-region
   "x"       'query-replace-regexp
-  "b"       'crux-rename-buffer-and-file
-  "k"       'query-kill-matching-lines)
+  )
 
 
 ;;; M-s  search commands;;;
 (general-define-key
   :prefix "M-g"
-  "s"       'isearch-forward
-  "x"       'isearch-forward-regexp
-  "r"       'isearch-backward
-  "C-r"     'isearch-backward-regexp)
-;; C-t      counsel-etags-grep-symbol-at-point
-;; t        counsel-etags-find-tag
 ;; .        isearch-forward-symbol-at-point
-;; w        isearch-forward-word
+
+  "C-r"     'isearch-backward-regexp
+;; C-t      counsel-etags-grep-symbol-at-point
+
 ;; o        occur
+  "r"       'isearch-backward
+  "s"       'isearch-forward
+;; t        counsel-etags-find-tag
+  "x"       'isearch-forward-regexp
+;; w        isearch-forward-word
+  )
 
 
 ;; M-t          transpose-words
@@ -191,9 +209,11 @@
 (general-define-key
   :prefix "M-w"
   :prefix-command 'killring-keymap
-  "w"       'region-copy-line
   "C-w"     'region-copy-whole-line
-  "k"       'kill-whole-line)
+
+  "k"       'kill-whole-line
+  "w"       'region-copy-line
+  )
 
 
 ;; M-x          execute command -> counsel-M-x?
@@ -210,6 +230,7 @@
 ;; flycheck-buffer
 ;; flycheck-next-error
 ;; flycheck-previous-error
+
 
 
 (provide 'init-metachords)
