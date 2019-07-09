@@ -152,6 +152,8 @@
   :prefix "M-p"
   :prefix-command 'project-keymap
   "TAB"     'helm-projectile-find-file
+  "RET"     (general-predicate-dispatch nil
+              (derived-mode-p 'python-mode) 'switch-to-python-shell)
   "]"       'flycheck-buffer
   "["       'hl-todo-occur
 

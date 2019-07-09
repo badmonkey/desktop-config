@@ -77,11 +77,38 @@
 (global-whitespace-mode 1)
 
 
+(use-package indent-guide
+  :load-path contrib-load-path
+  :config
+  (indent-guide-global-mode)
+  (set-face-foreground 'indent-guide-face "DarkRed")
+  (setq indent-guide-recursive t)
+  (setq indent-guide-char "|")
+  (setq indent-guide-delay 0.2))
+
+(use-package rainbow-delimiters
+  :init
+  (eval-when-compile
+    ;; Silence missing function warnings
+    (declare-function rainbow-delimiters-mode "rainbow-delimiters.el"))
+  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+
+(use-package beacon
+  :init (beacon-mode 1)
+  :diminish beacon-mode)
+
+(use-package hl-todo
+  :load-path contrib-load-path
+  :config
+  (global-hl-todo-mode))
+
+
 ;; clean up the status bar
 (use-package diminish
   :config
   :diminish 'global-whitespace-mode)
   ;; (progn (add-hook 'whitespace-mode-hook (lambda () (diminish 'whitespace-mode)))))
+
 
 
 

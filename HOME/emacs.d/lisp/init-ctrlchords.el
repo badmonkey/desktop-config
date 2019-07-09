@@ -11,6 +11,9 @@
 
 ;; Stop uppercase-region warning from fucking with undo
   "C-x C-u"
+
+;; Need to delete this at the source
+  "C-x C-b"
   )
 
 
@@ -36,6 +39,8 @@
 
   "H-["           'previous-like-this-region
   "H-]"           'next-like-this-region
+
+  "H-g"           'point-to-buffer-end
   )
 
 

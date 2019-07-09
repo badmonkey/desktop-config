@@ -198,33 +198,13 @@ key             binding
 ---             -------
 
 
-`whole-line-or-region-local-mode' Minor Mode Bindings:
-key             binding
----             -------
-
-C-w				whole-line-or-region-kill-region
-C-y				whole-line-or-region-yank
-ESC				Prefix Command
-<C-insert>		whole-line-or-region-kill-ring-save
-<C-insertchar>	whole-line-or-region-kill-ring-save
-<S-delete>		whole-line-or-region-kill-region
-<S-insert>		whole-line-or-region-yank
-<S-insertchar>	whole-line-or-region-yank
-
-M-w				whole-line-or-region-kill-ring-save
-
-
 Major Mode Bindings:
 key             binding
 ---             -------
 
-C-j				eval-print-last-sexp
 ESC				Prefix Command
-DEL				backward-delete-char-untabify
 
-C-M-i			completion-at-point
-C-M-q			indent-pp-sexp
-C-M-x			eval-defun
+C-M-i			ispell-complete-word
 
 
 Global Bindings:
@@ -245,6 +225,7 @@ C-f				forward-char
 C-g				keyboard-quit
 C-h				help-command
 TAB				indent-for-tab-command
+C-j				electric-newline-and-maybe-indent
 C-k				region-kill-line
 C-l				recenter-top-bottom
 RET				newline
@@ -257,16 +238,25 @@ C-s				swiper-helm
 C-t				transpose-chars
 C-u				universal-argument
 C-v				scroll-up-command
+C-w				region-copy-line
 C-x				Control-X-prefix
+C-y				yank
 ESC				ESC-prefix
 C-\				toggle-input-method
 C-]				abort-recursive-edit
 C-_				undo
-s-p				projectile-command-map
+DEL				delete-backward-char
+H-SPC			switch-to-last-buffer
+H-[				previous-like-this-region
+H-]				next-like-this-region
+H-g				point-to-buffer-end
 C-SPC			set-mark-command
 C--				negative-argument
 C-/				undo
 C-0 .. C-9		digit-argument
+C-<				mc/mark-previous-like-this
+C-=				er/expand-region
+C->				mc/mark-next-like-this
 <C-M-down>		down-list
 <C-M-end>		end-of-defun
 <C-M-home>		beginning-of-defun
@@ -274,25 +264,26 @@ C-0 .. C-9		digit-argument
 <C-M-right>		forward-sexp
 <C-M-up>		backward-up-list
 <C-S-backspace>					kill-whole-line
-<C-S-return>					crux-smart-open-line-above
-<C-backspace>					backward-kill-word
-<C-delete>		region-kill-to-left-margin
+<C-backspace>					region-kill-to-left-margin
+<C-delete>		kill-word
 <C-down>		forward-paragraph
 <C-down-mouse-1>				mouse-buffer-menu
 <C-down-mouse-2>				facemenu-menu
 <C-end>			end-of-buffer
 <C-f10>			buffer-menu-open
 <C-home>		beginning-of-buffer
+<C-insert>		kill-ring-save
+<C-insertchar>	kill-ring-save
 <C-left>		left-word
 <C-mouse-4>		mwheel-scroll
 <C-mouse-5>		mwheel-scroll
 <C-next>		scroll-left
 <C-prior>		scroll-right
+<C-return>		crux-smart-open-line
 <C-right>		right-word
 <C-tab>			region-indent-code
 <C-up>			backward-paragraph
 <M-begin>		beginning-of-buffer-other-window
-<M-delete>		region-delete-back-word
 <M-down-mouse-1>				mouse-drag-secondary
 <M-drag-mouse-1>				mouse-set-secondary
 <M-end>			end-of-buffer-other-window
@@ -305,13 +296,17 @@ C-0 .. C-9		digit-argument
 <M-next>		scroll-other-window
 <M-prior>		scroll-other-window-down
 <M-right>		right-word
+<M-tab>			ac-complete-with-helm
+<S-delete>		kill-region
 <S-down>		windmove-down
 <S-down-mouse-1>				mouse-appearance-menu
+<S-insert>		yank
+<S-insertchar>	yank
 <S-left>		windmove-left
 <S-mouse-3>		kmacro-end-call-mouse
 <S-mouse-4>		mwheel-scroll
 <S-mouse-5>		mwheel-scroll
-<S-return>		crux-smart-open-line
+<S-return>		crux-smart-open-line-above
 <S-right>		windmove-right
 <S-up>			windmove-up
 <XF86Back>		previous-buffer
@@ -349,6 +344,7 @@ C-0 .. C-9		digit-argument
 <insert>		overwrite-mode
 <insertchar>	overwrite-mode
 <insertline>	open-line
+<key-chord>		Prefix Command
 <left>			left-char
 <make-frame-visible>			ignore-event
 <menu>			execute-extended-command
@@ -372,9 +368,6 @@ C-0 .. C-9		digit-argument
 <up>			previous-line
 <vertical-line>					Prefix Command
 <vertical-scroll-bar>			Prefix Command
-
-C-c f			Prefix Command
-C-c u			crux-view-url
 
 C-h C-a			about-emacs
 C-h C-c			describe-copying
@@ -425,7 +418,7 @@ C-h <help>		help-for-help
 
 C-x C-@			pop-global-mark
 C-x C-a			Prefix Command
-C-x C-b			ibuffer
+C-x C-b			list-buffers
 C-x C-d			list-directory
 C-x C-e			eval-last-sexp
 C-x C-f			helm-find-files
@@ -467,6 +460,7 @@ C-x ;			comment-set-column
 C-x <			scroll-left
 C-x =			what-cursor-position
 C-x >			scroll-right
+C-x X			Prefix Command
 C-x [			backward-page
 C-x ]			forward-page
 C-x ^			enlarge-window
@@ -525,9 +519,9 @@ C-M-t			transpose-sexps
 C-M-u			backward-up-list
 C-M-v			scroll-other-window
 C-M-w			append-next-kill
-ESC ESC			Prefix Command
+ESC ESC			keyboard-quit
 C-M-\			indent-region
-M-SPC			buffer-action-keymap
+M-SPC			bufferaction-keymap
 M-!				shell-command
 M-$				ispell-word
 M-%				query-replace
@@ -540,13 +534,13 @@ M--				negative-argument
 M-.				at-point-keymap
 M-/				dabbrev-expand
 M-:				eval-expression
-M-;				comment-keymap
+M-;				comment-dwim
 M-<				beginning-of-buffer
 M-=				count-words-region
 M->				end-of-buffer
 M-?				xref-find-references
 M-@				mark-word
-M-\				delete-horizontal-space
+M-\				helm-bm
 M-^				delete-indentation
 M-`				tmm-menubar
 M-a				helm-M-x
@@ -570,6 +564,7 @@ M-s				Prefix Command
 M-t				transpose-words
 M-u				upcase-word
 M-v				scroll-down-command
+M-w				killring-keymap
 M-x				execute-extended-command
 M-y				helm-show-kill-ring
 M-z				zap-to-char
@@ -577,7 +572,7 @@ M-{				backward-paragraph
 M-|				shell-command-on-region
 M-}				forward-paragraph
 M-~				not-modified
-M-DEL			backward-kill-word
+M-DEL			region-delete-back-word
 C-M-S-v			scroll-other-window-down
 C-M-SPC			mark-sexp
 C-M-%			query-replace-regexp
@@ -602,29 +597,32 @@ ESC <next>		scroll-other-window
 ESC <prior>		scroll-other-window-down
 ESC <right>		forward-word
 
-M-s C-r			isearch-backward-regexp
+M-w C-w			region-copy-whole-line
+M-w k			kill-whole-line
+M-w w			region-copy-line
+
 M-s ESC			Prefix Command
 M-s .			isearch-forward-symbol-at-point
 M-s _			isearch-forward-symbol
 M-s h			Prefix Command
 M-s o			occur
-M-s r			isearch-backward
-M-s s			isearch-forward
 M-s w			isearch-forward-word
-M-s x			isearch-forward-regexp
 
 M-r b			crux-rename-buffer-and-file
-M-r r			query-replace
+M-r k			query-kill-matching-lines
+M-r r			query-replace-from-region
 M-r x			query-replace-regexp
 
 M-p TAB			helm-projectile-find-file
+M-p [			hl-todo-occur
+M-p ]			flycheck-buffer
 M-p b			ibuffer
+M-p f			neotree
 M-p g			magit-status
-M-p l			flycheck-buffer
 M-p o			counsel-find-file
 M-p p			projectile-switch-project
 M-p r			revbufs
-M-p t			hl-todo-occur
+M-p v			venv-workon
 
 M-o ESC			Prefix Command
 M-o b			facemenu-set-bold
@@ -642,6 +640,7 @@ M-k u			kill-unmodified-buffers
 M-k DEL			crux-delete-file-and-buffer
 
 M-g TAB			move-to-column
+M-g C-r			isearch-backward-regexp
 M-g C-t			hl-todo-previous
 M-g ESC			Prefix Command
 M-g 1			flycheck-first-error
@@ -649,17 +648,18 @@ M-g c			goto-char
 M-g g			goto-line
 M-g n			next-error
 M-g p			previous-error
+M-g r			isearch-backward
+M-g s			isearch-forward
 M-g t			hl-todo-next
-
-M-; TAB			comment-dwim
-M-; SPC			comment-or-uncomment-region
-M-; ;			comment-or-uncomment-line
+M-g x			isearch-forward-regexp
 
 M-. TAB			completion-at-point
 M-. SPC			helm-dash-at-point
-M-. d			pydoc-at-point
+M-. \			bm-toggle
 M-. e			flycheck-display-error-at-point
 M-. g			google-this
+M-. p			pydoc-at-point
+M-. u			crux-view-url
 M-. x			exchange-point-and-mark
 M-. z			zeal-at-point
 
@@ -667,50 +667,27 @@ M-SPC TAB		indent-rigidly
 M-SPC ESC		Prefix Command
 M-SPC SPC		set-mark-command
 M-SPC 1			just-one-space
-M-SPC ;			comment-or-uncomment-region
-M-SPC d			Prefix Command
+M-SPC ;			region-toggle-comment
+M-SPC e			mc/edit-lines
 M-SPC k			region-kill-whole-line
+M-SPC m			mc/mark-all-like-this
 M-SPC p			mark-paragraph
 M-SPC w			region-copy-line
+M-SPC DEL		delete-region
 
-M-ESC ESC		keyboard-escape-quit
-M-ESC :			eval-expression
-
-s-p ESC			projectile-project-buffers-other-buffer
-s-p !			projectile-run-shell-command-in-root
-s-p &			projectile-run-async-shell-command-in-root
-s-p 4			Prefix Command
-s-p D			projectile-dired
-s-p E			projectile-edit-dir-locals
-s-p F			projectile-find-file-in-known-projects
-s-p I			projectile-ibuffer
-s-p P			projectile-test-project
-s-p R			projectile-regenerate-tags
-s-p S			projectile-save-project-buffers
-s-p T			projectile-find-test-file
-s-p a			projectile-find-other-file
-s-p b			projectile-switch-to-buffer
-s-p c			projectile-compile-project
-s-p d			projectile-find-dir
-s-p e			projectile-recentf
-s-p f			projectile-find-file
-s-p g			projectile-find-file-dwim
-s-p h			helm-projectile
-s-p i			projectile-invalidate-cache
-s-p j			projectile-find-tag
-s-p k			projectile-kill-buffers
-s-p l			projectile-find-file-in-directory
-s-p m			projectile-commander
-s-p o			projectile-multi-occur
-s-p p			projectile-switch-project
-s-p q			projectile-switch-open-project
-s-p r			projectile-replace
-s-p s			Prefix Command
-s-p t			projectile-toggle-between-implementation-and-test
-s-p u			projectile-run-project
-s-p v			projectile-vc
-s-p x			Prefix Command
-s-p z			projectile-cache-current-file
+<key-chord> '	Prefix Command
+<key-chord> +	Prefix Command
+<key-chord> /	Prefix Command
+<key-chord> 1	Prefix Command
+<key-chord> ;	Prefix Command
+<key-chord> =	Prefix Command
+<key-chord> [	Prefix Command
+<key-chord> \	Prefix Command
+<key-chord> ]	Prefix Command
+<key-chord> `	Prefix Command
+<key-chord> x	Prefix Command
+<key-chord> {	Prefix Command
+<key-chord> }	Prefix Command
 
 <bottom-divider> <C-mouse-2>	mouse-split-window-horizontally
 <bottom-divider> <down-mouse-1>
@@ -855,10 +832,6 @@ s-p z			projectile-cache-current-file
 <f2> s			2C-split
 <f2> <f2>		2C-two-columns
 
-C-c f c			write-file
-C-c f d			crux-delete-file-and-buffer
-C-c f r			crux-rename-buffer-and-file
-
 C-h 4 i			info-other-window
 
 C-x C-a C-l		gud-refresh
@@ -933,6 +906,24 @@ C-x 6 s			2C-split
 C-x 6 <f2>		2C-two-columns
 
 C-x 8 RET		insert-char
+
+C-x X SPC		edebug-step-mode
+C-x X =			edebug-display-freq-count
+C-x X C			edebug-Continue-fast-mode
+C-x X G			edebug-Go-nonstop-mode
+C-x X Q			edebug-top-level-nonstop
+C-x X T			edebug-Trace-fast-mode
+C-x X W			edebug-toggle-save-windows
+C-x X X			edebug-set-global-break-condition
+C-x X a			abort-recursive-edit
+C-x X b			edebug-set-breakpoint
+C-x X c			edebug-continue-mode
+C-x X g			edebug-go-mode
+C-x X q			top-level
+C-x X t			edebug-trace-mode
+C-x X u			edebug-unset-breakpoint
+C-x X w			edebug-where
+C-x X x			edebug-set-conditional-breakpoint
 
 C-x a C-a		add-mode-abbrev
 C-x a '			expand-abbrev
@@ -1022,22 +1013,36 @@ M-g M-p			previous-error
 
 M-SPC M-w		kill-ring-save
 
-M-SPC d e		Prefix Command
+<key-chord> x '					execute-extended-command
 
-s-p x e			projectile-run-eshell
-s-p x s			projectile-run-shell
-s-p x t			projectile-run-term
+<key-chord> ' x					execute-extended-command
 
-s-p s g			projectile-grep
-s-p s s			projectile-ag
+<key-chord> 1 ;					Keyboard Macro
 
-s-p 4 C-o		projectile-display-buffer
-s-p 4 a			projectile-find-other-file-other-window
-s-p 4 b			projectile-switch-to-buffer-other-window
-s-p 4 d			projectile-find-dir-other-window
-s-p 4 f			projectile-find-file-other-window
-s-p 4 g			projectile-find-file-dwim-other-window
-s-p 4 t			projectile-find-implementation-or-test-other-window
+<key-chord> + +					er/contract-region
+
+<key-chord> = =					er/expand-region
+
+<key-chord> ; 1					Keyboard Macro
+<key-chord> ; ;					region-toggle-comment
+<key-chord> ; [					Keyboard Macro
+<key-chord> ; ]					Keyboard Macro
+
+<key-chord> ` `					point-to-buffer-start
+
+<key-chord> / /					ac-complete-with-helm
+
+<key-chord> } }					flycheck-next-error
+
+<key-chord> { {					flycheck-previous-error
+
+<key-chord> \ \					bm-annotate-or-create
+
+<key-chord> ] ;					Keyboard Macro
+<key-chord> ] ]					bm-next
+
+<key-chord> [ ;					Keyboard Macro
+<key-chord> [ [					bm-previous
 
 <C-down-mouse-2> <fc> b			facemenu-set-bold
 <C-down-mouse-2> <fc> d			facemenu-set-default
@@ -1078,14 +1083,6 @@ C-x a i g		inverse-add-global-abbrev
 C-x a i l		inverse-add-mode-abbrev
 
 C-x r M-w		copy-rectangle-as-kill
-
-M-SPC d e l		Prefix Command
-
-M-SPC d e l e	Prefix Command
-
-M-SPC d e l e t					Prefix Command
-
-M-SPC d e l e t e				delete-region
 
 
 Function key map translations:

@@ -8,6 +8,8 @@
 
 
 (general-define-key
+  (general-chord ";;")   'region-toggle-comment
+
   (general-chord "[[")   'bm-previous
   (general-chord "]]")   'bm-next
   (general-chord "\\\\") 'bm-annotate-or-create
@@ -15,16 +17,27 @@
   (general-chord "}}")   'flycheck-next-error
   (general-chord "//")   'ac-complete-with-helm
   (general-chord "``")   'switch-to-last-buffer
-  (general-chord ";;")   'region-toggle-comment
-  (general-chord "==")   'er/expand-region
+  ;; (general-chord "==")   'er/expand-region
   (general-chord "++")   'er/contract-region
   (general-chord "``")   'point-to-buffer-start
 
   (general-chord "1;")   "!"
   (general-chord ";1")   "!"
 
+  (general-chord "[;")   "("
+  (general-chord ";[")   "("
+  (general-chord "];")   ")"
+  (general-chord ";]")   ")"
+
   (general-chord "'x")   'execute-extended-command
   (general-chord "x'")   'execute-extended-command
+  )
+
+(general-define-key
+  :prefix "H-f"
+  :prefix-command 'extra-chords-keymap
+
+  (general-chord "==")   'er/expand-region
   )
 
 

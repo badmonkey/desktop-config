@@ -9,9 +9,11 @@
   :init
   (key-chord-mode 1))
 
-;; (use-package hydra)
-;; (use-package pretty-hydra)
+(use-package hydra)
 
+(use-package pretty-hydra
+  :load-path contrib-load-path
+  :config)
 
 
 ;; WIP
@@ -23,24 +25,11 @@
   :load-path contrib-load-path
   :config)
 
-(use-package rainbow-delimiters
-  :init
-  (eval-when-compile
-    ;; Silence missing function warnings
-    (declare-function rainbow-delimiters-mode "rainbow-delimiters.el"))
-  (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
+;; realgud
+;; realgud-ipdb
 
-(use-package beacon
-  :init (beacon-mode 1)
-  :diminish beacon-mode)
-
-(use-package hl-todo
-  :load-path contrib-load-path
-  :config
-  (global-hl-todo-mode))
-
-(use-package electric
-  :hook (prog-mode . electric-indent-mode))
+;; (use-package electric
+;;   :hook (prog-mode . electric-indent-mode))
 
 (use-package expand-region)
 
@@ -61,23 +50,9 @@
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally))
 
-;; (use-package muban)
 
+;; yasnippet
 
-;; (use-package undo-tree
-;;   :diminish (undo-tree-mode)
-;;   :init
-;;   (progn
-;;     (setq undo-tree-visualizer-relative-timestamps t)
-;;     (setq undo-tree-visualizer-timestamps t)
-;;     (setq undo-tree-visualizer-diff nil)
-
-;;     (add-to-list
-;;      'display-buffer-alist
-;;      `(,(rx bos " *undo-tree*" eos)
-;;        (display-buffer-in-side-window)
-;;        (side . bottom)
-;;        (window-height . 0.4)))))
 
 (use-package magit
   :disabled t)

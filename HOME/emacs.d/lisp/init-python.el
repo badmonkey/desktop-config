@@ -6,12 +6,13 @@
 
 (use-package python
   :init
-  (setq-default python-indent-offset 4))
+  (setq-default python-indent-offset 4)
+  (setq python-shell-interpreter "ipython"
+        python-shell-interpreter-args "-i --simple-prompt"))
 
 (use-package pip-requirements
-  :mode (("\\.pip\\'" . pip-requirements-mode)
-         ("requirements.*\\.txt\\'" . pip-requirements-mode)
-         ("requirements\\.in" . pip-requirements-mode)))
+  :config
+  (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
 
 (use-package cython-mode
   :mode ("\\.pyd\\'" "\\.pyi\\'" "\\.pyx\\'"))
@@ -32,7 +33,12 @@
   :config
   (add-hook 'python-mode-hook #'auto-virtualenvwrapper-activate))
 
-(use-package with-venv)
+(use-package with-venv
+  :config
+  (remove-hook 'with-venv-find-venv-dir-functions
+          'with-venv-find-venv-dir-poetry)
+  (remove-hook 'with-venv-find-venv-dir-functions
+          'with-venv-find-venv-dir-pipenv))
 
 (use-package py-pyment
   :load-path contrib-load-path

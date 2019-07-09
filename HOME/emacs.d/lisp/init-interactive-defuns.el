@@ -143,6 +143,16 @@
 	(query-replace from-string to-string)))
 
 
+;;  python functions
+
+(defun switch-to-python-shell ()
+  (interactive)
+  (progn
+    (unless (python-shell-get-process)
+      (run-python))
+    (python-shell-switch-to-shell)))
+
+
 ;; WIP
 (defun select-at-point ()
   (interactive)
