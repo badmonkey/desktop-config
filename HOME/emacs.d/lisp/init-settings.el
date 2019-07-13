@@ -63,17 +63,14 @@
 (setq windmove-wrap-around t)
 
 
+(customize-set-variable 'mouse-yank-at-point t)
+
+
 ;;; utf-8
 (prefer-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-
-
-(with-current-buffer "*scratch*"
-	  (emacs-lock-mode 'kill))
-(with-current-buffer "*Messages*"
-	  (emacs-lock-mode 'kill))
 
 
 (provide 'init-settings)

@@ -13,14 +13,28 @@
   (switch-to-buffer (cadr (buffer-list))))
 
 
-(defun kill-all-buffers ()
-  (interactive)
-  (mapc 'kill-buffer (buffer-list)))
-
-
 (defun activate-venv ()
   (interactive)
   (venv-projectile-auto-workon))
+
+
+(defun kill-or-bury-buffer ()
+  (interactive)
+  (if (bound-and-true-p emacs-lock-mode)
+      (bury-buffer)
+    (kill-buffer)))
+
+
+(defun kill-or-bury-ask-buffer (buffer)
+  (interactive (input-working-buffer 'with-current))
+  (if (bound-and-true-p emacs-lock-mode)
+      (bury-buffer buffer)
+    (kill-buffer buffer)))
+
+
+(defun kill-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
 
 
 (defun kill-other-buffers ()

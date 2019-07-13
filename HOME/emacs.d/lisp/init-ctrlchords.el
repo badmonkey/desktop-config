@@ -37,10 +37,21 @@
 
   "H-SPC"         'switch-to-last-buffer
 
+  ;; https://www.emacswiki.org/emacs/SwitchingBuffers#BufferCycling
+  "<H-up>"        'switch-to-last-buffer
+  "<H-down>"      'bury-buffer
+
   "H-["           'previous-like-this-region
   "H-]"           'next-like-this-region
 
   "H-g"           'point-to-buffer-end
+  )
+
+
+(general-define-key
+  :prefix "C-x"
+
+  "k"             'kill-or-bury-ask-buffer
   )
 
 

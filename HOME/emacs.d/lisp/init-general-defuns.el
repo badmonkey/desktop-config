@@ -22,12 +22,29 @@
 
 (defun input-region-from-to-args (prompt regexp-flag)
   (if (region-active-p)
-      (let ((region-text
-             (buffer-substring
-              (region-beginning)
-              (region-end))))
+      (let ((region-text (buffer-substring (region-beginning) (region-end))))
         (list region-text (query-replace-read-to region-text prompt regexp-flag)))
     (query-replace-read-args prompt regexp-flag)))
+
+
+(defun working-buffer-p (buffer)
+  (if buffer
+      (with-current-buffer buffer
+        (not (or (bound-and-true-p emacs-lock-mode)
+                 (s-starts-with? " *" (buffer-name))
+                 (s-starts-with? "*" (buffer-name)) )))))
+
+;; with-current
+;; with-locked
+;; with-special  "*??*"
+;;  always hide " *??*"
+
+(defun input-working-buffer (style &optional prompt default)
+  (unless prompt
+    (setq prompt "Select Buffer: "))
+  (cond ((eq style 'with-current)
+         (setq default (buffer-name (current-buffer)))) )
+  (read-buffer prompt default t 'working-buffer-p) )
 
 
 
@@ -65,6 +82,20 @@ The return value is the new value of LIST-VAR."
     (when buffer-path
       (load-file buffer-path))))
 
+
+(defun which-active-modes ()
+  "Give a message of which minor modes are enabled in the current buffer."
+  (interactive)
+  (let ((active-modes))
+    (mapc
+     (lambda (mode)
+       (condition-case nil
+           (if (and (symbolp mode)
+                    (symbol-value mode))
+               (add-to-list 'active-modes mode))
+         (error nil) ))
+     minor-mode-list)
+    (message "Active modes are %s" active-modes)))
 
 
 (provide 'init-general-defuns)

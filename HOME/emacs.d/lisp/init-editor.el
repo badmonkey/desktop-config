@@ -3,6 +3,22 @@
 ;;; Code:
 
 
+(with-current-buffer "*scratch*"
+	  (emacs-lock-mode 'kill))
+(with-current-buffer "*Messages*"
+	  (emacs-lock-mode 'kill))
+
+
+(defvar my-term-shell "/bin/bash")
+(defadvice ansi-term (before force-bash)
+  (interactive (list my-term-shell)))
+(ad-activate 'ansi-term)
+
+
+(use-package dash)
+(use-package dash-functional)
+
+
 (use-package general)
 
 (use-package key-chord
@@ -21,6 +37,7 @@
 
 (use-package mc-extras)
 
+
 (use-package revbufs
   :load-path contrib-load-path
   :config)
@@ -32,12 +49,6 @@
 ;;   :hook (prog-mode . electric-indent-mode))
 
 (use-package expand-region)
-
-(use-package ido
-  :config
-  (setq ido-enable-flex-matching t)
-  (ido-everywhere t)
-  (ido-mode 1))
 
 (use-package zeal-at-point)
 

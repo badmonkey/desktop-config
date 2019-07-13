@@ -3,6 +3,13 @@
 ;;; Code:
 
 
+;; (use-package ido
+;;   :config
+;;   (setq ido-enable-flex-matching t)
+;;   (ido-everywhere t)
+;;   (ido-mode 1))
+
+
 (use-package helm
   :diminish helm-mode
   :bind (("M-a" . helm-M-x)

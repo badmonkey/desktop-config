@@ -77,6 +77,13 @@
 (global-whitespace-mode 1)
 
 
+
+;; clean up the status bar
+(use-package diminish
+  :config
+  :diminish 'global-whitespace-mode)
+  ;; (progn (add-hook 'whitespace-mode-hook (lambda () (diminish 'whitespace-mode)))))
+
 (use-package indent-guide
   :load-path contrib-load-path
   :config
@@ -102,13 +109,25 @@
   :config
   (global-hl-todo-mode))
 
-
-;; clean up the status bar
-(use-package diminish
+(use-package dashboard
+  :ensure t
   :config
-  :diminish 'global-whitespace-mode)
-  ;; (progn (add-hook 'whitespace-mode-hook (lambda () (diminish 'whitespace-mode)))))
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner "~/.emacs.d/logo.png")
+  (setq dashboard-banner-logo-title "[ C 0 D E M O N K 3 Y ]")
+  (setq dashboard-set-init-info nil)
+  ;; (setq dashboard-center-content t)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-set-footer nil)
+  (setq dashboard-items '((recents   . 10)
+                          (projects  . 10)
+                          (bookmarks . 10))))
 
+(add-hook 'emacs-startup-hook
+          '(lambda ()
+             (switch-to-buffer dashboard-buffer-name)
+             (emacs-lock-mode 'kill)))
 
 
 

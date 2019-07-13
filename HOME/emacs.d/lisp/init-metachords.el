@@ -12,6 +12,7 @@
 (general-define-key
   "M-DEL"   'region-delete-back-word
   "<M-tab>" 'ac-complete-with-helm
+  "M-RET"   'ansi-term
   )
 
 
@@ -133,7 +134,8 @@
 
   "1"       'kill-other-buffers
   "a"       'kill-all-buffers
-  "k"       'kill-buffer
+  "b"       'bury-buffer
+  "k"       'kill-or-bury-buffer
   "o"       'kill-orphan-buffers
   "u"       'kill-unmodified-buffers
   )
@@ -164,6 +166,7 @@
   "g"       'magit-status
   "l"       (general-predicate-dispatch nil
               (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer)
+  "m"       'which-active-modes
   "o"       'counsel-find-file
   "p"       'projectile-switch-project
   "r"       'revbufs
