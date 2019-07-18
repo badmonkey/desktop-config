@@ -19,11 +19,14 @@
 
 (general-define-key
   "C-="           'er/expand-region
+  "C-+"           'er/contract-region
 
   "<C-return>"    'crux-smart-open-line
   "<S-return>"    'crux-smart-open-line-above
   "<C-backspace>" 'region-kill-to-left-margin
   "<C-tab>"       'region-indent-code
+
+  "<C-SPC>"       'smart-region
 
   "C-a"           'crux-move-beginning-of-line
 
@@ -34,17 +37,6 @@
 
   "C->"           'mc/mark-next-like-this
   "C-<"           'mc/mark-previous-like-this
-
-  "H-SPC"         'switch-to-last-buffer
-
-  ;; https://www.emacswiki.org/emacs/SwitchingBuffers#BufferCycling
-  "<H-up>"        'switch-to-last-buffer
-  "<H-down>"      'bury-buffer
-
-  "H-["           'previous-like-this-region
-  "H-]"           'next-like-this-region
-
-  "H-g"           'point-to-buffer-end
   )
 
 
@@ -52,6 +44,12 @@
   :prefix "C-x"
 
   "k"             'kill-or-bury-ask-buffer
+  )
+
+
+(general-define-key
+  "H-["           'previous-like-this-region
+  "H-]"           'next-like-this-region
   )
 
 

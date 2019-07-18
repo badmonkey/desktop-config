@@ -3,6 +3,9 @@
 ;;; Code:
 
 
+(defvar global-line-max-width)
+(setq global-line-max-width 100)
+
 ;; Theme
 (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 (load-theme 'hipster t)
@@ -45,7 +48,8 @@
 
 
 ;; whitespace settings
-(setq whitespace-line-column 100)
+(setq whitespace-line-column global-line-max-width)
+(setq-default fill-column global-line-max-width)
 
 (setq whitespace-style
 	  (quote (face trailing lines spaces tabs newline space-mark tab-mark newline-mark)))
@@ -100,8 +104,14 @@
     (declare-function rainbow-delimiters-mode "rainbow-delimiters.el"))
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
+(use-package color-identifiers-mode
+   :init)
+   ;; :diminish 'color-identifiers-mode
+   ;; (add-hook 'after-init-hook 'global-color-identifiers-mode))
+
 (use-package beacon
-  :init (beacon-mode 1)
+  :init
+  (beacon-mode 1)
   :diminish beacon-mode)
 
 (use-package hl-todo
@@ -114,7 +124,7 @@
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner "~/.emacs.d/logo.png")
-  (setq dashboard-banner-logo-title "[ C 0 D E M O N K 3 Y ]")
+  ;; (setq dashboard-banner-logo-title "[ C 0 D E M O N K 3 Y ]")
   (setq dashboard-set-init-info nil)
   ;; (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)

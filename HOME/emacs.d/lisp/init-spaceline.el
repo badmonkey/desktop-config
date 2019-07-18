@@ -21,7 +21,7 @@
         (let ((project-name (projectile-project-name)))
           (unless (or (string= project-name "-")
                       (string= project-name (buffer-name)))
-            (format "/%s/" project-name)))))
+            (format "/%s" project-name)))))
     ))
 
 

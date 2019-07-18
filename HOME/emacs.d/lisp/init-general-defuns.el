@@ -3,6 +3,27 @@
 ;;; Code:
 
 
+
+;;
+;; Buffer related general purpose functions
+;;
+
+(defun buffer-list-next ()
+  (seq-some
+   '(lambda (x) (if (s-starts-with? " *" (buffer-name x)) nil x))
+   (cdr (buffer-list))) )
+
+
+(defun as-buffer-name (buffer)
+  (cond ((not buffer) (buffer-name (current-buffer)))
+        ((stringp buffer) buffer)
+        ((bufferp buffer) (buffer-name buffer)) ))
+
+(defun buffer-lockedp (buffer)
+  (with-current-buffer buffer
+    (bound-and-true-p emacs-lock-mode)))
+
+
 ;;
 ;; Interactive prompts for regions/lines
 ;;
@@ -27,39 +48,31 @@
     (query-replace-read-args prompt regexp-flag)))
 
 
-(defun working-buffer-p (buffer)
+(defun filter-buffer-p (buffer default)
   (if buffer
-      (with-current-buffer buffer
-        (not (or (bound-and-true-p emacs-lock-mode)
-                 (s-starts-with? " *" (buffer-name))
-                 (s-starts-with? "*" (buffer-name)) )))))
+      (or (equal buffer default)
+          (with-current-buffer buffer
+            (let ((name (buffer-name)))
+              (not (or (bound-and-true-p emacs-lock-mode)
+                       ;; (s-starts-with? "*" name)
+                       (s-starts-with? " *" name) )))))))
 
-;; with-current
-;; with-locked
-;; with-special  "*??*"
-;;  always hide " *??*"
 
-(defun input-working-buffer (style &optional prompt default)
+(defun input-buffer (&optional prompt default predicate)
   (unless prompt
     (setq prompt "Select Buffer: "))
-  (cond ((eq style 'with-current)
-         (setq default (buffer-name (current-buffer)))) )
-  (read-buffer prompt default t 'working-buffer-p) )
+  (unless default
+    (setq default (current-buffer)))
+  (unless predicate
+    (setq predicate '(lambda (x) (filter-buffer-p x default))))
+  (let* ((select (read-buffer prompt default t predicate))
+         (locked (buffer-lockedp select)) )
+    (list select locked) ))
 
 
-
-(defun append-to-list (list-var elements)
-  "Append ELEMENTS to the end of LIST-VAR.
-
-The return value is the new value of LIST-VAR."
-  (unless (consp elements)
-    (error "ELEMENTS must be a list"))
-  (let ((list (symbol-value list-var)))
-    (if list
-        (setcdr (last list) elements)
-      (set list-var elements)))
-  (symbol-value list-var))
-
+;;
+;; General purpose interactive functions
+;;
 
 (defun venv-display-name ()
   (interactive)
@@ -81,6 +94,21 @@ The return value is the new value of LIST-VAR."
   (let ((buffer-path (buffer-file-name)))
     (when buffer-path
       (load-file buffer-path))))
+
+
+
+
+(defun append-to-list (list-var elements)
+  "Append ELEMENTS to the end of LIST-VAR.
+
+The return value is the new value of LIST-VAR."
+  (unless (consp elements)
+    (error "ELEMENTS must be a list"))
+  (let ((list (symbol-value list-var)))
+    (if list
+        (setcdr (last list) elements)
+      (set list-var elements)))
+  (symbol-value list-var))
 
 
 (defun which-active-modes ()

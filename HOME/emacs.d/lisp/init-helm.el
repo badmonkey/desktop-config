@@ -44,9 +44,7 @@
   (helm-projectile-on))
 
 (use-package helm-pydoc
-  :config
-  (with-eval-after-load "python"
-	(define-key python-mode-map (kbd "C-c C-d") 'helm-pydoc)))
+  :config)
 
 (use-package bm
   :init

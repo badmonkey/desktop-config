@@ -10,28 +10,23 @@
 (general-define-key
   (general-chord ";;")   'region-toggle-comment
 
-  (general-chord "[[")   'bm-previous
-  (general-chord "]]")   'bm-next
-  (general-chord "\\\\") 'bm-annotate-or-create
-  (general-chord "{{")   'flycheck-previous-error
-  (general-chord "}}")   'flycheck-next-error
-  (general-chord "//")   'ac-complete-with-helm
-  (general-chord "``")   'switch-to-last-buffer
-  ;; (general-chord "==")   'er/expand-region
+  (general-chord "\\\\") 'bm-toggle
+
+    ;; (general-chord "==")   'er/expand-region
   (general-chord "++")   'er/contract-region
   (general-chord "``")   'point-to-buffer-start
 
-  (general-chord "1;")   "!"
-  (general-chord ";1")   "!"
+  (general-chord "[;")   'previous-error
+  (general-chord ";[")   'previous-error
+  (general-chord "];")   'next-error
+  (general-chord ";]")   'next-error
 
-  (general-chord "[;")   "("
-  (general-chord ";[")   "("
-  (general-chord "];")   ")"
-  (general-chord ";]")   ")"
-
-  (general-chord "'x")   'execute-extended-command
-  (general-chord "x'")   'execute-extended-command
+  (general-chord "[\\")   'bm-previous
+  (general-chord "\\[")   'bm-previous
+  (general-chord "]\\")   'bm-next
+  (general-chord "\\]")   'bm-next
   )
+
 
 (general-define-key
   :prefix "H-f"

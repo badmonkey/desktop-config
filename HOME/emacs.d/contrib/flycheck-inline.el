@@ -77,9 +77,11 @@ Return the displayed phantom."
 
 MSG is trimmed beforehand."
   (let* ((pad (make-string offset ?\s))
-         (rep (concat "\n" pad)))
+         (rep (concat "\n" pad))
+         (width (- global-line-max-width offset))
+         (fixed (s-word-wrap width (string-trim msg))))
     (concat pad
-            (replace-regexp-in-string "\n" rep (string-trim msg)))))
+            (replace-regexp-in-string "\n" rep fixed))))
 
 
 ;;; Customization
@@ -162,6 +164,7 @@ POS defaults to point."
 
 ;;; Display inline errors
 
+;; new -mfj
 (defun flycheck-inline--pos (pos)
   (save-excursion
 	(goto-char pos)

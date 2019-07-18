@@ -35,8 +35,12 @@
 ;; WIP
 (use-package multiple-cursors)
 
-(use-package mc-extras)
+(use-package expand-region)
 
+(use-package smart-region)
+
+
+(use-package crux)
 
 (use-package revbufs
   :load-path contrib-load-path
@@ -48,7 +52,6 @@
 ;; (use-package electric
 ;;   :hook (prog-mode . electric-indent-mode))
 
-(use-package expand-region)
 
 (use-package zeal-at-point)
 
@@ -85,7 +88,6 @@
 				   lua-mode))
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict"))
 
-(use-package crux)
 
 
 (provide 'init-editor)

@@ -10,6 +10,8 @@
   (setq python-shell-interpreter "ipython"
         python-shell-interpreter-args "-i --simple-prompt"))
 
+;; (use-package jedi)
+
 (use-package pip-requirements
   :config
   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))

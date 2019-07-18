@@ -10,7 +10,7 @@
 
 (defun switch-to-last-buffer ()
   (interactive)
-  (switch-to-buffer (cadr (buffer-list))))
+  (switch-to-buffer (buffer-list-next)))
 
 
 (defun activate-venv ()
@@ -21,15 +21,19 @@
 (defun kill-or-bury-buffer ()
   (interactive)
   (if (bound-and-true-p emacs-lock-mode)
-      (bury-buffer)
+      (progn (switch-to-buffer (buffer-list-next))
+             (bury-buffer))
     (kill-buffer)))
 
 
-(defun kill-or-bury-ask-buffer (buffer)
-  (interactive (input-working-buffer 'with-current))
-  (if (bound-and-true-p emacs-lock-mode)
-      (bury-buffer buffer)
-    (kill-buffer buffer)))
+(defun kill-or-bury-ask-buffer (buffer unlocked)
+  (interactive (input-buffer))
+  (if unlocked
+      (let ((next-buffer (buffer-list-next)) )
+        (switch-to-buffer next-buffer)
+        (bury-buffer buffer)
+        (message "bury %s" buffer) )
+    (kill-buffer buffer) ))
 
 
 (defun kill-all-buffers ()
@@ -157,6 +161,18 @@
 	(query-replace from-string to-string)))
 
 
+(defun fill-region-or-line (start end)
+  (interactive (input-region-or-line))
+  (fill-region-as-paragraph start end))
+
+
+
+;;  Help functions
+(defun describe-function-at-point ()
+  (interactive)
+  (describe-function (function-called-at-point)))
+
+
 ;;  python functions
 
 (defun switch-to-python-shell ()
@@ -220,7 +236,7 @@
 		(if annotation
 			(bm-bookmark-annotate bookmark annotation)
 		  ))
-      (bm-bookmark-annotate (bm-bookmark-add annotation))))
+    (bm-bookmark-annotate (bm-bookmark-add annotation))))
 
 
 

@@ -21,7 +21,6 @@
   :config
   (setq projectile-switch-project-action
 		'(lambda ()
-		   (message "Change project")
 		   (venv-projectile-auto-workon)
 		   (projectile-dired)))
   (setq projectile-mode-line
