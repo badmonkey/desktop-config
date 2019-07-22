@@ -32,6 +32,7 @@
 
   "C-k"           'region-kill-line
   "C-w"           'region-copy-line
+  ;; "C-y"           'yank
 
   "C-s"           'swiper-helm
 
@@ -44,12 +45,6 @@
   :prefix "C-x"
 
   "k"             'kill-or-bury-ask-buffer
-  )
-
-
-(general-define-key
-  "H-["           'previous-like-this-region
-  "H-]"           'next-like-this-region
   )
 
 

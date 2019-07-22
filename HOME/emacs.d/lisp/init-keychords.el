@@ -12,9 +12,10 @@
 
   (general-chord "\\\\") 'bm-toggle
 
-    ;; (general-chord "==")   'er/expand-region
-  (general-chord "++")   'er/contract-region
   (general-chord "``")   'point-to-buffer-start
+
+  ;; WIP
+  (general-chord "..")   'hydra-mark/body
 
   (general-chord "[;")   'previous-error
   (general-chord ";[")   'previous-error
@@ -25,14 +26,6 @@
   (general-chord "\\[")   'bm-previous
   (general-chord "]\\")   'bm-next
   (general-chord "\\]")   'bm-next
-  )
-
-
-(general-define-key
-  :prefix "H-f"
-  :prefix-command 'extra-chords-keymap
-
-  (general-chord "==")   'er/expand-region
   )
 
 

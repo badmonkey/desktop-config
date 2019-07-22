@@ -97,9 +97,10 @@
 
 (defun region-toggle-comment (start end)
   (interactive (input-region-or-line))
-  (if (eq start end)
-      (comment-dwim nil)
-    (comment-or-uncomment-region start end)))
+  (let ((text (string-trim (buffer-substring start end))))
+    (if (s-blank? text)
+        (comment-dwim nil)
+      (comment-or-uncomment-region start end))))
 
 
 (defun region-indent-code (start &optional end)

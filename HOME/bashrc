@@ -226,22 +226,41 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+function keyboard-setup {
+	# setxkbmap -option "caps:hyper"
+
+	spare_modifier="Hyper_L"
+	xmodmap -e "keycode 65 = $spare_modifier"
+	xmodmap -e "remove mod4 = $spare_modifier" # hyper_l is mod4 by default
+	xmodmap -e "add Control = $spare_modifier"
+	xmodmap -e "keycode any = space"
+	xcape -e "$spare_modifier=space"
+}
+
+keyboard-setup
+
+
 export EDITOR="emacsclient -q"
 
-export PIP_CERT=/usr/share/ca-certificates/extra/penten-low-ca.crt
-export REQUESTS_CA_BUNDLE="$PIP_CERT"
 
-export WORKON_HOME="$HOME/.virtualenvs"
-export PROJECT_HOME=/opt/projects
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export VIRTUAL_ENV_DISABLE_PROMPT=1
-export VIRTUALENVWRAPPER_PYTHON=/home/mfagan/.pyenv/shims/python
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+function python-setup {
+	export PIP_CERT=/usr/share/ca-certificates/extra/penten-low-ca.crt
+	export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
 
+	export WORKON_HOME="$HOME/.virtualenvs"
+	export PROJECT_HOME=/opt/projects
+	export PYENV_ROOT="$HOME/.pyenv"
+	export PATH="$PYENV_ROOT/bin:$PATH"
+	export VIRTUAL_ENV_DISABLE_PROMPT=1
+	export VIRTUALENVWRAPPER_PYTHON=/home/mfagan/.pyenv/shims/python
+	export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
-eval "$(pyenv init -)"
-pyenv virtualenvwrapper
+	eval "$(pyenv init -)"
+	pyenv virtualenvwrapper
+}
+
+python-setup
 
 
 if [ "$SSH_IP" != "" ]; then
