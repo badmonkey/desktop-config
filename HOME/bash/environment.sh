@@ -1,0 +1,3 @@
+#
+# setup bash environment vars
+#

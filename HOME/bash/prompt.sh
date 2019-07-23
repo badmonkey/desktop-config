@@ -1,0 +1,3 @@
+#
+# set up bash prompt
+#
