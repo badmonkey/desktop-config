@@ -25,7 +25,16 @@
   :init
   (key-chord-mode 1))
 
+(use-package posframe
+  :load-path contrib-load-path
+  :config)
+
 (use-package hydra)
+
+(use-package hydra-posframe
+  :load-path contrib-load-path
+  :init
+  (add-hook 'after-init-hook 'hydra-posframe-enable))
 
 (use-package pretty-hydra
   :load-path contrib-load-path
