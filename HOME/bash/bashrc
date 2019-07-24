@@ -1,233 +1,24 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#
+# Configure bashrc for interactive use
+#
 
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
+bind "set completion-ignore-case on"
+bind "set bell-style none"
+
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
 
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
+# check the window size after each command
 shopt -s checkwinsize
+
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 #shopt -s globstar
 
+
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-
-
-
-shorten_path() {
-	local ret=
-
-    local p="$1"
-
-    local tmp="${p//\//}"
-    local -i delims=$(( ${#p} - ${#tmp} ))
-
-    for (( dir=0; dir < 2; dir++ )); do
-        (( dir == delims )) && break
-
-        local left="${p#*/}"
-        local name="${p:0:${#p} - ${#left}}"
-        p="${left}"
-        ret+="${name%/}/"
-    done
-	if (( delims <= 2 )); then
-        # no dirs between LP_PATH_KEEP leading dirs and current dir
-        ret+="${p##*/}"
-    else
-        local base="${p##*/}"
-
-        p="${p:0:${#p} - ${#base}}"
-
-        [[ ${ret} != "/" ]] && ret="${ret%/}" # strip trailing slash
-
-        local -i len_left=$(( max_len - ${#ret} - ${#base} - ${#mask} ))
-
-        ret+="/…/${p:${#p} - ${len_left}}${base}"
-    fi
-	echo "$ret"
-}
-
-
-work-dir() {
-	shorten_path "$(dirs +0)"
-}
-
-
-if [ "$color_prompt" = yes ]; then
-	if [ $(id -u) -eq 0 ]; then
-		PRMPT_HOST='\[\e[01;31m\]\u@\h\[\e[00m\]'
-	else
-		PRMPT_HOST='\[\e[01;32m\]\u@\h\[\e[00m\]'
-	fi
-	PRMPT_HOST="${PRMPT_HOST}:\[\e[01;36m\]\$(work-dir)\[\e[00m\]"
-else
-    PRMPT_HOST='\u@\h:\w'
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PRMPT_HOST="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]${PRMPT_HOST}"
-    ;;
-*)
-    ;;
-esac
-
-
-
-dirstack-top() {
-	if [ "xx${DIRSTACK[1]}xx" != "xxxx" ]; then
-		echo $(basename "${DIRSTACK[1]}")
-	else
-		echo "none"
-	fi
-}
-
-
-SSH_IP=$(echo "$SSH_CLIENT" | cut -d' ' -f 1)
-if [ "$SSH_IP" != "" ]; then
-	SSH_PROMPT="ssh:\[\e[1;33m\]${SSH_IP}\[\e[0m\]|"
-else
-	SSH_PROMPT=""
-fi
-
-if [ "$debian_chroot" != "" ] ; then
-	CHROOT_PROMPT="chroot:\[\e[1;31m\]${debian_chroot}\[\e[0m\]|"
-else
-	CHROOT_PROMPT=""
-fi
-
-
-virtual-env-name() {
-	if [ "${VIRTUAL_ENV}" != "" ]; then
-		echo $(basename "$VIRTUAL_ENV")
-	else
-		echo ""
-	fi
-}
-
-
-optional-line() {
-	TMP="${CHROOT_PROMPT}${SSH_PROMPT}"
-	if [ "$TMP" != "" ]; then
-		echo "\n| [${TMP}]"
-	else
-		echo ""
-	fi
-}
-
-
-
-# append git status
-#PS1="${PS1} \[\e[1;33m\]\$(git-prompt)\[\e[0m\]"
-
-GIT_PROMPT_ONLY_IN_REPO=0
-GIT_PROMPT_START="┌─[\[\e[1;31m\]\$(virtual-env-name)\[\e[0m\]] [${PRMPT_HOST}]"
-
-# working prompt
-GIT_PROMPT_END="\n└─[${CHROOT_PROMPT}${SSH_PROMPT}stack:\[\e[1;33m\]\$(dirstack-top)\[\e[0m\]] \[\e[1;31m\]λ\[\e[0m\] "
-
-#
-# λ  ❱  ▶  ⊳  △  ▲  ▽  ▼  ⬡  ⬢
-#
-
-source ~/.bash-git-prompt/gitprompt.sh
-
-
-
-
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
-
-
-
-export EDITOR="emacsclient -q"
-
-
-function python-setup {
-	export PIP_CERT=/usr/share/ca-certificates/extra/penten-low-ca.crt
-	export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
-
-	export WORKON_HOME="$HOME/.virtualenvs"
-	export PROJECT_HOME=/opt/projects
-	export PYENV_ROOT="$HOME/.pyenv"
-	export PATH="$PYENV_ROOT/bin:$PATH"
-	export VIRTUAL_ENV_DISABLE_PROMPT=1
-	export VIRTUALENVWRAPPER_PYTHON=/home/mfagan/.pyenv/shims/python
-	export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-
-	eval "$(pyenv init -)"
-	pyenv virtualenvwrapper
-}
-
-python-setup
-
-
-if [ "$SSH_IP" != "" ]; then
-	export LIBGL_ALWAYS_INDIRECT=1
-fi

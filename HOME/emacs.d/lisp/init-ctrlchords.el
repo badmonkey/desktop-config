@@ -38,6 +38,8 @@
 
   "C->"           'mc/mark-next-like-this
   "C-<"           'mc/mark-previous-like-this
+
+  "C-`"           'switch-to-last-buffer
   )
 
 

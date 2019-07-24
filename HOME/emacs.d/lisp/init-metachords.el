@@ -17,8 +17,6 @@
   "M-;"     'comment-dwim
   "M-\\"    'helm-bm
 
-  "M-`"     'switch-to-last-buffer
-
   "M-q"     'fill-region-or-line
   )
 
@@ -99,8 +97,10 @@
   "t"       'hl-todo-next
   "C-t"     'hl-todo-previous
 
-  "`"       'point-to-buffer-start
-  "."       'point-to-buffer-end
+  "`"       'switch-to-last-buffer
+
+  "["       'point-to-buffer-start
+  "]"       'point-to-buffer-end
   )
 
 

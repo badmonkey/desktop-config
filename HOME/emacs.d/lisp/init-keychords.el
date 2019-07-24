@@ -12,7 +12,8 @@
 
   (general-chord "\\\\") 'bm-toggle
 
-  (general-chord "``")   'point-to-buffer-start
+  ;; (general-chord "``")   'point-to-buffer-start
+  (general-chord "``")   'switch-to-last-buffer
 
   ;; WIP
   ;; (general-chord "..")   'hydra-mark/body
