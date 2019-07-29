@@ -16,6 +16,7 @@
 
 
 (use-package projectile
+  :diminish
   :init
   (projectile-global-mode)
   :config
@@ -23,10 +24,9 @@
 		'(lambda ()
 		   (venv-projectile-auto-workon)
 		   (projectile-dired)))
-  (setq projectile-mode-line
-		'(:eval (if (file-remote-p default-directory)
-					" Prj*remote" "Prj"))
-		))
+  (setq projectile-mode-line "Prj"))
+
+(use-package projectile-ripgrep)
 
 
 (provide 'init-project)

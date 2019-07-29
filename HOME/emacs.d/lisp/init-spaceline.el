@@ -5,24 +5,26 @@
 
 (use-package spaceline
   :config
-  (progn
-    (spaceline-define-segment python-venvwrap
-      "The current python venv."
-      (when (and active
-                 (eq major-mode 'python-mode)
-                 (bound-and-true-p venv-current-name))
-        (let ((tmp-venv-name (venv-display-name)))
-          (propertize (format "<%s>" tmp-venv-name)
+
+  (spaceline-define-segment python-venvwrap
+    "The current python venv, if different from project-name"
+    (when (and active
+               (eq major-mode 'python-mode)
+               (bound-and-true-p venv-current-name))
+      (let ((tmp-venv-name (venv-display-name)))
+        (unless (string= (projectile-project-name) tmp-venv-name)
+          (propertize (format "//%s//" tmp-venv-name)
                       'face 'spaceline-python-venv
-                      'help-echo (format "Virtual environment: %s" tmp-venv-name)))))
-    (spaceline-define-segment projectile-root
-      "Show the current projectile root."
-      (when (fboundp 'projectile-project-name)
-        (let ((project-name (projectile-project-name)))
-          (unless (or (string= project-name "-")
-                      (string= project-name (buffer-name)))
-            (format "/%s" project-name)))))
-    ))
+                      'help-echo (format "Virtual environment: %s" tmp-venv-name))))))
+
+  (spaceline-define-segment projectile-root
+    "Show the current projectile root."
+    (when (fboundp 'projectile-project-name)
+      (let ((project-name (projectile-project-name)))
+        (unless (or (string= project-name "-")
+                    (string= project-name (buffer-name)))
+          (format "%s/.." project-name)))))
+  )
 
 
 (use-package all-the-icons)

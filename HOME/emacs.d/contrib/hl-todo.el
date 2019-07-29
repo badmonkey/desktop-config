@@ -44,12 +44,15 @@
 ;; the same basic features, but which might also provide additional
 ;; features that you might like, but which I don't deem necessary.
 
+;; XXX
+;; XXX explain text
 ;; XXX: explain text
 ;; XXX: W0713
 ;; XXX: W0713:
 ;; XXX: W0713, E1000: more text
 ;; XXX(person): explain text
 ;; XXX(person): W0713, E1000: more text
+;; XXX(person@where): WW000: more@text
 
 
 ;;; Code:
@@ -129,13 +132,13 @@ located inside a string."
                                (string :tag "Color")
                                (sexp :tag "Face")))))
 
-(defcustom hl-todo-id-regexp "[-a-zA-Z0-9#@]+"
+(defcustom hl-todo-id-regexp "[A-Z0-9]+"
   "Regexp match ids to highlight after keyword section."
   :package-version '(hl-todo . "2.0.0")
   :group 'hl-todo
   :type 'string)
 
-(defcustom hl-todo-author-regexp "[-a-zA-Z0-9_.]+"
+(defcustom hl-todo-author-regexp "[-a-zA-Z0-9@_.]+"
   "Regexp describing FIXME/TODO(author name)"
   :group 'hl-mode)
 

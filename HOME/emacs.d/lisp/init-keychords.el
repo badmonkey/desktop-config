@@ -17,7 +17,7 @@
 
   ;; WIP
   ;; (general-chord "..")   'hydra-mark/body
-  (general-chord "..")   'jp-window/body
+  ;; (general-chord "..")   'jp-window/body
 
   (general-chord "[;")   'previous-error
   (general-chord ";[")   'previous-error

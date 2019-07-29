@@ -74,6 +74,37 @@
   (setq ediff-split-window-function 'split-window-horizontally))
 
 
+(use-package fringe-helper)
+
+(use-package bm
+  :init
+  (setq bm-restore-repository-on-load t)
+
+  :config
+  (setq bm-highlight-style 'bm-highlight-only-fringe)
+  ;; (setq bm-highlight-style 'bm-highlight-line-and-fringe)
+  (setq bm-marker 'bm-marker-left)
+
+  (setq bm-cycle-all-buffers t)
+  (setq bm-repository-file "~/.emacs.d/bookmarks")
+  (setq-default bm-buffer-persistence t)
+
+  (when (display-graphic-p) ; Add fringe only if display is graphic (GUI)
+    (fringe-helper-define 'bm-marker-left '(top repeat)
+      "XX......"
+      "..XX...."
+      "....XX.."
+      "......XX"))
+
+  (add-hook 'after-init-hook 'bm-repository-load)
+
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  (add-hook 'after-save-hook #'bm-buffer-save)
+
+  (add-hook 'find-file-hooks   #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore))
+
+
 ;; yasnippet
 
 

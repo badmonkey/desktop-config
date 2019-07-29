@@ -27,7 +27,8 @@
   :prefix "M-SPC"
   :prefix-command 'bufferaction-keymap
 
-  "SPC"     'set-mark-command
+  ;; "SPC"     'set-mark-command
+  "SPC"     'smart-region
   "DEL"     'delete-region
   "TAB"     'indent-rigidly
   ";"       'region-toggle-comment
@@ -126,7 +127,7 @@
   :prefix "M-p"
   :prefix-command 'project-keymap
 
-  "TAB"     'helm-projectile-find-file
+  "TAB"     'neotree
 
   "RET"     (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
@@ -139,7 +140,6 @@
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-buffer)
 
-  "f"       'neotree
   ;; "g"       'magit-status   ;; TODO not a commandp?
 
   "i"       (general-predicate-dispatch nil
@@ -149,9 +149,10 @@
               (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer)
 
   "m"       'which-active-modes
-  ;; "o"       'counsel-find-file   ;; TODO not a commandp?
+  "o"       'helm-projectile-find-file
   "p"       'projectile-switch-project
   "r"       'revbufs
+  "s"       'projectile-ripgrep
   "v"       'venv-workon
   )
 

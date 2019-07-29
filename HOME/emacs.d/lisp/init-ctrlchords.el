@@ -12,7 +12,7 @@
 ;; Stop uppercase-region warning from fucking with undo
   "C-x C-u"
 
-;; Need to delete this at the source
+;; Need to delete this at the metsource
   "C-x C-b"
   )
 
