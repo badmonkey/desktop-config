@@ -10,7 +10,6 @@ export LC_ALL=en_US.UTF-8
 export EDITOR="emacsclient -q"
 
 
-export PIP_CERT=/usr/share/ca-certificates/extra/penten-low-ca.crt
 export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
 
 

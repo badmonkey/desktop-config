@@ -12,6 +12,12 @@ setxkbmap -option "caps:ctrl_modifier"
 xmodmap -e "keysym Menu = Caps_Lock"
 
 
+function caps-tap-layer {
+	setxkbmap -option "grp:caps_switch"
+	xcape "tap layer shift -> capslock"
+}
+
+
 
 function space2ctrl {
 	spare_modifier = $1

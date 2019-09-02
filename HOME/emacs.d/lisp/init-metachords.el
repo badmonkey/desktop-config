@@ -27,7 +27,7 @@
   :prefix "M-SPC"
   :prefix-command 'bufferaction-keymap
 
-  ;; "SPC"     'set-mark-command
+  "M-SPC"   'smart-region
   "SPC"     'smart-region
   "DEL"     'delete-region
   "TAB"     'indent-rigidly
@@ -44,7 +44,7 @@
   "k"       'region-kill-whole-line
   "m"       'mc/mark-all-like-this
   "p"       'mark-paragraph
-  "w"       'region-copy-line
+  "w"       'region-copy-whole-line
   )
 
 
@@ -129,7 +129,7 @@
 
   "TAB"     'neotree
 
-  "RET"     (general-predicate-dispatch nil
+  "RET"     (general-predicate-dispatch 'ansi-term
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
 
   "]"       'flycheck-buffer
@@ -146,13 +146,15 @@
               (derived-mode-p 'python-mode) 'helm-pydoc)
 
   "l"       (general-predicate-dispatch nil
-              (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer)
+              (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer
+              (derived-mode-p 'markdown-mode) 'markdown-live-preview-mode)
 
   "m"       'which-active-modes
   "o"       'helm-projectile-find-file
   "p"       'projectile-switch-project
   "r"       'revbufs
   "s"       'projectile-ripgrep
+  "t"       'transpose-windows
   "v"       'venv-workon
   )
 
@@ -190,15 +192,32 @@
 
 
 
-;;; M-w  kill-ring commands ;;;
+;;; M-t transpose-word
+(general-unbind
+  "M-t"
+  )
+
+
+
+;;; M-u  text commands ;;;
 (general-define-key
-  :prefix "M-w"
-  :prefix-command 'killring-keymap
+  :prefix "M-u"
+  :prefix-command 'text-keymap
+  "u"       'region-upcase-word
+  "l"       'region-downcase-word
 
-  "C-w"     'region-copy-whole-line
+  "t"       'transpose-words
+  "f"       'fill-region-or-line
 
-  "k"       'kill-whole-line
-  "w"       'region-copy-line
+  "g"       (general-predicate-dispatch nil
+              (derived-mode-p 'python-mode) 'py-pyment-buffer
+              (derived-mode-p 'markdown-mode) 'markdown-toc-generate-toc)
+
+  "d"       (general-predicate-dispatch nil
+              (derived-mode-p 'markdown-mode) 'markdown-toc-delete-toc)
+
+  "f"       (general-predicate-dispatch nil
+              (derived-mode-p 'markdown-mode) 'markdown-toc-refresh-toc)
   )
 
 

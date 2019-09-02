@@ -16,6 +16,11 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint python-flake8))
   (global-flycheck-mode))
 
+;; (use-package flycheck-posframe
+;;   :ensure t
+;;   :after flycheck
+;;   :config (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+
 (use-package flycheck-inline
   :load-path contrib-load-path
   :init

@@ -5,8 +5,30 @@
 
 
 (use-package markdown-mode
-  :mode ("\\.\\(m\\(ark\\)?down\\|md\\)$" . markdown-mode)
-  :config)
+  :custom
+  (markdown-hide-markup nil)
+  (markdown-bold-underscore t)
+  (markdown-italic-underscore t)
+  (markdown-header-scaling t)
+  (markdown-indent-function t)
+  (markdown-enable-math t)
+  (markdown-hide-urls nil)
+  :custom-face
+  (markdown-header-delimiter-face ((t (:foreground "mediumpurple"))))
+  (markdown-header-face-1 ((t (:foreground "violet" :weight bold :height 1.0))))
+  (markdown-header-face-2 ((t (:foreground "lightslateblue" :weight bold :height 1.0))))
+  (markdown-header-face-3 ((t (:foreground "mediumpurple1" :weight bold :height 1.0))))
+  (markdown-link-face ((t (:background "#0e1014" :foreground "#bd93f9"))))
+  (markdown-list-face ((t (:foreground "mediumpurple"))))
+  (markdown-pre-face ((t (:foreground "#bd98fe"))))
+  :config
+  (setq markdown-command "pandoc")
+  ;; (setq markdown-command "vmd --stdin")
+  ;; (setq markdown-command "redcarpet")
+  :mode "\\.\\(m\\(ark\\)?down\\|md\\)$")
+
+(use-package markdown-toc)
+
 
 (use-package rst
   :config
@@ -15,6 +37,12 @@
               (local-set-key (kbd "C-M-h") 'backward-kill-word)
               (setq-local fill-column 80)
               (turn-on-auto-fill))))
+
+
+(use-package fill-column-indicator
+  :hook
+  ((markdown-mode
+    git-commit-mode) . fci-mode))
 
 
 ;; (flycheck-define-checker textlint

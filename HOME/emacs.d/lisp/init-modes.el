@@ -22,7 +22,5 @@
             (lambda ()
               (c-add-style "my-style" my-protobuf-style t))))
 
-
-
 (provide 'init-modes)
 ;;; init-modes.el ends here

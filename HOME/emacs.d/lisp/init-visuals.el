@@ -62,25 +62,38 @@
 		(tab-mark 9 [9655 9] [92 9]) ; tab
 		))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(hl-line ((t (:background "gray5"))))
- '(whitespace-empty ((t (:foreground "red" :background "red"))))
- '(whitespace-indentation ((t (:foreground "yellow" :background "black"))))
- '(whitespace-line ((t (:foreground unspecified :underline "DarkRed"))))
- '(whitespace-newline ((t (:foreground "blue" :background "black"))))
- '(whitespace-space ((t (:foreground "gray25" :background "black"))))
- '(whitespace-space-after-tab ((t (:foreground "yellow" :background "black"))))
- '(whitespace-space-before-tab ((t (:foreground "red" :background "black"))))
- '(whitespace-tab ((t (:foreground "blue" :background "black"))))
- '(whitespace-trailing ((t (:bold t :foreground "red" :background "black")))))
+
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(hl-line ((t (:background "gray5"))))
+ ;; '(hydra-posframe-border-face ((t (:background "#6272a4"))))
+ ;; '(markdown-header-delimiter-face ((t (:foreground "mediumpurple"))))
+ ;; '(markdown-header-face-1 ((t (:foreground "violet" :weight bold :height 1.0))))
+ ;; '(markdown-header-face-2 ((t (:foreground "lightslateblue" :weight bold :height 1.0))))
+ ;; '(markdown-header-face-3 ((t (:foreground "mediumpurple1" :weight bold :height 1.0))))
+ ;; '(markdown-link-face ((t (:background "#0e1014" :foreground "#bd93f9"))))
+ ;; '(markdown-list-face ((t (:foreground "mediumpurple"))))
+ ;; '(markdown-pre-face ((t (:foreground "#bd98fe"))))
+;;  '(whitespace-empty ((t (:foreground "red" :background "red"))))
+;;  '(whitespace-indentation ((t (:foreground "yellow" :background "black"))))
+;;  '(whitespace-line ((t (:foreground unspecified :underline "DarkRed"))))
+;;  '(whitespace-newline ((t (:foreground "blue" :background "black"))))
+;;  '(whitespace-space ((t (:foreground "gray25" :background "black"))))
+;;  '(whitespace-space-after-tab ((t (:foreground "yellow" :background "black"))))
+;;  '(whitespace-space-before-tab ((t (:foreground "red" :background "black"))))
+;;  '(whitespace-tab ((t (:foreground "blue" :background "black"))))
+;;  '(whitespace-trailing ((t (:bold t :foreground "red" :background "black"))))
+;;  )
 
 (global-whitespace-mode 1)
 
 
+;; fringe
+(setq-default left-fringe-width 10
+              right-fringe-width 10)
 
 ;; clean up the status bar
 (use-package diminish
@@ -118,26 +131,6 @@
   :load-path contrib-load-path
   :config
   (global-hl-todo-mode))
-
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "~/.emacs.d/logo.png")
-  ;; (setq dashboard-banner-logo-title "[ C 0 D E M O N K 3 Y ]")
-  (setq dashboard-set-init-info nil)
-  ;; (setq dashboard-center-content t)
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-items '((recents   . 10)
-                          (projects  . 10)
-                          (bookmarks . 10))))
-
-(add-hook 'emacs-startup-hook
-          '(lambda ()
-             (switch-to-buffer dashboard-buffer-name)
-             (emacs-lock-mode 'kill)))
 
 
 

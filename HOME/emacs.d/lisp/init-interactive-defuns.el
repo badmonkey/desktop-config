@@ -167,6 +167,19 @@
   (fill-region-as-paragraph start end))
 
 
+(defun region-upcase-word (start &optional end)
+  (interactive (input-region-or-point))
+  (if (use-region-p)
+	  (upcase-region start end)
+	(upcase-word 1)))
+
+
+(defun region-downcase-word (start &optional end)
+  (interactive (input-region-or-point))
+  (if (use-region-p)
+	  (downcase-region start end)
+	(downcase-word 1)))
+
 
 ;;  Help functions
 (defun describe-function-at-point ()
@@ -182,6 +195,33 @@
     (unless (python-shell-get-process)
       (run-python))
     (python-shell-switch-to-shell)))
+
+
+;;  Frame functions
+
+(defun transpose-windows ()
+   "Transpose two windows.  If more or less than two windows are visible, error."
+   (interactive)
+   (unless (= 2 (count-windows))
+     (error "There are not 2 windows."))
+   (let* ((windows (window-list))
+          (w1 (car windows))
+          (w2 (nth 1 windows))
+          (w1b (window-buffer w1))
+          (w2b (window-buffer w2)))
+     (set-window-buffer w1 w2b)
+     (set-window-buffer w2 w1b)))
+
+
+(defun toggle-window-transparency ()
+  "Cycle the frame transparency from default to transparent."
+  (interactive)
+  (let ((transparency 85)
+        (opacity 100))
+    (if (and (not (eq (frame-parameter nil 'alpha) nil))
+             (< (frame-parameter nil 'alpha) opacity))
+        (set-frame-parameter nil 'alpha opacity)
+      (set-frame-parameter nil 'alpha transparency))))
 
 
 ;; WIP
