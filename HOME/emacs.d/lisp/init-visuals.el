@@ -124,6 +124,9 @@
 
 (use-package beacon
   :init
+  ;; (setq beacon-size  7
+  ;;       beacon-color "#f85e9f")
+  ;; (beacon-color "#f1fa8c")
   (beacon-mode 1)
   :diminish beacon-mode)
 
@@ -131,6 +134,9 @@
   :load-path contrib-load-path
   :config
   (global-hl-todo-mode))
+
+
+(use-package all-the-icons)
 
 
 

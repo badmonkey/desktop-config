@@ -29,7 +29,7 @@
 ;;; Hydra!
 
 (use-package posframe
-  :load-path contrib-load-path
+  ;; :load-path contrib-load-path
   :config)
 
 (use-package hydra
@@ -40,13 +40,12 @@
     (hydra-posframe-parameters
       '((left-fringe . 5)
         (right-fringe . 5)))
-    :custom-face
-    (hydra-posframe-border-face ((t (:background "#6272a4"))))
+    ;; :custom-face
+    ;; (hydra-posframe-border-face ((t (:background "#6272a4"))))
     :hook (after-init . hydra-posframe-enable)))
 
-;; (use-package pretty-hydra
-;;   :load-path contrib-load-path
-;;   :config)
+(use-package major-mode-hydra
+  :after hydra)
 
 
 ;;; multi/smart selection
@@ -92,8 +91,8 @@
   :config
   (setq bm-highlight-style 'bm-highlight-only-fringe)
   ;; (setq bm-highlight-style 'bm-highlight-line-and-fringe)
-  (setq bm-marker 'bm-marker-left)
-  ;; (setq bm-marker 'bm-marker-right)
+  ;; (setq bm-marker 'bm-marker-left)
+  (setq bm-marker 'bm-marker-right)
 
   (setq bm-cycle-all-buffers t)
   (setq bm-repository-file "~/.emacs.d/bookmarks")
@@ -116,15 +115,6 @@
     ;;   )
 
     (fringe-helper-define 'bm-marker-left nil
-      ;; "...XX..."
-      ;; "...XX..."
-      ;; "...XX..."
-      ;; "XXXXXXXX"
-      ;; "XXXXXXXX"
-      ;; "...XX..."
-      ;; "...XX..."
-      ;; "...XX..."
-
       "xx.xx..."
       ".xx.xx.."
       "..xx.xx."
@@ -132,32 +122,26 @@
       "..xx.xx."
       ".xx.xx.."
       "xx.xx..."
-
-;;  ".xxxxx."
-;;   "xxxxxxx"
-;;   "xx.x.xx"
-;;   "xxxxxxx"
-;;   "xx...xx"
-;;   "xxx.xxx"
-;;   ".xxxxx."
-
-;; xx......
-;; xxxx....
-;; xxxxx...
-;; xxxxxx..
-;; xxxxxx..
-;; xxxxx...
-;; xxxx....
-;; xx......
-
       )
 
-    (fringe-helper-define 'bm-marker-right '(top repeat)
-      "XXXX...."
-      "XXXX...."
-      "XXXX...."
-      "XXXX...."
-      ))
+    ;; (fringe-helper-define 'bm-marker-right '(top repeat)
+    ;;   "XXXX...."
+    ;;   "XXXX...."
+    ;;   "XXXX...."
+    ;;   "XXXX...."
+    ;;   )
+
+    (fringe-helper-define 'bm-marker-right nil
+
+      "...xx.xx"
+      "..xx.xx."
+      ".xx.xx.."
+      "xx.xx..."
+      ".xx.xx.."
+      "..xx.xx."
+      "...xx.xx"
+      )
+    )
 
   (add-hook 'after-init-hook 'bm-repository-load)
 

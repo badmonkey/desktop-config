@@ -132,7 +132,8 @@
   "RET"     (general-predicate-dispatch 'ansi-term
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
 
-  "]"       'flycheck-buffer
+  ;; "]"       'flycheck-buffer
+  "]"       'hydra-flycheck/body
   "["       'hl-todo-occur
 
   "b"       'ibuffer
@@ -149,7 +150,6 @@
               (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer
               (derived-mode-p 'markdown-mode) 'markdown-live-preview-mode)
 
-  "m"       'which-active-modes
   "o"       'helm-projectile-find-file
   "p"       'projectile-switch-project
   "r"       'revbufs

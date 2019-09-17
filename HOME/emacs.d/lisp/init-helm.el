@@ -39,12 +39,22 @@
 		 (helm-adaptive-mode 1))
   )
 
+(use-package helm-posframe
+  :after helm
+  :config
+  (helm-posframe-enable)
+  (setq helm-posframe-parameters
+        '((left-fringe . 10)
+          (right-fringe . 10))))
+
 (use-package helm-projectile
   :config
   (helm-projectile-on))
 
 (use-package helm-pydoc
   :config)
+
+(use-package helm-google)
 
 (use-package helm-bm)
 

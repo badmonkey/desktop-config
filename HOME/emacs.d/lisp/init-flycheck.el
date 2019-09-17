@@ -16,15 +16,18 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint python-flake8))
   (global-flycheck-mode))
 
-;; (use-package flycheck-posframe
-;;   :ensure t
-;;   :after flycheck
-;;   :config (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
 
-(use-package flycheck-inline
-  :load-path contrib-load-path
-  :init
-  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+(use-package flycheck-posframe
+  :after flycheck
+  :config
+  (flycheck-posframe-configure-pretty-defaults)
+  ;; frame-center  frame-top-center  window-center
+  (setq flycheck-posframe-position 'frame-center)
+  (setq flycheck-posframe-border-width 2)
+  (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
+
+  :custom-face
+  (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
 
 
 (provide 'init-flycheck)

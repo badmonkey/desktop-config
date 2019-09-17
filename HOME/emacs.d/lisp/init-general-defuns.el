@@ -97,33 +97,29 @@
 
 
 
+;;
+;; Icon funs
+;;
+(defun with-alltheicon (icon str &optional height v-adjust)
+  "Displays an icon from all-the-icon."
+  (s-concat
+   (all-the-icons-alltheicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-(defun append-to-list (list-var elements)
-  "Append ELEMENTS to the end of LIST-VAR.
+(defun with-faicon (icon str &optional height v-adjust)
+  "Displays an icon from Font Awesome icon."
+  (s-concat
+   (all-the-icons-faicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-The return value is the new value of LIST-VAR."
-  (unless (consp elements)
-    (error "ELEMENTS must be a list"))
-  (let ((list (symbol-value list-var)))
-    (if list
-        (setcdr (last list) elements)
-      (set list-var elements)))
-  (symbol-value list-var))
+(defun with-fileicon (icon str &optional height v-adjust)
+  "Displays an icon from the Atom File Icons package."
+  (s-concat
+   (all-the-icons-fileicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
+(defun with-octicon (icon str &optional height v-adjust)
+  "Displays an icon from the GitHub Octicons."
+  (s-concat
+   (all-the-icons-octicon icon :v-adjust (or v-adjust 0) :height (or height 1)) " " str))
 
-(defun which-active-modes ()
-  "Give a message of which minor modes are enabled in the current buffer."
-  (interactive)
-  (let ((active-modes))
-    (mapc
-     (lambda (mode)
-       (condition-case nil
-           (if (and (symbolp mode)
-                    (symbol-value mode))
-               (add-to-list 'active-modes mode))
-         (error nil) ))
-     minor-mode-list)
-    (message "Active modes are %s" active-modes)))
 
 
 (provide 'init-general-defuns)

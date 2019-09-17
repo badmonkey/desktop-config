@@ -45,6 +45,57 @@
     git-commit-mode) . fci-mode))
 
 
+;; (use-package wiki-summary
+;;   :defer 1
+;;   :preface
+;;   (defun my/format-summary-in-buffer (summary)
+;;     "Given a summary, sticks it in the *wiki-summary* buffer and displays
+;;      the buffer."
+;;     (let ((buf (generate-new-buffer "*wiki-summary*")))
+;;       (with-current-buffer buf
+;;         (princ summary buf)
+;;         (fill-paragraph)
+;;         (goto-char (point-min))
+;;         (view-mode))
+;;       (pop-to-buffer buf))))
+
+;; (advice-add 'wiki-summary/format-summary-in-buffer :override #'my/format-summary-in-buffer)
+
+
+
+;; (use-package google-translate
+;;   :bind
+;;   ("M-o t" . google-translate-at-point)
+;;   ("M-o T" . google-translate-at-point-reverse)
+;;   :custom
+;;   (google-translate-default-source-language "en")
+;;   (google-translate-default-target-language "ja"))
+
+
+;; (use-package bing-dict
+;;   :straight t
+;;   :bind (("C-c d" . bing-dict-brief))
+;;   :init (setq bing-dict-show-thesaurus  'both
+;;               bing-dict-vocabulary-save t
+;;               bing-dict-cache-auto-save t
+;;               bing-dict-vocabulary-file
+;;               (no-littering-expand-var-file-name "bing-dict/vocabulary.org")
+;;               bing-dict-cache-file
+;;               (no-littering-expand-var-file-name "bing-dict/bing-dict-save.el")))
+;; Spell
+;; (if *ispell*
+;;     (use-package ispell
+;;       :init
+;;       (setq-default ispell-program-name   *ispell*
+;;                     ispell-silently-savep t
+;;                     ispell-dictionary     "english"
+;;                     ispell-personal-dictionary
+;;                     (no-littering-expand-var-file-name "ispell/dictionary"))
+;;       (when (string-suffix-p "aspell" *ispell*)
+;;         (setq-default ispell-extra-args '("--reverse"))))
+;;   (message "if you want to use ispell, try\n brew install aspell\n brew install ispell"))
+
+
 ;; (flycheck-define-checker textlint
 ;;   "A linter for textlint."
 ;;   :command ("npx" "textlint"

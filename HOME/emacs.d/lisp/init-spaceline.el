@@ -27,8 +27,6 @@
   )
 
 
-(use-package all-the-icons)
-
 (use-package spaceline-config
   :ensure spaceline
   :config

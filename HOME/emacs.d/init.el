@@ -96,7 +96,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (markdown-toc fill-column-indicator flycheck-posframe markdown-preview-eww vmd-mode helm-rg projectile-ripgrep fringe-helper posframe jedi flycheck-inline color-identifiers-mode color-identifiers smart-region pretty-hydra highlight-indent-guides indent-guide side-notes with-venv auto-virtualenvwrapper switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido)))
+    (major-mode-hydra helm-google helm-posframe markdown-toc fill-column-indicator flycheck-posframe markdown-preview-eww vmd-mode helm-rg projectile-ripgrep fringe-helper posframe jedi flycheck-inline color-identifiers-mode color-identifiers smart-region pretty-hydra highlight-indent-guides indent-guide side-notes with-venv auto-virtualenvwrapper switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(py-pyment-options (quote ("--output" "reST")) t)
  '(vc-annotate-background "#2B2B2B")
@@ -126,8 +126,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(flycheck-posframe-border-face ((t (:foreground "DarkRed"))))
  '(hl-line ((t (:background "gray5"))))
- '(hydra-posframe-border-face ((t (:background "#6272a4"))))
  '(markdown-header-delimiter-face ((t (:foreground "mediumpurple"))))
  '(markdown-header-face-1 ((t (:foreground "violet" :weight bold :height 1.0))))
  '(markdown-header-face-2 ((t (:foreground "lightslateblue" :weight bold :height 1.0))))
