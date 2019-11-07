@@ -24,11 +24,13 @@ export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
 #
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME=/opt/projects
+export PIP_CACHE_DIR="/var/opt/cache/pip"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VIRTUALENVWRAPPER_PYTHON="$PYENV_ROOT/shims/python"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+export MYPY_CACHE_DIR=~/.mypy_cache
 
 
 # For remote sessions

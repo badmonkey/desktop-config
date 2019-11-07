@@ -48,6 +48,22 @@
     (query-replace-read-args prompt regexp-flag)))
 
 
+;;
+;; Interactive prompts for misc
+;;
+
+(defun input-char-from-smart-region (&optional as-string atpoint ch)
+  (unless atpoint
+    (setq atpoint (if (region-active-p)
+                      (region-beginning)
+                    (point))))
+  (unless ch
+    (setq ch (char-after atpoint)))
+  (if as-string
+      (list (char-to-string ch))
+    (list ch)))
+
+
 (defun filter-buffer-p (buffer default)
   (if buffer
       (or (equal buffer default)

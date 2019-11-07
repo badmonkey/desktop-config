@@ -74,6 +74,8 @@
     ("-" zoom-out "out")
     ("0" jp-zoom-default "reset"))))
 
+
+
 (pretty-hydra-define hydra-windows
   (:hint nil :forein-keys warn :quit-key "q" :title (with-faicon "windows" "Windows" 1 -0.05))
   ("Window"

@@ -167,6 +167,11 @@
   (fill-region-as-paragraph start end))
 
 
+(defun ispell-region-or-line (start end)
+  (interactive (input-region-or-line))
+  (ispell-region start end))
+
+
 (defun region-upcase-word (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
@@ -179,6 +184,23 @@
   (if (use-region-p)
 	  (downcase-region start end)
 	(downcase-word 1)))
+
+
+(defun kill-inner-region (ch)
+  (interactive (input-char-from-smart-region t))
+  (change-inner* nil ch))
+
+(defun kill-outer-region (ch)
+  (interactive (input-char-from-smart-region t))
+  (change-outer* nil ch))
+
+(defun copy-inner-region (ch)
+  (interactive (input-char-from-smart-region t))
+  (change-inner* t ch))
+
+(defun copy-outer-region (ch)
+  (interactive (input-char-from-smart-region t))
+  (change-outer* t ch))
 
 
 ;;  Help functions

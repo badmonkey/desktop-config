@@ -10,8 +10,11 @@
 (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 (load-theme 'hipster t)
 
+;; Fonts
+;; (set-default-font "Fira Code")
 ;;(set-face-attribute 'default t :font "Hack-Regular" )
-
+(add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")))
+(set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
 
 ;; Line mode
 (global-linum-mode t)
@@ -99,7 +102,13 @@
 (use-package diminish
   :config
   :diminish 'global-whitespace-mode)
-  ;; (progn (add-hook 'whitespace-mode-hook (lambda () (diminish 'whitespace-mode)))))
+
+(use-package fira-code-mode
+  :load-path contrib-load-path
+  :config
+  ;; (fira-code-mode)
+  (add-hook 'prog-mode-hook 'fira-code-mode)
+  :diminish fira-code-mode)
 
 (use-package indent-guide
   :load-path contrib-load-path
@@ -137,8 +146,6 @@
 
 
 (use-package all-the-icons)
-
-
 
 (provide 'init-visuals)
 ;;; init-visuals.el ends here

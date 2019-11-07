@@ -27,11 +27,11 @@
   :prefix "M-SPC"
   :prefix-command 'bufferaction-keymap
 
-  "M-SPC"   'smart-region
   "SPC"     'smart-region
   "DEL"     'delete-region
   "TAB"     'indent-rigidly
   ";"       'region-toggle-comment
+  "."       'smart-region
 
   "M-w"     'kill-ring-save
 
@@ -41,10 +41,14 @@
               (derived-mode-p 'python-mode) 'py-pyment-region)
 
   "e"       'mc/edit-lines
+  "i"       'kill-inner-region
+  "j"       'hydra-mark/body
   "k"       'region-kill-whole-line
   "m"       'mc/mark-all-like-this
+  "o"       'kill-outer-region
   "p"       'mark-paragraph
   "w"       'region-copy-whole-line
+  "y"       'clipmon-autoinsert-toggle
   )
 
 
@@ -68,10 +72,13 @@
               (derived-mode-p 'emacs-lisp-mode) 'describe-function-at-point
               (derived-mode-p 'python-mode) 'pydoc-at-point)
 
-;; t        counsel-etags-find-tag-at-point   ;; TODO missing?
+  "s"       'ispell-word
+  ;; t        counsel-etags-find-tag-at-point   ;; TODO missing?
   "u"       'crux-view-url
   "x"       'exchange-point-and-mark
   "z"       'zeal-at-point
+
+  "?"       'symbol-at-point
   )
 
 
@@ -89,6 +96,7 @@
 ;; TAB      move-to-column
 
   "1"       'flycheck-first-error
+
 ;; c        goto-char
 ;; g        goto-line
 
@@ -98,6 +106,7 @@
   "t"       'hl-todo-next
   "C-t"     'hl-todo-previous
 
+  "\\"      'goto-last-change
   "`"       'switch-to-last-buffer
 
   "["       'point-to-buffer-start
@@ -115,8 +124,8 @@
   "1"       'kill-other-buffers
   "a"       'kill-all-buffers
   "b"       'bury-buffer
+  "f"       'kill-orphan-buffers
   "k"       'kill-or-bury-buffer
-  "o"       'kill-orphan-buffers
   "u"       'kill-unmodified-buffers
   )
 
@@ -136,6 +145,8 @@
   "]"       'hydra-flycheck/body
   "["       'hl-todo-occur
 
+  "-"       'posframe-delete-all
+
   "b"       'ibuffer
 
   "d"       (general-predicate-dispatch nil
@@ -146,6 +157,8 @@
   "i"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'helm-pydoc)
 
+  "g"       'projectile-ripgrep
+
   "l"       (general-predicate-dispatch nil
               (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer
               (derived-mode-p 'markdown-mode) 'markdown-live-preview-mode)
@@ -153,7 +166,7 @@
   "o"       'helm-projectile-find-file
   "p"       'projectile-switch-project
   "r"       'revbufs
-  "s"       'projectile-ripgrep
+  "s"       'ispell
   "t"       'transpose-windows
   "v"       'venv-workon
   )
@@ -216,8 +229,10 @@
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'markdown-mode) 'markdown-toc-delete-toc)
 
-  "f"       (general-predicate-dispatch nil
+  "r"       (general-predicate-dispatch nil
               (derived-mode-p 'markdown-mode) 'markdown-toc-refresh-toc)
+
+  "s"       'ispell-region-or-line
   )
 
 

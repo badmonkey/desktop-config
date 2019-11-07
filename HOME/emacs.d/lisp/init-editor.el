@@ -56,6 +56,8 @@
 
 (use-package smart-region)
 
+(use-package change-inner)
+
 
 (use-package crux)
 
@@ -157,6 +159,13 @@
 
 (use-package magit
   :disabled t)
+
+(use-package goto-last-change)
+
+(use-package clipmon
+  :config
+  (setq clipmon-autoinsert-color "red")
+  (setq clipmon-autoinsert-timeout 2))
 
 (use-package ibuffer)
 

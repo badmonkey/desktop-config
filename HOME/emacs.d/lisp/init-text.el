@@ -41,8 +41,11 @@
 
 (use-package fill-column-indicator
   :hook
-  ((markdown-mode
-    git-commit-mode) . fci-mode))
+  ((markdown-mode git-commit-mode) . fci-mode))
+
+
+(use-package helm-ispell
+  :after helm)
 
 
 ;; (use-package wiki-summary
