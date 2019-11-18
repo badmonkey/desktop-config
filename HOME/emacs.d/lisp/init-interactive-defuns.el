@@ -185,6 +185,22 @@
 	  (downcase-region start end)
 	(downcase-word 1)))
 
+(defun region-qp-encode (start end)
+  (interactive (input-region-or-line))
+  (quoted-printable-encode-region start end t))
+
+(defun region-qp-decode (start end)
+  (interactive (require-region))
+  (quoted-printable-decode-region start end))
+
+(defun unfill-region (start end)
+  "Unfill the region, joining text paragraphs into a single
+    logical line.  This is useful, e.g., for use with
+    `visual-line-mode'."
+  (interactive (require-region))
+  (let ((fill-column (point-max)))
+    (fill-region start end)))
+
 
 (defun kill-inner-region (ch)
   (interactive (input-char-from-smart-region t))

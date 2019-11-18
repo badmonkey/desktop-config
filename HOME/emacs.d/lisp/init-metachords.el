@@ -17,7 +17,9 @@
   "M-;"     'comment-dwim
   "M-\\"    'helm-bm
 
+  "M-x"     'helm-M-x
   "M-q"     'fill-region-or-line
+  "M-a"     'unfill-region
   )
 
 
@@ -37,6 +39,7 @@
 
   "1"       'just-one-space
 
+  "a"       'region-qp-decode
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-region)
 
@@ -47,6 +50,7 @@
   "m"       'mc/mark-all-like-this
   "o"       'kill-outer-region
   "p"       'mark-paragraph
+  "q"       'region-qp-encode
   "w"       'region-copy-whole-line
   "y"       'clipmon-autoinsert-toggle
   )

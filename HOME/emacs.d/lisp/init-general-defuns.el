@@ -47,6 +47,11 @@
         (list region-text (query-replace-read-to region-text prompt regexp-flag)))
     (query-replace-read-args prompt regexp-flag)))
 
+(defun require-region ()
+  (if (region-active-p)
+      (list (region-beginning)
+            (region-end))
+    (error "Requires a selected region")))
 
 ;;
 ;; Interactive prompts for misc
