@@ -64,6 +64,8 @@ optional-line() {
 }
 
 
+RET_PROMPT='[${GIT_PROMPT_LAST_COMMAND_STATE}]'
+
 
 # append git status
 #PS1="${PS1} \[\e[1;33m\]\$(git-prompt)\[\e[0m\]"
@@ -72,7 +74,7 @@ GIT_PROMPT_ONLY_IN_REPO=0
 GIT_PROMPT_START="┌─[\[\e[1;31m\]\$(virtual-env-name)\[\e[0m\]] [${PRMPT_HOST}]"
 
 # working prompt
-GIT_PROMPT_END="\n└─[${CHROOT_PROMPT}${SSH_PROMPT}stack:\[\e[1;33m\]\$(dirstack-top)\[\e[0m\]] \[\e[1;31m\]λ\[\e[0m\] "
+GIT_PROMPT_END="\n└─[${CHROOT_PROMPT}${SSH_PROMPT}stack:\[\e[1;33m\]\$(dirstack-top)\[\e[0m\]]${RET_PROMPT} \[\e[1;31m\]λ\[\e[0m\] "
 
 #
 # λ  ❱  ▶  ⊳  △  ▲  ▽  ▼  ⬡  ⬢

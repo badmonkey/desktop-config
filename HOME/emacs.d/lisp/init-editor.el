@@ -71,6 +71,13 @@
 ;; (use-package electric
 ;;   :hook (prog-mode . electric-indent-mode))
 
+(use-package multi-term
+  :load-path contrib-load-path
+  :config
+  (setq multi-term-program "/bin/bash")
+  (setq multi-term-dedicated-window-height 40)
+  (setq multi-term-dedicated-select-after-open-p t)
+  (setq multi-term-dedicated-close-back-to-open-buffer-p t))
 
 (use-package zeal-at-point)
 

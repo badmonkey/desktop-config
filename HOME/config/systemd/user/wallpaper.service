@@ -1,0 +1,16 @@
+[Unit]
+Description=Wallpaper
+Documentation=man:feh(1)
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+; I need to figure out how to translate ~/.fehbg to variables
+;ExecStartPre=/bin/true
+ExecStart=/usr/bin/feh $FEHBG
+WorkingDirectory=/home/robbie/wallpapers
+EnvironmentFile=/home/robbie/.config/fehbg.conf
+
+[Install]
+WantedBy=xinitrc.target
+

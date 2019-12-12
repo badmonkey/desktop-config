@@ -1,0 +1,13 @@
+[Unit]
+Description="Start spotify"
+After=graphical.target
+
+[Service]
+Type=exec
+WorkingDirectory=/
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/spotify
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target

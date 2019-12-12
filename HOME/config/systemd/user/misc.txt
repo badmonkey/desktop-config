@@ -1,0 +1,14 @@
+[Unit]
+Desscroption=TDC: dramatiq workers (GPU 4)
+Requries=network-online.target
+After=network.target
+
+[Service]
+Type=simple
+User=trapdocs-ce
+WorkingDirectory=/home/trapdocs-ce/code/Communitarianism
+Environment=CUDA_VISIBLE_DEVICES=3
+Environment=TF_FORCE_GPU_ALLOW_GROWTH=true
+Environment=CUDA_LAUNCH_BLOCKING=1
+ExecStart=/bin/bash -c "source /home/trapdocs-ce/anaconda3/etc/profile.d/conda.sh && conda activate cloud && dramatiq -p 1 -t 1 bell_tower.dramatiq.init_actors --queues priority_high_serialised priority_low_serialised"
+Restart=always

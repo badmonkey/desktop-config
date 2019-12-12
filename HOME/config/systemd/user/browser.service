@@ -1,0 +1,13 @@
+[Unit]
+Description="Start Browser"
+After=graphical.target
+
+[Service]
+Type=simple
+WorkingDirectory=/
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/chromium-browser
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target

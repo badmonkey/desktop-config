@@ -25,4 +25,4 @@ shopt -s checkwinsize
 
 
 eval "$(pyenv init -)"
-pyenv virtualenvwrapper
+pyenv virtualenvwrapper_lazy

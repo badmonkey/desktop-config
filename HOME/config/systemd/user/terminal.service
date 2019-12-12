@@ -1,0 +1,13 @@
+[Unit]
+Description="Start Terminal (and tmux)"
+After=graphical.target
+
+[Service]
+Type=exec
+WorkingDirectory=/opt/home/mfagan
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/alacritty -e tmux
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target

@@ -29,6 +29,8 @@
   :custom-face
   (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
 
+(use-package flycheck-pony)
+
 
 (provide 'init-flycheck)
 ;;; init-flycheck.el ends here

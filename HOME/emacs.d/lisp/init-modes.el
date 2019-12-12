@@ -22,5 +22,8 @@
             (lambda ()
               (c-add-style "my-style" my-protobuf-style t))))
 
+;; (use-package gitlab-ci-mode
+;;   :load-path contrib-load-path)
+
 (provide 'init-modes)
 ;;; init-modes.el ends here

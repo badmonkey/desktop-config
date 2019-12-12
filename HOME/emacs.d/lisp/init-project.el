@@ -34,15 +34,16 @@
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner "~/.emacs.d/logo.png")
-  ;; (setq dashboard-banner-logo-title "[ C 0 D E M O N K 3 Y ]")
+  (setq dashboard-banner-logo-title "Kill all humans")
   (setq dashboard-set-init-info nil)
   ;; (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-set-footer nil)
-  (setq dashboard-items '((recents   . 15)
-                          (projects  . 5)
-                          (bookmarks . 5))))
+  ;; (setq dashboard-set-footer nil)
+  (setq dashboard-footer (shell-command-to-string "fortune -s"))
+  (setq dashboard-items '((recents   . 10)
+                          ;; (projects  . 5)
+                          (bookmarks . 10))))
 
 (add-hook 'emacs-startup-hook
           '(lambda ()

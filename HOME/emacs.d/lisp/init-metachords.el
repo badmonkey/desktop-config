@@ -12,7 +12,7 @@
 (general-define-key
   "M-DEL"   'region-delete-back-word
   "<M-tab>" 'ac-complete-with-helm
-  "M-RET"   'ansi-term
+  "M-RET"   'multi-term-dedicated-toggle
 
   "M-;"     'comment-dwim
   "M-\\"    'helm-bm
@@ -142,7 +142,7 @@
 
   "TAB"     'neotree
 
-  "RET"     (general-predicate-dispatch 'ansi-term
+  "RET"     (general-predicate-dispatch 'multi-term-dedicated-toggle
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
 
   ;; "]"       'flycheck-buffer
