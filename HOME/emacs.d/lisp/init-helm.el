@@ -73,6 +73,9 @@
 
 (use-package helm-rg)
 
+(use-package ggtags)
+(use-package imenu-anywhere)
+
 
 (provide 'init-helm)
 ;;; init-helm.el ends here

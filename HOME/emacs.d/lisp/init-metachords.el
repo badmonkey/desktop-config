@@ -77,7 +77,7 @@
               (derived-mode-p 'python-mode) 'pydoc-at-point)
 
   "s"       'ispell-word
-  ;; t        counsel-etags-find-tag-at-point   ;; TODO missing?
+  ;; "t"       'ggtags-
   "u"       'crux-view-url
   "x"       'exchange-point-and-mark
   "z"       'zeal-at-point
@@ -210,8 +210,21 @@
 
 
 ;;; M-t transpose-word
-(general-unbind
-  "M-t"
+(general-define-key
+  :prefix "M-t"
+
+  "."       'ggtags-find-tag-dwim
+  "TAB"     'ggtags-view-search-history
+
+  "c"       'ggtags-create-tags
+  "u"       'ggtags-update-tags
+
+  "d"       'ggtags-find-definition
+  "o"       'imenu-anywhere
+
+  "x"       'ggtags-explain-tags
+
+  "r"       'ggtags-query-replace
   )
 
 

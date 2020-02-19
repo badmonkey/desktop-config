@@ -1,0 +1,7 @@
+[Unit]
+Description=Desktop apps target
+Requires=graphical.target
+After=graphical.target
+#Wants=foobar.service
+
+[Install]
