@@ -46,7 +46,7 @@
 
 (use-package swift-mode)
 
-;(use-package rust-mode)
+;;(use-package rust-mode)
 
 
 (provide 'init-lang)
