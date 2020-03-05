@@ -11,7 +11,6 @@
 
 
 (use-package erlang
-
   :init
   :mode (("\\.erl\\'" . erlang-mode)
          ("\\.hrl\\'" . erlang-mode)
@@ -43,6 +42,11 @@
        (set-variable 'indent-tabs-mode nil)
        (set-variable 'tab-width 4)))))
 
+(use-package go-mode)
+
+(use-package swift-mode)
+
+;(use-package rust-mode)
 
 
 (provide 'init-lang)

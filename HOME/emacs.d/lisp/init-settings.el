@@ -7,12 +7,18 @@
 (setq user-full-name "Michael Fagan"
       user-mail-address "michael.charles.fagan@gmail.com")
 
+(setq package-use-network t)
+
 
 ;; Backup/Autosave
 (setq auto-save-file-name-transforms
 	  `((".*" ,temporary-file-directory t)))
 
-(defvar backup-dir (concat "/home/" (user-login-name) "/.backup/"))
+(defvar user-home-dir (getenv "HOME"))
+
+(defvar emacs-config-dir (concat user-home-dir "/.emacs.d/"))
+
+(defvar backup-dir (concat user-home-dir "/.backup/"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 

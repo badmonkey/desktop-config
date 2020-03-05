@@ -31,6 +31,14 @@
 
 (use-package flycheck-pony)
 
+(use-package flycheck-swift)
+
+;;(use-package flycheck-rust)
+
+;; (use-package flycheck-gometalinter
+;;   :config
+;;   (flycheck-gometalinter-setup))
+
 
 (provide 'init-flycheck)
 ;;; init-flycheck.el ends here
