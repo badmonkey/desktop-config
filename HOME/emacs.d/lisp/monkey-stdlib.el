@@ -2,7 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-
+(require 'dash)
+(require 'dash-functional)
+(require 's)
 (require 'f)
 
 
