@@ -17,21 +17,28 @@
   (global-flycheck-mode))
 
 
-(use-package flycheck-posframe
-  :after flycheck
-  :config
-  (flycheck-posframe-configure-pretty-defaults)
-  ;; frame-center  frame-top-center  window-center
-  (setq flycheck-posframe-position 'frame-center)
-  (setq flycheck-posframe-border-width 2)
-  (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
+(when (display-graphic-p)
+  (use-package flycheck-posframe
+    :after flycheck
+    :config
+    (flycheck-posframe-configure-pretty-defaults)
+    ;; frame-center  frame-top-center  window-center
+    (setq flycheck-posframe-position 'frame-center)
+    (setq flycheck-posframe-border-width 2)
+    (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
 
-  :custom-face
-  (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
+    :custom-face
+    (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
+)
 
 (use-package flycheck-pony)
 
 (use-package flycheck-swift)
+
+(use-package flycheck-swiftlint
+  :after flycheck
+  :config
+  (flycheck-swiftlint-setup))
 
 ;;(use-package flycheck-rust)
 

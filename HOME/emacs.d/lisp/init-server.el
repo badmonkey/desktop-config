@@ -17,20 +17,23 @@
 ;;   (toggle-frame-maximized))
 
 
-;; Start server (but don't restart).
-(add-hook 'after-init-hook
-          (lambda ()
-            (require 'server)
-            (unless (server-running-p)
-              (server-start))))
+;; Start server (but don't restart) but only on graphics systems
 
+ (add-hook 'after-init-hook
+           (lambda ()
+             (require 'server)
+             (unless (server-running-p)
+               (server-start))))
 
 (setq scroll-error-top-bottom t)
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(add-hook 'server-visit-hook 'raise-frame)
 
-(split-window-right)
+(when (display-graphic-p)
+  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (add-hook 'server-visit-hook 'raise-frame)
+
+  (split-window-right)
+)
 
 
 (provide 'init-server)

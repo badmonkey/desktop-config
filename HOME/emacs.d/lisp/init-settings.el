@@ -11,6 +11,11 @@
 (defvar package-use-network t)
 
 
+;;  set default font
+(set-frame-font "Fira Code 18" nil t)
+;; (set-frame-font "Inconsolata 18" nil t)
+
+
 ;; Backup/Autosave
 (setq auto-save-file-name-transforms
 	  `((".*" ,temporary-file-directory t)))

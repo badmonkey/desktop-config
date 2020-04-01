@@ -41,6 +41,9 @@
   "C-<"           'mc/mark-previous-like-this
 
   "C-`"           'switch-to-last-buffer
+
+  "<home>"        'crux-move-beginning-of-line
+  "<end>"         'move-end-of-line
   )
 
 

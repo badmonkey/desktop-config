@@ -42,7 +42,7 @@
 
 
 ;; highlight mode
-(when window-system
+(when (display-graphic-p)
   (global-hl-line-mode 1))
 
 
@@ -103,12 +103,14 @@
   :config
   :diminish 'global-whitespace-mode)
 
-(use-package fira-code-mode
-  :load-path contrib-load-path
-  :config
-  ;; (fira-code-mode)
-  (add-hook 'prog-mode-hook 'fira-code-mode)
-  :diminish fira-code-mode)
+(when (display-graphic-p)
+  (use-package fira-code-mode
+    :load-path contrib-load-path
+    :config
+    ;; (fira-code-mode)
+    (add-hook 'prog-mode-hook 'fira-code-mode)
+    :diminish fira-code-mode)
+)
 
 (use-package indent-guide
   :load-path contrib-load-path

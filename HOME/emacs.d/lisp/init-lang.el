@@ -33,16 +33,16 @@
 
 
 (use-package ponylang-mode
-  :ensure t
   :config
-  (progn
-    (add-hook
-     'ponylang-mode-hook
-     (lambda ()
-       (set-variable 'indent-tabs-mode nil)
-       (set-variable 'tab-width 4)))))
+  (add-hook
+   'ponylang-mode-hook
+   (lambda ()
+     (set-variable 'indent-tabs-mode nil)
+     (set-variable 'tab-width 4))))
 
-(use-package go-mode)
+(use-package go-mode
+  :config
+  (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package swift-mode)
 

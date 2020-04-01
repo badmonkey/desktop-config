@@ -173,6 +173,7 @@
   "s"       'ispell
   "t"       'transpose-windows
   "v"       'venv-workon
+  "x"       'delete-window
   )
 
 
