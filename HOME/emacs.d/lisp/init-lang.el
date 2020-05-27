@@ -34,17 +34,27 @@
 
 (use-package ponylang-mode
   :config
-  (add-hook
-   'ponylang-mode-hook
-   (lambda ()
-     (set-variable 'indent-tabs-mode nil)
-     (set-variable 'tab-width 4))))
+  (add-hook 'ponylang-mode-hook
+            (lambda ()
+              (set-variable 'indent-tabs-mode nil)
+              (set-variable 'tab-width 4))))
 
 (use-package go-mode
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package swift-mode)
+
+(use-package google-java-format
+  :load-path contrib-load-path
+  :config
+  (add-hook 'java-mode-hook
+            (lambda ()
+              (setq c-basic-offset 4
+                    tab-width 4
+                    indent-tabs-mode t)
+              )))
+     ;;(add-hook 'before-save-hook 'google-java-format-buffer))))
 
 ;;(use-package rust-mode)
 

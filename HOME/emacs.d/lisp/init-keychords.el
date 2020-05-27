@@ -15,6 +15,8 @@
   (general-chord "..")      (general-predicate-dispatch ".."
                               (derived-mode-p 'markdown-mode) 'hydra-mark/body)
 
+  (general-chord "\'\'")    'ispell-word
+
   (general-chord "[;")      'previous-error
   (general-chord ";[")      'previous-error
   (general-chord "];")      'next-error

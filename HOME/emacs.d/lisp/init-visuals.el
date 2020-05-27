@@ -23,6 +23,7 @@
 
 ;; Indent setting
 (setq-default tab-always-indent nil)
+(setq-default indent-tabs-mode nil)
 
 (defun monkey-generate-tab-stops (&optional width max)
   "Return a sequence suitable for `tab-stop-list'."
