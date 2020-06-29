@@ -53,8 +53,7 @@
               (setq c-basic-offset 4
                     tab-width 4
                     indent-tabs-mode t)
-              )))
-     ;;(add-hook 'before-save-hook 'google-java-format-buffer))))
+              (add-hook 'before-save-hook 'google-java-format-buffer nil 'local))))
 
 ;;(use-package rust-mode)
 

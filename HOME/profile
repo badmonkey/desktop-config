@@ -40,7 +40,10 @@ if [ -n "$BASH_VERSION" ]; then
 
 		. "$HOME/.bash/bashrc"
 		. "$HOME/.bash/aliases.sh"
-		. "$HOME/.bash/prompt.sh"
+
+        if [ -n "$SETUP_PROMPTS" ]; then
+		   . "$HOME/.bash/prompt.sh"
+        fi
 
 		if [ -f "$HOME/.bashrc" ]; then
 			. "$HOME/.bashrc"

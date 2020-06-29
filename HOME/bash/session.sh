@@ -8,8 +8,10 @@
 # setxkbmap -option "caps:super"
 
 
-setxkbmap -option "caps:ctrl_modifier"
-xmodmap -e "keysym Menu = Caps_Lock"
+if [ -n "$SETUP_XDISPLAY" ]; then
+    setxkbmap -option "caps:ctrl_modifier"
+    xmodmap -e "keysym Menu = Caps_Lock"
+fi
 
 
 function caps-tap-layer {

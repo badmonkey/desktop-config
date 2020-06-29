@@ -13,6 +13,11 @@ export EDITOR="emacsclient -q"
 export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
 
 
+export SETUP_XDISPLAY=1
+export SETUP_PYTHON=1
+export SETUP_PROMPTS=1
+
+
 # GCC
 #
 

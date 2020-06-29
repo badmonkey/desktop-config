@@ -1,4 +1,5 @@
 #
+
 # Configure bashrc for interactive use
 #
 
@@ -24,5 +25,7 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 
-eval "$(pyenv init -)"
-pyenv virtualenvwrapper_lazy
+if [ -n "$SETUP_PYTHON" ]; then
+   eval "$(pyenv init -)"
+   pyenv virtualenvwrapper_lazy
+fi
