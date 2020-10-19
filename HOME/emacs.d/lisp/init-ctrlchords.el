@@ -51,6 +51,11 @@
   :prefix "C-x"
 
   "k"             'kill-or-bury-ask-buffer
+  "-"             'split-window-below
+  "\\"            'split-window-right
+  "="             'balance-windows
+  "<backspace>"   'delete-window
+  "/"             'what-cursor-position
   )
 
 

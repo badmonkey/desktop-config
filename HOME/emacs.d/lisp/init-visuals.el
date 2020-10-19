@@ -11,10 +11,12 @@
 (load-theme 'hipster t)
 
 ;; Fonts
+(set-frame-font "Fira Code 10" nil t)
 ;; (set-default-font "Fira Code")
 ;;(set-face-attribute 'default t :font "Hack-Regular" )
 (add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")))
 (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
+
 
 ;; Line mode
 (global-linum-mode t)

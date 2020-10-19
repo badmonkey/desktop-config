@@ -20,6 +20,9 @@
   "M-x"     'helm-M-x
   "M-q"     'fill-region-or-line
   "M-a"     'unfill-region
+
+  "<home>"  'move-beginning-of-line
+  "<end>"   'move-end-of-line
   )
 
 
