@@ -35,19 +35,12 @@ function assert_have_mode () {
 	fi
 }
 
-
+EDITING=
 
 while [ -n "${1}" ]; do
 	if [ "${1:0:2}" == "--" ]; then
 		MODE="${1:2}"
 		echo "Changing mode ${MODE}"
-	elif [ "${1}" == "-cp" ]; then
-		shift
-		echo "Copy ${1} to ${2} and then edit"
-		cp "${1}" "${2}"
-	elif [ "${1}" == "-h" ]; then
-		echo "Usage"
-		exit 0
 	elif [ "${1}" == "-n" ]; then
 		WAIT="-n"
 	elif [ "${1}" == "-w" ]; then
@@ -58,6 +51,7 @@ while [ -n "${1}" ]; do
 		set_mode `basename ${1}`
 		echo "Edit ${1} ..."
 		emacsclient ${WAIT} -q "${1}"
+        EDITING="${1}"
 	elif [ -d "${1}" ]; then
 		assert_have_mode
 		echo "Edit files from ${1}/*.${MODE}"
@@ -66,13 +60,19 @@ while [ -n "${1}" ]; do
 		else
 			find ${1} -type f -iname "*.${MODE}" -print0 | xargs -r -n 8 -0 emacsclient -nq
 		fi
+        EDITING="*.${MODE}"
 	elif ! [ -e "${1}" ]; then
 		set_mode ${1}
 		echo "Creating ${1} ..."
-		touch ${1}
 		emacsclient ${WAIT} -q "${1}"
+        EDITING="${1}"
 	else
 		echo "Not sure what to do with ${1}  skipping"
 	fi
 	shift
 done
+
+
+if [ -z "${EDITING}" ]; then
+    fzf-tmux -m --border --margin=5,0 --query "${MODE}" --print0 | xargs -r -n 8 -0 emacsclient -nq
+fi

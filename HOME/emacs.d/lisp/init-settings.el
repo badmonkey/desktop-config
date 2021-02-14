@@ -21,9 +21,29 @@
 	  `((".*" ,temporary-file-directory t)))
 
 
-
 (defvar backup-dir (f-join user-home-dir ".backup"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
+
+
+(when (string-equal system-type "darwin")
+  ;;  used for compiling and callign stuff with eshell
+  (setenv "PATH"
+          (concat
+           "/usr/local/bin" ":"
+           "/bin" ":"
+           "/usr/bin" ":"
+           (getenv "PATH")
+           )
+          )
+
+  ;;  used for loading flyc make and the like
+  (setq exec-path
+        (append exec-path
+                '("~/bin"
+                  "/usr/local/bin"
+                  "/bin"
+                  "/usr/bin"
+                  ))))
 
 
 (setq vc-handled-backends nil)
@@ -50,8 +70,12 @@
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
+(setq-default scroll-conservatively 101)
+
 ;; the blinking cursor is nothing, but an annoyance
 (blink-cursor-mode -1)
+
+(setq-default x-stretch-cursor t)
 
 ;; disable the annoying bell ring
 (setq ring-bell-function 'ignore)
@@ -67,6 +91,14 @@
 ;; transient mode
 (setq-default transient-mark-mode t)
 
+(delete-selection-mode 1)
+(desktop-save-mode 1)
+
+;; treat CamelCase as words
+(global-subword-mode 1)
+
+(customize-set-variable 'make-pointer-invisible nil)
+(mouse-avoidance-mode 'exile)
 
 ;; Frame movement (shift arrow)
 (windmove-default-keybindings)
@@ -82,6 +114,10 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-language-environment "UTF-8")
+
+
+;; make compile-command local
+(make-variable-buffer-local 'compile-command)
 
 
 

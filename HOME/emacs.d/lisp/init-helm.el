@@ -58,6 +58,8 @@
 
 (use-package helm-bm)
 
+;; (use-package helm-unicode)
+
 (use-package helm-dash
   :init
   (defun c-doc ()

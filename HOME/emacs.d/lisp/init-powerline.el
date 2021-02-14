@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; https://github.com/dbordak/telephone-line
+;; https://github.com/dbordak/telephone-line/blob/110c578ccf6c0421cfd9eec7aa3e960b6fd49fb4/examples.org
+;; https://github.com/MagicDuck/emacs-config/blob/master/init.el
+;; https://quinoa42.github.io/en/dot-emacs/
 
 (use-package spaceline
   :config
@@ -17,13 +21,13 @@
                       'face 'spaceline-python-venv
                       'help-echo (format "Virtual environment: %s" tmp-venv-name))))))
 
-  (spaceline-define-segment projectile-root
+  (spaceline-define-segment projectile-segment
     "Show the current projectile root."
     (when (fboundp 'projectile-project-name)
       (let ((project-name (projectile-project-name)))
         (unless (or (string= project-name "-")
                     (string= project-name (buffer-name)))
-          (format "%s/.." project-name)))))
+          (format "%s|%s" project-name (projectile-project-type))))))
   )
 
 
@@ -41,7 +45,7 @@
       process
       (("!?" flycheck-error flycheck-warning flycheck-info) :when flycheck-current-errors)
       (python-venvwrap :fallback python-pyvenv)
-      projectile-root
+      projectile-segment
       ((minor-modes :separator spaceline-minor-modes-separator) :when active))
     ;; Right segment (the unimportant stuff)
     '((version-control :when active)))
@@ -49,11 +53,13 @@
                 header-line-format mode-line-format))
 
 
+(diminish
+  (list 'indent-guide-mode 'subword-mode))
 ;(use-package spaceline-all-the-icons
 ;  :after spaceline
 ;  :config (spaceline-all-the-icons-theme))
 
 
 
-(provide 'init-spaceline)
-;;; init-spaceline.el ends here
+(provide 'init-powerline)
+;;; init-powerline.el ends here

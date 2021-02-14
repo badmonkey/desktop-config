@@ -1,8 +1,8 @@
-TYPE: XXX-nnn: summary
-##- 8< -------- 50 characters ------------- 8< -##
-# TYPE: fix,feat,chore,docs,style,refactor,perf,test,revert
-## BLANK
 
-##- 8< -------- 72 characters ----------------------------------- 8< -##
-# modified: filename
-# Action:
+# XXX-nnn: TYPE: Summary
+##- 8< -------- 50 characters ------------- 8< -##
+## BLANK LINE BLANK LINE  BLANK LINE BLANK LINE ##
+
+##- 8< -------- 72 characters ------------- 8< ------------------ 8< -##
+# fix,feat,build,chore,docs,ci,style,refactor,perf,test,revert
+#

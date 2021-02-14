@@ -33,12 +33,33 @@
 
 (use-package flycheck-pony)
 
-(use-package flycheck-swift)
-
-(use-package flycheck-swiftlint
+(use-package flycheck-swift
   :after flycheck
   :config
-  (flycheck-swiftlint-setup))
+  (flycheck-swift-setup))
+
+;; (use-package flycheck-swiftlint
+;;   :after flycheck
+;;   :config
+;;   (flycheck-swiftlint-setup))
+
+(with-eval-after-load 'flycheck
+  (flycheck-def-config-file-var flycheck-swiftlintrc flycheck-swiftlintier "~/.swiftlink.yml")
+  (flycheck-def-executable-var flycheck-swiftlintier "/usr/local/bin/swiftlint")
+
+  (flycheck-define-checker swiftlintier
+    "Swift syntax and style checker"
+    :command ("swiftlint"
+              "--strict"
+              (config-file "--config" flycheck-swiftlintrc)
+              "--quiet"
+              source)
+    :error-patterns
+    ((error line-start (file-name) ":" line ":" column ": " "error: " (message) line-end)
+     (warning line-start (file-name) ":" line ":" column ": " "warning: " (message) line-end))
+    :modes swift-mode)
+
+  (add-to-list 'flycheck-checkers 'swiftlintier))
 
 ;;(use-package flycheck-rust)
 

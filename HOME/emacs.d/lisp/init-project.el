@@ -19,12 +19,20 @@
   :diminish
   :init
   (projectile-global-mode)
+  :custom
+  (projectile-enable-caching t)
+  (projectile-indexing-method 'alien)
   :config
   (setq projectile-switch-project-action
 		'(lambda ()
 		   (venv-projectile-auto-workon)
 		   (projectile-dired)))
-  (setq projectile-mode-line "Prj"))
+  (projectile-register-project-type
+    'adhocsh '(".adhoc.sh")
+    :compile "/bin/bash  .adhoc.sh build "
+    :test "/bin/bash  .adhoc.sh test "
+    :run "/bin/bash  .adhoc.sh run "))
+;; (add-to-list 'projectile-project-root-files ".projectile"))
 
 (use-package projectile-ripgrep)
 
@@ -32,6 +40,11 @@
 (use-package dashboard
   :ensure t
   :config
+  ;; (use-package dashboard-project-status
+  ;;   :config
+  ;;   (add-to-list 'dashboard-item-generators
+  ;;                `(project-status . ,(dashboard-project-status "/opt/projects/owlbear")))
+  ;;   (add-to-list 'dashboard-items '(project-status) t))
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner "~/.emacs.d/logo.png")
   (setq dashboard-banner-logo-title "Kill all humans")
@@ -43,7 +56,9 @@
   (setq dashboard-footer (shell-command-to-string "fortune -s"))
   (setq dashboard-items '((recents   . 10)
                           ;; (projects  . 5)
+                          ;; (project-status . 10)
                           (bookmarks . 10))))
+
 
 (add-hook 'emacs-startup-hook
           '(lambda ()

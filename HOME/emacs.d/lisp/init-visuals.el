@@ -2,9 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; https://github.com/Fuco1/indicators.el
 
 (defvar global-line-max-width)
-(setq global-line-max-width 100)
+(setq global-line-max-width 120)
 
 ;; Theme
 (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
@@ -51,6 +52,10 @@
 
 ;; turn on highlight matching brackets when cursor is on one
 (show-paren-mode t)
+
+
+;; Emoji set
+;; (set-fontset-font t 'unicode "Noto Color Emoji" nil 'prepend)
 
 
 ;; whitespace settings
@@ -118,6 +123,7 @@
 (use-package indent-guide
   :load-path contrib-load-path
   :config
+  :diminish 'indent-guide-mode
   (indent-guide-global-mode)
   (set-face-foreground 'indent-guide-face "DarkRed")
   (setq indent-guide-recursive t)

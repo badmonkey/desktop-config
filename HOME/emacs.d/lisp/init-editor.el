@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+;; https://github.com/jpkotta/syntax-subword/tree/9aa9b3f846bfe2474370642458a693ac4760d9fe
+;; https://github.com/akicho8/string-inflection/tree/c4a519be102cb99dd86be3ee8c387f008d097635
+;; https://github.com/knu/replace-with-inflections.el/tree/d9201e047856492f282da65459b28aba25998dbb
+
 
 (with-current-buffer "*scratch*"
 	  (emacs-lock-mode 'kill))
@@ -57,6 +61,17 @@
 (use-package smart-region)
 
 (use-package change-inner)
+
+
+(use-package avy
+  :config
+  (avy-setup-default)
+  (setq avy-background t)
+  :custom
+  (avy-timeout-seconds 0.5)
+  (avy-style 'words)
+  :custom-face
+  (avy-lead-face ((t (:background "#51afef" :foreground "#870000" :weight bold)))))
 
 
 (use-package crux)

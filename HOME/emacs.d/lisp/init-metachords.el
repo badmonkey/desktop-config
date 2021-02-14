@@ -21,6 +21,8 @@
   "M-q"     'fill-region-or-line
   "M-a"     'unfill-region
 
+  "M-c"     'subword-capitalize
+
   "<home>"  'move-beginning-of-line
   "<end>"   'move-end-of-line
   )
@@ -109,6 +111,7 @@
 
 ;; n        next-error
 ;; p        previous-error
+  "l"       'avy-goto-line
 
   "t"       'hl-todo-next
   "C-t"     'hl-todo-previous
@@ -159,10 +162,10 @@
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-buffer)
 
-  ;; "g"       'magit-status   ;; TODO not a commandp?
-
-  "i"       (general-predicate-dispatch nil
+  "v"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'helm-pydoc)
+
+  ;; "g"       'magit-status   ;; TODO not a commandp?
 
   "g"       'projectile-ripgrep
 
@@ -170,6 +173,7 @@
               (derived-mode-p 'emacs-lisp-mode) 'load-current-buffer
               (derived-mode-p 'markdown-mode) 'markdown-live-preview-mode)
 
+  "i"       'projectile-project-info
   "o"       'helm-projectile-find-file
   "p"       'projectile-switch-project
   "r"       'revbufs

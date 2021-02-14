@@ -2,6 +2,7 @@
 # extra commands
 #
 
+
 # $-  contains i or s
 function interactive {
     if [[ $- == *i* ]]; then

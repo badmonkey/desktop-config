@@ -65,7 +65,7 @@
 
 ;; init that requires most packages are loaded
 (require 'init-interactive-defuns)
-(require 'init-spaceline)
+(require 'init-powerline)
 
 (general-auto-unbind-keys)
 (require 'init-hydra)
@@ -101,7 +101,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (flycheck-swiftlint f rust-mode swift-mode go-mode helm-gtags ggtags imenu-anywhere multi-term gitlab-ci-mode helm-ispell change-inner clipmon goto-last-change major-mode-hydra helm-google helm-posframe markdown-toc fill-column-indicator flycheck-posframe markdown-preview-eww vmd-mode helm-rg projectile-ripgrep fringe-helper posframe jedi flycheck-inline color-identifiers-mode color-identifiers smart-region pretty-hydra highlight-indent-guides indent-guide side-notes with-venv auto-virtualenvwrapper switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido)))
+    (avy dashboard-project-status dashboard-hackernews helm-unicode flycheck-swiftlint f rust-mode swift-mode go-mode helm-gtags ggtags imenu-anywhere multi-term gitlab-ci-mode helm-ispell change-inner clipmon goto-last-change major-mode-hydra helm-google helm-posframe markdown-toc fill-column-indicator flycheck-posframe markdown-preview-eww vmd-mode helm-rg projectile-ripgrep fringe-helper posframe jedi flycheck-inline color-identifiers-mode color-identifiers smart-region pretty-hydra highlight-indent-guides indent-guide side-notes with-venv auto-virtualenvwrapper switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(py-pyment-options (quote ("--output" "reST")) t)
  '(vc-annotate-background "#2B2B2B")

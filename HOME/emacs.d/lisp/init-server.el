@@ -32,9 +32,9 @@
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
   (add-hook 'server-visit-hook 'raise-frame)
 
-  (if (< (frame-height) (frame-width))
-      (split-window-right)
-    (split-window-below))
+  ;; (if (< (frame-height) (frame-width))
+  ;;     (split-window-right)
+  ;;   (split-window-below))
 )
 
 

@@ -11,9 +11,13 @@
   (general-chord "``")      'point-to-buffer-start
   (general-chord "\,\,")    'switch-to-last-buffer
 
+  ;; (general-chord "jj")      'avy-goto-char-2
+  (general-chord "jj")      'avy-goto-char-timer
+
   ;; WIP
-  (general-chord "..")      (general-predicate-dispatch ".."
-                              (derived-mode-p 'markdown-mode) 'hydra-mark/body)
+  ;; (general-chord "..")      (general-predicate-dispatch ".."
+  ;;                             (derived-mode-p 'markdown-mode) 'hydra-mark/body)
+  (general-chord "..")      'hydra-mark/body
 
   (general-chord "\'\'")    'ispell-word
 

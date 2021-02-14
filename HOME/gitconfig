@@ -13,7 +13,6 @@
 [difftool "meld"]
 	cmd = meld "$LOCAL" "$REMOTE"
 [merge]
-#	conflictstyle = diff3
 	tool = emerge
 [mergetool "emerge"]
 	cmd = ec-merge "$LOCAL" "$REMOTE" "$MERGED"
@@ -23,5 +22,12 @@
 	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 #	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 [alias]
-	root = rev-parse --show-toplevel
-	fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
+    sw = !git checkout $(git branch -a --format '%(refname:short)' | sed 's~origin/~~' | sort | uniq | fzf)
+    root = rev-parse --show-toplevel
+    fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
+    blog = log master..
+	co = checkout
+    ci = commit
+# log --graph --abbrev-commit --decorate  --first-parent
+[commit]
+	template = /home/mfagan/.gitmessage

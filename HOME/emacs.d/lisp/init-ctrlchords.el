@@ -18,6 +18,8 @@
 
 
 (general-define-key
+  "<f5>"          'projectile-compile-project
+
   "C-="           'er/expand-region
   "C-+"           'er/contract-region
 
@@ -41,6 +43,8 @@
   "C-<"           'mc/mark-previous-like-this
 
   "C-`"           'switch-to-last-buffer
+
+  "C-."           'helm-ucs
 
   "<home>"        'crux-move-beginning-of-line
   "<end>"         'move-end-of-line

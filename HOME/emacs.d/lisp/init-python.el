@@ -52,12 +52,12 @@
 
 (use-package blacken
   :config
-  (setq blacken-line-length '100)
+  (setq blacken-line-length global-line-max-width)
   (add-hook 'python-mode-hook 'blacken-mode))
 
 (use-package py-isort
   :init
-  (setq py-isort-options '("--lines=100"))
+  (setq py-isort-options '("-l 120"))
   (add-hook 'before-save-hook 'py-isort-before-save))
 
 

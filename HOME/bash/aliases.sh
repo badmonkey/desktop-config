@@ -24,6 +24,9 @@ alias ll='ls -halF'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias rless='less -R'
+
+alias j='autojump'
 
 
 # Add an "alert" alias for long running commands.  Use like so:
