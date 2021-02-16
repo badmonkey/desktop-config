@@ -14,21 +14,14 @@
   ;; (general-chord "jj")      'avy-goto-char-2
   (general-chord "jj")      'avy-goto-char-timer
 
-  ;; WIP
-  ;; (general-chord "..")      (general-predicate-dispatch ".."
-  ;;                             (derived-mode-p 'markdown-mode) 'hydra-mark/body)
-  (general-chord "..")      'hydra-mark/body
+  (general-chord "/.")      'hydra-mark/body
 
   (general-chord "\'\'")    'ispell-word
 
-  (general-chord "[;")      'previous-error
-  (general-chord ";[")      'previous-error
-  (general-chord "];")      'next-error
-  (general-chord ";]")      'next-error
+  (general-chord "[[")      'previous-error
+  (general-chord "]]")      'next-error
 
-  (general-chord "[\\")     'bm-previous
   (general-chord "\\[")     'bm-previous
-  (general-chord "]\\")     'bm-next
   (general-chord "\\]")     'bm-next
   )
 
