@@ -26,7 +26,30 @@ alias l='ls -CF'
 
 alias rless='less -R'
 
-alias j='autojump'
+alias rm=trash
+
+# fast cd, adds `z` cd-like command
+eval "$(fasd --init auto)"
+
+
+function select-one {
+    if [ -z "$1" ]; then
+	echo ""
+    elif [ $(wc -l <<< "$1") -eq 1 ]; then
+	echo "$1"
+    else
+	echo "$1" | fzf-tmux -p
+    fi
+}
+
+unalias zz
+function zz {
+    choices=$(fasd -d -R -l "$1")
+    target=$(select-one "$choices")
+    if [ ! -z "$target" ]; then
+	fasd_cd -d "$target"
+    fi
+}
 
 
 # Add an "alert" alias for long running commands.  Use like so:

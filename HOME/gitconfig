@@ -16,18 +16,19 @@
 	tool = emerge
 [mergetool "emerge"]
 	cmd = ec-merge "$LOCAL" "$REMOTE" "$MERGED"
-#	cmd = ec-merge "$LOCAL" "$REMOTE" "$MERGED" "$BASE"
 	trustExitCode = true
 [mergetool "meld"]
 	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-#	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 [alias]
     sw = !git checkout $(git branch -a --format '%(refname:short)' | sed 's~origin/~~' | sort | uniq | fzf)
     root = rev-parse --show-toplevel
     fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
     blog = log master..
-	co = checkout
-    ci = commit
-# log --graph --abbrev-commit --decorate  --first-parent
+    sw = checkout
+    switch = checkout
+    amend = commit --amend
+    ll = log --all --decorate --oneline --graph --first-parent
+    history = log --graph --abbrev-commit --decorate --first-parent
+    squash = rebase -i
 [commit]
-	template = /home/mfagan/.gitmessage
+    template = /home/mfagan/.gitmessage

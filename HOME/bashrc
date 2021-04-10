@@ -1,0 +1,33 @@
+#
+# non-interactive login
+#
+
+# config bash settings
+. "$HOME/.bash/bashrc"
+
+
+PATH="$HOME/.local/bin:$PATH"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+
+. "$HOME/.bash/environment.sh"
+. "$HOME/.bash/commands.sh"
+
+if [ -f "$HOME/.environment" ]; then
+   . "$HOME/.environment"
+fi
+
+if is-login-shell; then
+   . "$HOME/.bash/login.sh"
+fi
+
+
+
+if [ -n "$SETUP_PYTHON" ]; then
+   eval "$(pyenv init -)"
+   pyenv virtualenvwrapper_lazy
+fi

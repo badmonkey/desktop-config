@@ -1,0 +1,27 @@
+#
+# interactive login
+#
+
+# setup bash
+. "$HOME/.bashrc"
+
+
+if is-start-session; then
+   . "$HOME/.bash/session.sh"
+fi
+
+
+. "$HOME/.bash/aliases.sh"
+
+if [ -n "$SETUP_PROMPTS" ]; then
+   . "$HOME/.bash/prompt.sh"
+fi
+
+
+[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+
+for bcfile in ~/.completion.d/*.bash ; do
+    . $bcfile
+done
+
+complete -cf sudo

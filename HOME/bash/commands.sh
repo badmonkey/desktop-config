@@ -4,7 +4,7 @@
 
 
 # $-  contains i or s
-function interactive {
+function is-interactive {
     if [[ $- == *i* ]]; then
         return 0
     else
@@ -14,7 +14,7 @@ function interactive {
 
 # shopt -q login_shell
 # or  $0 ~= "-bash"
-function login-shell {
+function is-login-shell {
 	if shopt -q login_shell; then
 		return 0
 	else
