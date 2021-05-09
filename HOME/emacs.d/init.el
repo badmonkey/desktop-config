@@ -2,12 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
 
 ;; Fiddle with Garbage Collection
 
@@ -33,7 +27,6 @@
 (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
 
-
 ;; Add custom code to the load path.
 ;; `contrib' is code snippets from the internet
 ;; `lisp' is for my code
@@ -44,13 +37,36 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 
-(require 'monkey-stdlib)
+;; bootstrap straight
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
+(setq straight-cache-autoloads t)
+
+;; Load somne library packages
+(use-package dash)
+(use-package dash-functional)
+(use-package s)
+(use-package s-buffer)
+(use-package f)
+
+;; start loading packages
 (require 'init-settings)
 (require 'init-package)
 (require 'init-visuals)
 
-;; start loading packages
 (require 'init-general-defuns)
 
 (require 'init-editor)
@@ -99,9 +115,9 @@
  '(nrepl-message-colors
    '("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3"))
  '(package-selected-packages
-   '(avy dashboard-project-status dashboard-hackernews helm-unicode flycheck-swiftlint f rust-mode swift-mode go-mode helm-gtags ggtags imenu-anywhere multi-term gitlab-ci-mode helm-ispell change-inner clipmon goto-last-change major-mode-hydra helm-google helm-posframe markdown-toc fill-column-indicator flycheck-posframe markdown-preview-eww vmd-mode helm-rg projectile-ripgrep fringe-helper posframe jedi flycheck-inline color-identifiers-mode color-identifiers smart-region pretty-hydra highlight-indent-guides indent-guide side-notes with-venv auto-virtualenvwrapper switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido))
+   '(zig-mode avy dashboard-project-status dashboard-hackernews helm-unicode flycheck-swiftlint f rust-mode swift-mode go-mode helm-gtags ggtags imenu-anywhere multi-term gitlab-ci-mode helm-ispell change-inner clipmon goto-last-change major-mode-hydra helm-google helm-posframe markdown-toc fill-column-indicator flycheck-posframe markdown-preview-eww vmd-mode helm-rg projectile-ripgrep fringe-helper posframe jedi flycheck-inline color-identifiers-mode color-identifiers smart-region pretty-hydra highlight-indent-guides indent-guide side-notes with-venv auto-virtualenvwrapper switch-buffer-functions mc-extras multiple-cursors spaceline-all-the-icons all-the-icons hl-todo flycheck-pyre flycheck crux virtualenvwrapper blacken counsel-etags counsel swiper ivy rainbow-delimiters magit erlang pandoc-mode json-mode diminish use-package projectile flx-ido))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#383838"))
- '(py-pyment-options '("--output" "reST") t)
+ '(py-pyment-options '("--output" "reST"))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    '((20 . "#BC8383")

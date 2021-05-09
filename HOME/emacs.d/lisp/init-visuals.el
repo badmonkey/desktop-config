@@ -63,15 +63,15 @@
 (setq-default fill-column global-line-max-width)
 
 (setq whitespace-style
-	  (quote (face trailing lines spaces tabs newline space-mark tab-mark newline-mark)))
+      (quote (face trailing lines spaces tabs newline space-mark tab-mark newline-mark)))
 
 ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
 (setq whitespace-display-mappings
-	  ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-	  '((space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-		(newline-mark 10 [182 10]) ; LINE FEED,
-		(tab-mark 9 [9655 9] [92 9]) ; tab
-		))
+      ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
+      '((space-mark 32 [183] [46]) ; SPACE 32 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+        (newline-mark 10 [182 10]) ; LINE FEED,
+        (tab-mark 9 [9655 9] [92 9]) ; tab
+        ))
 
 
 ;; (custom-set-faces
@@ -109,11 +109,11 @@
 ;; clean up the status bar
 (use-package diminish
   :config
+  :diminish 'subword-mode
   :diminish 'global-whitespace-mode)
 
 (when (display-graphic-p)
   (use-package fira-code-mode
-    :load-path contrib-load-path
     :config
     ;; (fira-code-mode)
     (add-hook 'prog-mode-hook 'fira-code-mode)
@@ -121,14 +121,13 @@
 )
 
 (use-package indent-guide
-  :load-path contrib-load-path
   :config
-  :diminish 'indent-guide-mode
   (indent-guide-global-mode)
   (set-face-foreground 'indent-guide-face "DarkRed")
   (setq indent-guide-recursive t)
   (setq indent-guide-char "|")
-  (setq indent-guide-delay 0.2))
+  (setq indent-guide-delay 0.2)
+  :diminish 'indent-guide-mode)
 
 (use-package rainbow-delimiters
   :init
@@ -151,7 +150,6 @@
   :diminish beacon-mode)
 
 (use-package hl-todo
-  :load-path contrib-load-path
   :config
   (global-hl-todo-mode))
 

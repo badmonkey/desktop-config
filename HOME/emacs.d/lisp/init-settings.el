@@ -3,12 +3,13 @@
 ;;; Code:
 
 
+(defvar user-home-dir (getenv "HOME"))
+
+
 ;; simple settings
 (setq user-full-name "Michael Fagan"
       user-mail-address "michael.charles.fagan@gmail.com")
 
-
-(defvar package-use-network t)
 
 
 ;;  set default font
@@ -18,7 +19,7 @@
 
 ;; Backup/Autosave
 (setq auto-save-file-name-transforms
-	  `((".*" ,temporary-file-directory t)))
+      `((".*" ,temporary-file-directory t)))
 
 
 (defvar backup-dir (f-join user-home-dir ".backup"))
@@ -84,8 +85,8 @@
 (fset 'yes-or-no-p #'y-or-n-p)
 
 ;; clipboard mode
-(setq x-select-enable-clipboard t
-      x-select-enable-primary t)
+(setq select-enable-clipboard t
+      select-enable-primary t)
 
 
 ;; transient mode

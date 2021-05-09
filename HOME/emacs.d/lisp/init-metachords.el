@@ -57,6 +57,7 @@
   "p"       'mark-paragraph
   "q"       'region-qp-encode
   "w"       'region-copy-whole-line
+  "u"       'untabify-everything
   "y"       'clipmon-autoinsert-toggle
   )
 

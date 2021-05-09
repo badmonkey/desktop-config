@@ -7,6 +7,7 @@
 ;; https://github.com/MagicDuck/emacs-config/blob/master/init.el
 ;; https://quinoa42.github.io/en/dot-emacs/
 
+
 (use-package spaceline
   :config
 
@@ -32,8 +33,11 @@
 
 
 (use-package spaceline-config
-  :ensure spaceline
+  :straight (spaceline :host github :repo "TheBB/spaceline")
   :config
+  (setq spaceline-workspace-numbers-unicode t)
+  (spaceline-toggle-minor-modes-off)
+  (spaceline-helm-mode 1)
   (spaceline-compile
     'lunaryorn
     ;; Left side of the mode line (all the important stuff)
@@ -53,11 +57,37 @@
                 header-line-format mode-line-format))
 
 
+;; (use-package eyeliner
+;;   :straight (eyeliner :type git :host github :repo "dustinlacewell/eyeliner")
+;;   :config
+;;   (require 'eyeliner)
+;;   (eyeliner/install))
+
+;; (eyeliner/style 'buffer-name eyeliner/plain-color)
+;; (eyeliner/style 'buffer-name-modified eyeliner/warm-color)
+
+;; (eyeliner/segment eyeliner/buffer-name
+;;   (let* ((buffer-state (format-mode-line "%*"))
+;;          (style (cond
+;;                  ((string= buffer-state "-") 'eyeliner/buffer-name-style)
+;;                  ((string= buffer-state "*") 'eyeliner/buffer-name-modified-style)
+;;                  ((string= buffer-state "%") 'eyeliner/buffer-name-modified-style))))
+;;     (apply style `(,(buffer-name)))))
+
+;; (eyeliner/icon unmodified "circle-o" eyeliner/cool-color)
+;; (eyeliner/icon modified "dot-circle-o" eyeliner/warm-color)
+;; (eyeliner/icon locked "diff-added" eyeliner/warm-color)
+
+;; (eyeliner/segment eyeliner/buffer-modified
+;;   (let ((buffer-state (format-mode-line "%*")))
+;;     (cond
+;;      ((string= buffer-state "-") (eyeliner/unmodified-icon))
+;;      ((string= buffer-state "*") (eyeliner/modified-icon))
+;;      ((string= buffer-state "%") (eyeliner/locked-icon)))))
+
+
 (diminish
   (list 'indent-guide-mode 'subword-mode))
-;(use-package spaceline-all-the-icons
-;  :after spaceline
-;  :config (spaceline-all-the-icons-theme))
 
 
 

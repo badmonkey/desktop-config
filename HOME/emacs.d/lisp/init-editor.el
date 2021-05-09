@@ -19,10 +19,6 @@
 (ad-activate 'ansi-term)
 
 
-(use-package dash)
-(use-package dash-functional)
-
-
 (use-package general)
 
 (use-package key-chord
@@ -32,14 +28,13 @@
 
 ;;; Hydra!
 
-(use-package posframe
-  ;; :load-path contrib-load-path
-  :config)
+(use-package posframe)
 
 (use-package hydra
   :config
   (use-package hydra-posframe
-    :load-path contrib-load-path
+    :straight (:host github :repo "Ladicle/hydra-posframe"
+               :fork (:host github :repo "jerrypnz/hydra-posframe"))
     :custom
     (hydra-posframe-parameters
       '((left-fringe . 5)
@@ -76,9 +71,7 @@
 
 (use-package crux)
 
-(use-package revbufs
-  :load-path contrib-load-path
-  :config)
+(use-package revbufs)
 
 ;; realgud
 ;; realgud-ipdb
@@ -177,10 +170,19 @@
 
 
 ;; yasnippet
+;; (use-package yasnippet
+;;   :straight t
+;;   :bind
+;;   (:map yas-minor-mode-map
+;;         ("<tab>" . nil)
+;;         ("TAB" . nil))
+;;   :hook (yas-before-expand-snippet . expand-for-web-mode)
+;;   :config
+;;   (yas-global-mode)
 
+;;   )
 
-(use-package magit
-  :disabled t)
+(use-package magit)
 
 (use-package goto-last-change)
 
@@ -188,6 +190,10 @@
   :config
   (setq clipmon-autoinsert-color "red")
   (setq clipmon-autoinsert-timeout 2))
+
+;;(require 'xclip)
+;;(xclip-mode 1)
+;;(turn-on-xclip)
 
 (use-package ibuffer)
 
@@ -199,11 +205,11 @@
   (ac-config-default)
   (setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
   (setq ac-modes '(emacs-lisp-mode
-				   c-mode
-				   cc-mode
-				   c++-mode
-				   python-mode
-				   lua-mode))
+                   c-mode
+                   cc-mode
+                   c++-mode
+                   python-mode
+                   lua-mode))
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict"))
 
 

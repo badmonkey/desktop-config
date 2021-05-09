@@ -24,9 +24,9 @@
   (projectile-indexing-method 'alien)
   :config
   (setq projectile-switch-project-action
-		'(lambda ()
-		   (venv-projectile-auto-workon)
-		   (projectile-dired)))
+        '(lambda ()
+           (venv-projectile-auto-workon)
+           (projectile-dired)))
   (projectile-register-project-type
     'adhocsh '(".adhoc.sh")
     :compile "/bin/bash  .adhoc.sh build "
@@ -34,11 +34,11 @@
     :run "/bin/bash  .adhoc.sh run "))
 ;; (add-to-list 'projectile-project-root-files ".projectile"))
 
+
 (use-package projectile-ripgrep)
 
 
 (use-package dashboard
-  :ensure t
   :config
   ;; (use-package dashboard-project-status
   ;;   :config
@@ -65,6 +65,14 @@
              (switch-to-buffer dashboard-buffer-name)
              (emacs-lock-mode 'kill)))
 
+
+;; (require 'subr-x)
+;; (dolist (package (sort (hash-table-keys straight--recipe-cache)
+;;                        #'string-lessp))
+;;   (insert (format
+;;            "%25s | %s\n"
+;;            package (plist-get (gethash package straight--recipe-cache)
+;;                               :local-repo))))
 
 
 (provide 'init-project)

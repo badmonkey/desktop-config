@@ -107,59 +107,63 @@
   "If there is an active region use indent-code-rigidly else indent-for-tab-command."
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (indent-code-rigidly start end tab-width)
-	(indent-for-tab-command)))
+      (indent-code-rigidly start end tab-width)
+    (indent-for-tab-command)))
 
 
 (defun region-kill-line (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (kill-region start end)
-	(kill-line)))
+      (kill-region start end)
+    (kill-line)))
 
 
 (defun region-kill-whole-line (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (kill-region beg end)
-	(kill-whole-line)))
+      (kill-region beg end)
+    (kill-whole-line)))
 
 
 (defun region-kill-to-left-margin (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (kill-region start end)
-	(kill-region (line-beginning-position) start)))
+      (kill-region start end)
+    (kill-region (line-beginning-position) start)))
 
 
 (defun region-copy-line (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (kill-ring-save start end)
-	(copy-region-as-kill start (line-end-position))))
+      (kill-ring-save start end)
+    (copy-region-as-kill start (line-end-position))))
 
 
 (defun region-copy-whole-line (start end)
   (interactive (input-region-or-line))
   (if (use-region-p)
-	  (kill-ring-save start end)
-	(copy-region-as-kill start end)))
+      (kill-ring-save start end)
+    (copy-region-as-kill start end)))
 
 
 (defun region-delete-back-word (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (delete-region start end)
-	(backward-kill-word 1)))
+      (delete-region start end)
+    (backward-kill-word 1)))
+
+(defun untabify-everything (start end)
+  (interactive (input-region-or-everything))
+  (untabify start end))
 
 
 (defun query-replace-from-region (from-string to-string &optional start end interactive)
   (interactive (input-region-from-to-args "Query replace" nil))
   (progn
-	(when mark-active
-	  (goto-char (mark))
-	  (deactivate-mark))
-	(query-replace from-string to-string)))
+    (when mark-active
+      (goto-char (mark))
+      (deactivate-mark))
+    (query-replace from-string to-string)))
 
 
 (defun fill-region-or-line (start end)
@@ -175,15 +179,15 @@
 (defun region-upcase-word (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (upcase-region start end)
-	(upcase-word 1)))
+      (upcase-region start end)
+    (upcase-word 1)))
 
 
 (defun region-downcase-word (start &optional end)
   (interactive (input-region-or-point))
   (if (use-region-p)
-	  (downcase-region start end)
-	(downcase-word 1)))
+      (downcase-region start end)
+    (downcase-word 1)))
 
 (defun region-qp-encode (start end)
   (interactive (input-region-or-line))
@@ -292,11 +296,11 @@
   (interactive
    (keep-lines-read-args "Kill lines containing match for regexp"))
   (progn
-	(unless (string-prefix-p "^" regexp)
-	  (setq regexp (format "^.*%s" regexp)))
-	(unless (string-suffix-p "$" regexp)
-	  (setq regexp (format "%s.*$" regexp)))
-	(query-replace-regexp regexp "" nil start end)))
+    (unless (string-prefix-p "^" regexp)
+      (setq regexp (format "^.*%s" regexp)))
+    (unless (string-suffix-p "$" regexp)
+      (setq regexp (format "%s.*$" regexp)))
+    (query-replace-regexp regexp "" nil start end)))
 
 
 ;;
@@ -309,12 +313,12 @@
       (setq bookmark (bm-bookmark-at (point))))
 
   (if bookmark
-	  (progn
-		(setq annotation (overlay-get bookmark 'annotation))
-		(setq annotation (read-from-minibuffer "Annotation: " annotation nil nil 'bm-annotation-history))
-		(if annotation
-			(bm-bookmark-annotate bookmark annotation)
-		  ))
+      (progn
+        (setq annotation (overlay-get bookmark 'annotation))
+        (setq annotation (read-from-minibuffer "Annotation: " annotation nil nil 'bm-annotation-history))
+        (if annotation
+            (bm-bookmark-annotate bookmark annotation)
+          ))
     (bm-bookmark-annotate (bm-bookmark-add annotation))))
 
 
@@ -333,8 +337,6 @@
            (file-readable-p file-ancestor))
       (ediff-merge-files-with-ancestor file-a file-b file-ancestor nil file-out)
     (ediff-merge-files file-a file-b nil file-out)))
-
-
 
 
 

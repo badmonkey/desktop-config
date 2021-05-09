@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(defvar package-use-network t)
+
 (require 'package)
 (setq package-enable-at-startup nil)
 

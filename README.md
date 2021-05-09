@@ -7,3 +7,7 @@ fira-code
 hack
 red-october
 
+python
+======
+install pyenv
+install pyenv-virtualenvwrapper

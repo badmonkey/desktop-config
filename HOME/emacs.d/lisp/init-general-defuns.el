@@ -41,6 +41,12 @@
     (list (line-beginning-position)
           (line-end-position))))
 
+(defun input-region-or-everything ()
+  (if (region-active-p)
+      (list (region-beginning)
+            (region-end))
+    (list (point-min) (point-max))))
+
 (defun input-region-from-to-args (prompt regexp-flag)
   (if (region-active-p)
       (let ((region-text (buffer-substring (region-beginning) (region-end))))

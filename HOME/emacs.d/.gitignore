@@ -1,4 +1,10 @@
-.mc-lists.el
 auto-save-list/
 elpa/
+transient/
+.mc-lists.el
+ac-comphist.dat
+recentf
+helm-adaptive-history
 projectile-bookmarks.eld
+.emacs.desktop
+.emacs.desktop.lock

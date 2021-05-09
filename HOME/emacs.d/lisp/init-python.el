@@ -27,7 +27,7 @@
 
 (use-package virtualenvwrapper
   :config
-  (setq venv-location "/home/mfagan/.virtualenvs/")
+  (setq venv-location (expand-file-name ".virtualenvs" user-home-dir))
   (venv-initialize-interactive-shells) ;; if you want interactive shell support
   (venv-initialize-eshell)) ;; if you want eshell support
 
@@ -42,13 +42,16 @@
   (remove-hook 'with-venv-find-venv-dir-functions
           'with-venv-find-venv-dir-pipenv))
 
+(use-package buftra
+  :straight (buftra :host github :repo "humitos/buftra.el"))
+
 (use-package py-pyment
-  :load-path contrib-load-path
-  :diminish
-  :config
-  :hook (python-mode . py-pyment-mode)
-  :custom
-  (py-pyment-options '("--output" "reST")))
+ :straight (py-pyment :host github :repo "humitos/py-cmd-buffer.el")
+ :diminish
+ :config
+ :hook (python-mode . py-pyment-mode)
+ :custom
+ (py-pyment-options '("--output" "reST")))
 
 (use-package blacken
   :config

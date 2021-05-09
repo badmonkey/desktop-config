@@ -57,9 +57,9 @@
   (setq counsel-etags-update-interval 180)
   ;; Set up auto-update
   (add-hook 'prog-mode-hook
-			(lambda () (add-hook 'after-save-hook
-								 (lambda ()
-								   (counsel-etags-virtual-update-tags))))
+            (lambda () (add-hook 'after-save-hook
+                                 (lambda ()
+                                   (counsel-etags-virtual-update-tags))))
   )
 
   ;; The function provided by counsel-etags is broken (at least on Linux)

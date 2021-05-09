@@ -128,7 +128,7 @@
 
 
 
-(pretty-hydra-define hydra-projectile
+(pretty-hydra-define hydra-projectile2
   (:hint nil :color teal :quit-key "q" :title (with-faicon "rocket" "Projectile" 1 -0.05))
   ("Buffers"
    (("b" counsel-projectile-switch-to-buffer "list")
@@ -148,6 +148,54 @@
 
 
 
+(defhydra hydra-projectile-other-window (:color teal)
+  "projectile-other-window"
+  ("f"  projectile-find-file-other-window        "file")
+  ("g"  projectile-find-file-dwim-other-window   "file dwim")
+  ("d"  projectile-find-dir-other-window         "dir")
+  ("b"  projectile-switch-to-buffer-other-window "buffer")
+  ("q"  nil                                      "cancel" :color blue))
+
+(defhydra hydra-projectile (:color teal
+                            :hint nil)
+  "
+     PROJECTILE: %(projectile-project-root)
+
+     Find File            Search/Tags          Buffers                Cache
+------------------------------------------------------------------------------------------
+_s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
+ _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
+ _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
+  _r_: recent file                                               ^^^^_z_: cache current
+  _d_: dir
+
+"
+  ("a"   projectile-ag)
+  ("b"   projectile-switch-to-buffer)
+  ("c"   projectile-invalidate-cache)
+  ("d"   projectile-find-dir)
+  ("s-f" projectile-find-file)
+  ("ff"  projectile-find-file-dwim)
+  ("fd"  projectile-find-file-in-directory)
+  ("g"   ggtags-update-tags)
+  ("s-g" ggtags-update-tags)
+  ("i"   projectile-ibuffer)
+  ("K"   projectile-kill-buffers)
+  ("s-k" projectile-kill-buffers)
+  ("m"   projectile-multi-occur)
+  ("o"   projectile-multi-occur)
+  ("s-p" projectile-switch-project "switch project")
+  ("p"   projectile-switch-project)
+  ("s"   projectile-switch-project)
+  ("r"   projectile-recentf)
+  ("x"   projectile-remove-known-project)
+  ("X"   projectile-cleanup-known-projects)
+  ("z"   projectile-cache-current-file)
+  ("`"   hydra-projectile-other-window/body "other window")
+  ("q"   nil "cancel" :color blue))
+
+
+
 (pretty-hydra-define hydra-spelling
   (:hint nil :color teal :quit-key "q" :title (with-faicon "magic" "Spelling" 1 -0.05))
   ("Checker"
@@ -162,6 +210,134 @@
     (">" flyspell-correct-next "next" :color pink)
     ("f" langtool-check "find"))))
 
+
+
+(defhydra hydra-helm (:hint nil :color pink)
+        "
+                                                                          ╭──────┐
+   Navigation   Other  Sources     Mark             Do             Help   │ Helm │
+  ╭───────────────────────────────────────────────────────────────────────┴──────╯
+        ^_k_^         _K_       _p_   [_m_] mark         [_v_] view         [_H_] helm help
+        ^^↑^^         ^↑^       ^↑^   [_t_] toggle all   [_d_] delete       [_s_] source help
+    _h_ ←   → _l_     _c_       ^ ^   [_u_] unmark all   [_f_] follow: %(helm-attr 'follow)
+        ^^↓^^         ^↓^       ^↓^    ^ ^               [_y_] yank selection
+        ^_j_^         _J_       _n_    ^ ^               [_w_] toggle windows
+  --------------------------------------------------------------------------------
+        "
+        ("<tab>" helm-keyboard-quit "back" :exit t)
+        ("<escape>" nil "quit")
+        ("\\" (insert "\\") "\\" :color blue)
+        ("h" helm-beginning-of-buffer)
+        ("j" helm-next-line)
+        ("k" helm-previous-line)
+        ("l" helm-end-of-buffer)
+        ("g" helm-beginning-of-buffer)
+        ("G" helm-end-of-buffer)
+        ("n" helm-next-source)
+        ("p" helm-previous-source)
+        ("K" helm-scroll-other-window-down)
+        ("J" helm-scroll-other-window)
+        ("c" helm-recenter-top-bottom-other-window)
+        ("m" helm-toggle-visible-mark)
+        ("t" helm-toggle-all-marks)
+        ("u" helm-unmark-all)
+        ("H" helm-help)
+        ("s" helm-buffer-help)
+        ("v" helm-execute-persistent-action)
+        ("d" helm-persistent-delete-marked)
+        ("y" helm-yank-selection)
+        ("w" helm-toggle-resplit-and-swap-windows)
+        ("f" helm-follow-mode))
+
+
+
+(defhydra dh-hydra-markdown-mode (:hint nil)
+  "
+Formatting        C-c C-s    _s_: bold          _e_: italic     _b_: blockquote   _p_: pre-formatted    _c_: code
+
+Headings          C-c C-t    _h_: automatic     _1_: h1         _2_: h2           _3_: h3               _4_: h4
+
+Lists             C-c C-x    _m_: insert item
+
+Demote/Promote    C-c C-x    _l_: promote       _r_: demote     _u_: move up      _d_: move down
+
+Links, footnotes  C-c C-a    _L_: link          _U_: uri        _F_: footnote     _W_: wiki-link      _R_: reference
+
+"
+  ("s" markdown-insert-bold)
+  ("e" markdown-insert-italic)
+  ("b" markdown-insert-blockquote :color blue)
+  ("p" markdown-insert-pre :color blue)
+  ("c" markdown-insert-code)
+
+  ("h" markdown-insert-header-dwim)
+  ("1" markdown-insert-header-atx-1)
+  ("2" markdown-insert-header-atx-2)
+  ("3" markdown-insert-header-atx-3)
+  ("4" markdown-insert-header-atx-4)
+
+  ("m" markdown-insert-list-item)
+
+  ("l" markdown-promote)
+  ("r" markdown-demote)
+  ("d" markdown-move-down)
+  ("u" markdown-move-up)
+
+  ("L" markdown-insert-link :color blue)
+  ("U" markdown-insert-uri :color blue)
+  ("F" markdown-insert-footnote :color blue)
+  ("W" markdown-insert-wiki-link :color blue)
+  ("R" markdown-insert-reference-link-dwim :color blue)
+)
+
+
+
+;; (defhydra hydra-breadcrumb
+;;   (:exit t)
+;;   "
+;; Breadcrumb bookmarks:
+;;   _<up>_:   prev   _S-<up>_:   local prev
+;;   _<down>_: next   _S-<down>_: local next
+;;   _s_: set  _c_: clear  _l_: list  _q_: quit
+;; "
+;;   ("<down>" bc-next nil :exit nil)
+;;   ("<up>" bc-previous nil :exit nil)
+;;   ("S-<down>" bc-local-next nil :exit nil)
+;;   ("S-<up>" bc-local-previous nil :exit nil)
+;;   ("l" bc-list nil)
+;;   ("s" bc-set nil)
+;;   ("c" bc-clear nil)
+;;   ("q" nil nil))
+
+
+;; (defhydra hydra-straight-helper (:hint nil)
+;;   "
+;; _c_heck all       |_f_etch all     |_m_erge all      |_n_ormalize all   |p_u_sh all
+;; _C_heck package   |_F_etch package |_M_erge package  |_N_ormlize package|p_U_sh package
+;; ----------------^^+--------------^^+---------------^^+----------------^^+------------||_q_uit||
+;; _r_ebuild all     |_p_ull all      |_v_ersions freeze|_w_atcher start   |_g_et recipe
+;; _R_ebuild package |_P_ull package  |_V_ersions thaw  |_W_atcher quit    |prun_e_ build"
+;;   ("c" straight-check-all)
+;;   ("C" straight-check-package)
+;;   ("r" straight-rebuild-all)
+;;   ("R" straight-rebuild-package)
+;;   ("f" straight-fetch-all)
+;;   ("F" straight-fetch-package)
+;;   ("p" straight-pull-all)
+;;   ("P" straight-pull-package)
+;;   ("m" straight-merge-all)
+;;   ("M" straight-merge-package)
+;;   ("n" straight-normalize-all)
+;;   ("N" straight-normalize-package)
+;;   ("u" straight-push-all)
+;;   ("U" straight-push-package)
+;;   ("v" straight-freeze-versions)
+;;   ("V" straight-thaw-versions)
+;;   ("w" straight-watcher-start)
+;;   ("W" straight-watcher-quit)
+;;   ("g" straight-get-recipe)
+;;   ("e" straight-prune-build)
+;;   ("q" nil))
 
 
 (provide 'init-hydra)

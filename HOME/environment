@@ -10,7 +10,7 @@ export LC_ALL=en_US.UTF-8
 export EDITOR="emacsclient -q"
 
 
-export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
+#export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/
 
 
 export SETUP_XDISPLAY=1
@@ -29,13 +29,13 @@ export SETUP_PROMPTS=1
 #
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME=/opt/projects
-export PIP_CACHE_DIR="/var/opt/cache/pip"
+#export PIP_CACHE_DIR="/var/opt/cache/pip"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 export VIRTUALENVWRAPPER_PYTHON="$PYENV_ROOT/shims/python"
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-export PYENV_VERSION="3.8"
+export PYENV_VERSION="3.9"
 export MYPY_CACHE_DIR=~/.mypy_cache
 export GTAGSLABEL=ctags
 

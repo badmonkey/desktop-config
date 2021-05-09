@@ -39,14 +39,18 @@
               (set-variable 'indent-tabs-mode nil)
               (set-variable 'tab-width 4))))
 
+(use-package rust-mode)
+
 (use-package go-mode
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
 (use-package swift-mode)
 
+(use-package zig-mode)
+
 (use-package google-java-format
-  :load-path contrib-load-path
+  :straight (google-java-format :type nil :local-repo "~/.emacs.d/contrib/google-java-format")
   :config
   (add-hook 'java-mode-hook
             (lambda ()

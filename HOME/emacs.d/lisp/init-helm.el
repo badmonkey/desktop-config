@@ -28,27 +28,28 @@
          ("M-H" . helm-end-of-buffer))
   :config (progn
          (setq helm-split-window-in-side-p           t
-			   helm-move-to-line-cycle-in-source     t
-			   helm-ff-search-library-in-sexp        t
-			   helm-scroll-amount                    8
-			   helm-ff-file-name-history-use-recentf t
-			   helm-move-to-line-cycle-in-source     t
-			   helm-prevent-escaping-from-minibuffer t
-			   helm-bookmark-show-location           t)
-		 (helm-mode 1)
-		 (helm-adaptive-mode 1))
+               helm-move-to-line-cycle-in-source     t
+               helm-ff-search-library-in-sexp        t
+               helm-scroll-amount                    8
+               helm-ff-file-name-history-use-recentf t
+               helm-move-to-line-cycle-in-source     t
+               helm-prevent-escaping-from-minibuffer t
+               helm-bookmark-show-location           t)
+         (helm-mode 1)
+         (helm-adaptive-mode 1))
   )
 
-;; (use-package helm-posframe
-;;   :after helm
-;;   :config
-;;   (helm-posframe-enable)
-;;   (setq helm-posframe-parameters
-;;         '((left-fringe . 10)
-;;           (right-fringe . 10))))
+(use-package helm-posframe
+  :after helm
+  :config
+  (helm-posframe-enable)
+  (setq helm-posframe-parameters
+        '((left-fringe . 10)
+          (right-fringe . 10))))
 
 (use-package helm-projectile
   :config
+  (setq projectile-completion-system 'helm)
   (helm-projectile-on))
 
 (use-package helm-pydoc
@@ -63,9 +64,9 @@
 (use-package helm-dash
   :init
   (defun c-doc ()
-	(setq helm-dash-docsets '("C")))
+    (setq helm-dash-docsets '("C")))
   (defun c++-doc ()
-	(setq helm-dash-docsets '("C" "C++")))
+    (setq helm-dash-docsets '("C" "C++")))
   (add-hook 'c-mode-hook 'c-doc)
   (add-hook 'c++-mode-hook 'c++-doc))
 
@@ -76,6 +77,7 @@
 (use-package helm-rg)
 
 (use-package ggtags)
+
 (use-package imenu-anywhere)
 
 
