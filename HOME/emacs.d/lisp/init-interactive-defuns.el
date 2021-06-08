@@ -166,6 +166,16 @@
     (query-replace from-string to-string)))
 
 
+(defun repeat-query-replace (from-string to-string)
+  (interactive (input-replace-from-to-args "Query replace" nil))
+  (query-replace from-string to-string))
+
+
+(defun repeat-query-replace-regexp (from-string to-string)
+  (interactive (input-replace-from-to-args "Query replace" t))
+  (query-replace-regexp from-string to-string))
+
+
 (defun fill-region-or-line (start end)
   (interactive (input-region-or-line))
   (fill-region-as-paragraph start end))
@@ -292,6 +302,7 @@
 
 
 ;; still WIP
+;; currently replaces the text of a line with "" so leaves a blank line
 (defun query-kill-matching-lines (regexp &optional start end interactive)
   (interactive
    (keep-lines-read-args "Kill lines containing match for regexp"))

@@ -17,7 +17,8 @@
                (eq major-mode 'python-mode)
                (bound-and-true-p venv-current-name))
       (let ((tmp-venv-name (venv-display-name)))
-        (unless (string= (projectile-project-name) tmp-venv-name)
+        (if (string= (projectile-project-name) tmp-venv-name)
+          "//PROJECT//"
           (propertize (format "//%s//" tmp-venv-name)
                       'face 'spaceline-python-venv
                       'help-echo (format "Virtual environment: %s" tmp-venv-name))))))

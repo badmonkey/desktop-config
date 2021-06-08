@@ -19,11 +19,11 @@
 
 ;; Start server (but don't restart) but only on graphics systems
 
- (add-hook 'after-init-hook
-           (lambda ()
-             (require 'server)
-             (unless (server-running-p)
-               (server-start))))
+(add-hook 'after-init-hook
+          (lambda ()
+            (require 'server)
+            (unless (server-running-p)
+              (server-start))))
 
 (setq scroll-error-top-bottom t)
 

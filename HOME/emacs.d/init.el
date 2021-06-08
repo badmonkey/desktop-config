@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; init.el --- Configure all the things
 ;;; Commentary:
 ;;; Code:
@@ -14,8 +15,8 @@
 
 (run-with-idle-timer 5 nil
   (lambda ()
-	(setq gc-cons-threshold gc-cons-threshold-original)
-	(message "gc-cons-threshold restored")))
+    (setq gc-cons-threshold gc-cons-threshold-original)
+    (message "gc-cons-threshold restored")))
 
 (defun my-minibuffer-setup-hook ()
   (setq gc-cons-threshold gc-cons-threshold-large))

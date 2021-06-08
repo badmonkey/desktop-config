@@ -14,7 +14,7 @@ export EDITOR="emacsclient -q"
 
 
 export SETUP_XDISPLAY=1
-export SETUP_PYTHON=1
+export SETUP_PYENV=
 export SETUP_PROMPTS=1
 
 
@@ -27,21 +27,30 @@ export SETUP_PROMPTS=1
 
 # Python
 #
+
 export WORKON_HOME="$HOME/.virtualenvs"
-export PROJECT_HOME=/opt/projects
+export PROJECT_HOME="$HOME/projects"
 #export PIP_CACHE_DIR="/var/opt/cache/pip"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-export VIRTUALENVWRAPPER_PYTHON="$PYENV_ROOT/shims/python"
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-export PYENV_VERSION="3.9"
 export MYPY_CACHE_DIR=~/.mypy_cache
 export GTAGSLABEL=ctags
+
+if [ -n "$SETUP_PYENV" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export VIRTUALENVWRAPPER_PYTHON="$PYENV_ROOT/shims/python"
+    export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+    export PYENV_VERSION="3.9"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+
+    eval "$(pyenv init --path)"
+else
+    source /usr/bin/virtualenvwrapper.sh
+fi
+
 
 
 # For remote sessions
 #
 if [ "$SSH_IP" != "" ]; then
-	export LIBGL_ALWAYS_INDIRECT=1
+    export LIBGL_ALWAYS_INDIRECT=1
 fi

@@ -23,7 +23,7 @@
     :config
     (flycheck-posframe-configure-pretty-defaults)
     ;; frame-center  frame-top-center  window-center
-    (setq flycheck-posframe-position 'frame-center)
+    (setq flycheck-posframe-position 'window-bottom-right-corner)
     (setq flycheck-posframe-border-width 2)
     (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
 
@@ -43,11 +43,14 @@
 ;;   :config
 ;;   (flycheck-swiftlint-setup))
 
-(with-eval-after-load 'flycheck
-  (flycheck-def-config-file-var flycheck-swiftlintrc flycheck-swiftlintier "~/.swiftlink.yml")
-  (flycheck-def-executable-var flycheck-swiftlintier "/usr/local/bin/swiftlint")
+;; (use-package flycheck-indicator
+;;   :hook (flycheck-mode . flycheck-indicator-mode))
 
-  (flycheck-define-checker swiftlintier
+(with-eval-after-load 'flycheck
+  (flycheck-def-config-file-var flycheck-swiftlintrc flycheck-swiftlint "~/.swiftlink.yml")
+  (flycheck-def-executable-var flycheck-swiftlint "/usr/local/bin/swiftlint")
+
+  (flycheck-define-checker swiftlint
     "Swift syntax and style checker"
     :command ("swiftlint"
               "--strict"
@@ -59,7 +62,7 @@
      (warning line-start (file-name) ":" line ":" column ": " "warning: " (message) line-end))
     :modes swift-mode)
 
-  (add-to-list 'flycheck-checkers 'swiftlintier))
+  (add-to-list 'flycheck-checkers 'swiftlint))
 
 ;;(use-package flycheck-rust)
 

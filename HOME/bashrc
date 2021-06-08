@@ -27,7 +27,7 @@ fi
 
 
 
-if [ -n "$SETUP_PYTHON" ]; then
-   eval "$(pyenv init -)"
-   pyenv virtualenvwrapper_lazy
+if [ -n "$SETUP_PYENV" ]; then
+    eval "$(pyenv init -)"
+    pyenv virtualenvwrapper_lazy
 fi

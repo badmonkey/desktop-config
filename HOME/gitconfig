@@ -1,24 +1,24 @@
 [user]
-	name = Michael Fagan
-	email = michael.fagan@penten.com
+    name = Michael Fagan
+    email = michael.fagan@penten.com
 [push]
-	default = simple
+    default = simple
 [core]
-	editor = emacsclient
+    editor = emacsclient
 [diff]
-	tool = ediff
+    tool = ediff
 [difftool "ediff"]
-	cmd = ec-merge "$LOCAL" "$REMOTE"
-	trustExitCode = true
+    cmd = ec-merge "$LOCAL" "$REMOTE"
+    trustExitCode = true
 [difftool "meld"]
-	cmd = meld "$LOCAL" "$REMOTE"
+    cmd = meld "$LOCAL" "$REMOTE"
 [merge]
-	tool = emerge
+    tool = emerge
 [mergetool "emerge"]
-	cmd = ec-merge "$LOCAL" "$REMOTE" "$MERGED"
-	trustExitCode = true
+    cmd = ec-merge "$LOCAL" "$REMOTE" "$MERGED"
+    trustExitCode = true
 [mergetool "meld"]
-	cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [alias]
     sw = !git checkout $(git branch -a --format '%(refname:short)' | sed 's~origin/~~' | sort | uniq | fzf)
     root = rev-parse --show-toplevel
@@ -30,5 +30,7 @@
     ll = log --all --decorate --oneline --graph --first-parent
     history = log --graph --abbrev-commit --decorate --first-parent
     squash = rebase -i
+    latest = describe --abbrev=0 --tags
+    taglist = tag -l --sort=-version:refname
 [commit]
     template = /home/mfagan/.gitmessage

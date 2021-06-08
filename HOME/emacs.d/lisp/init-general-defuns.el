@@ -53,6 +53,12 @@
         (list region-text (query-replace-read-to region-text prompt regexp-flag)))
     (query-replace-read-args prompt regexp-flag)))
 
+(defun input-replace-from-to-args (prompt regexp-flag)
+  (if query-replace-defaults
+      (let ((last-query (car query-replace-defaults)))
+        (list (car last-query) (cdr last-query)))
+    (query-replace-read-args prompt regexp-flag)))
+
 (defun require-region ()
   (if (region-active-p)
       (list (region-beginning)

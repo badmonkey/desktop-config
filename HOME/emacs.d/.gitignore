@@ -6,5 +6,6 @@ ac-comphist.dat
 recentf
 helm-adaptive-history
 projectile-bookmarks.eld
+projectile.cache
 .emacs.desktop
 .emacs.desktop.lock

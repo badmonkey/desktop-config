@@ -40,7 +40,10 @@
   (remove-hook 'with-venv-find-venv-dir-functions
           'with-venv-find-venv-dir-poetry)
   (remove-hook 'with-venv-find-venv-dir-functions
-          'with-venv-find-venv-dir-pipenv))
+               'with-venv-find-venv-dir-pipenv))
+
+(use-package flycheck-virtualenv
+  :straight (flycheck-virtualenv :type nil :local-repo "~/.emacs.d/contrib/flycheck-virtualenv"))
 
 (use-package buftra
   :straight (buftra :host github :repo "humitos/buftra.el"))
@@ -76,6 +79,7 @@
   (add-hook 'flycheck-before-syntax-check-hook
             (lambda ()
               (setq flycheck-python-pylama-executable (with-venv (executable-find "python")))))
+
 
 
   (flycheck-define-checker python-pylama

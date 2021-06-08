@@ -153,6 +153,10 @@
   :config
   (global-hl-todo-mode))
 
+(use-package indicators)
+
+(use-package indicate-changes)
+(indicate-change-mode)
 
 (use-package all-the-icons)
 
