@@ -13,10 +13,66 @@
   (switch-to-buffer (buffer-list-next)))
 
 
+(defun toggle-supersub-mode ()
+  (interactive)
+  (if subword-mode
+      (progn
+        (message ".. superword on")
+        (superword-mode)
+        (subword-mode -1))
+    (progn
+      (message ".. subword on")
+      (subword-mode)
+      (superword-mode -1))))
+
+
 (defun activate-venv ()
   (interactive)
   (venv-projectile-auto-workon))
 
+
+(defun toggle-window-dedicated ()
+  "Toggle whether the current active window is dedicated or not"
+  (interactive)
+  (message
+   (if
+       (let ((window (get-buffer-window (current-buffer))))
+         (set-window-dedicated-p window (not (window-dedicated-p window))))
+       "Window '%s' is dedicated"
+     "Window '%s' is normal")
+   (current-buffer)))
+
+
+(defvar box/top-left "\u256d")
+(defvar box/bot-left "\u2570")
+(defvar box/left "\u2502")
+(defvar box/top "\u2500")
+(defvar box/top-long (s-repeat 8 box/top))
+
+(defun kill-with-linenum (beg end)
+  (interactive "r")
+  (save-excursion
+    (goto-char end)
+    (skip-chars-backward "\n \t")
+    (setq end (point))
+    (let* ((chunk (buffer-substring beg end))
+           (chunk (concat
+                   (format "%s%s #%-d %s %s %s\n%s "
+                           box/top-left
+                           box/top-long
+                           (line-number-at-pos beg)
+                           box/top
+                           (or (buffer-file-name) (buffer-name))
+                           (s-repeat 2 box/top)
+                           box/left)
+                   (replace-regexp-in-string "\n" (format "\n%s " box/left) chunk)
+                   (format "\n%s%s #%-d %s"
+                           box/bot-left
+                           box/top-long
+                           (line-number-at-pos end)
+                           box/top-long))))
+      (kill-new chunk)))
+  (deactivate-mark))
 
 (defun kill-or-bury-buffer ()
   (interactive)
@@ -68,6 +124,15 @@
            (kill-buffer buffer)))))
 
 
+(defun goto-line-with-prefix ()
+   (interactive)
+   (goto-char (point-min))
+   (forward-line (1- (string-to-number
+               (read-from-minibuffer
+            "Goto line: "
+            (char-to-string last-command-event))))))
+
+
 (defun point-to-buffer-start ()
   (interactive)
   (goto-char (point-min)))
@@ -75,6 +140,15 @@
 (defun point-to-buffer-end ()
   (interactive)
   (goto-char (point-max)))
+
+
+(defun narrow-to-region-indirect (start end)
+  "Restrict editing in this buffer to the current region, indirectly."
+  (interactive "r")
+  (let ((buf (clone-indirect-buffer nil nil)))
+    (with-current-buffer buf
+      (narrow-to-region start end))
+    (switch-to-buffer buf)))
 
 
 ;;

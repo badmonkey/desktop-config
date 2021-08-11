@@ -96,7 +96,8 @@
 (desktop-save-mode 1)
 
 ;; treat CamelCase as words
-(global-subword-mode 1)
+;; (global-subword-mode 1)
+(global-superword-mode 1)
 
 (customize-set-variable 'make-pointer-invisible nil)
 (mouse-avoidance-mode 'exile)

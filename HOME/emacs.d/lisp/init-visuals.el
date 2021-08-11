@@ -109,7 +109,8 @@
 ;; clean up the status bar
 (use-package diminish
   :config
-  :diminish 'subword-mode
+  ;; :diminish 'subword-mode
+  ;; :diminish 'superword-mode
   :diminish 'global-whitespace-mode)
 
 (when (display-graphic-p)

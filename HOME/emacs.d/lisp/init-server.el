@@ -13,12 +13,7 @@
 (add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
 
-;; (when (display-graphic-p)
-;;   (toggle-frame-maximized))
-
-
 ;; Start server (but don't restart) but only on graphics systems
-
 (add-hook 'after-init-hook
           (lambda ()
             (require 'server)
@@ -28,14 +23,19 @@
 (setq scroll-error-top-bottom t)
 
 (when (display-graphic-p)
-  (add-to-list 'initial-frame-alist '(fullscreen . maximized))
-  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (unless (eq (shape/display) 'display-shape-portrait)
+    (add-to-list 'initial-frame-alist '(fullscreen . maximized))
+    (add-to-list 'default-frame-alist '(fullscreen . maximized)))
   (add-hook 'server-visit-hook 'raise-frame)
+  ;; portrait maximise width not height (or better yet max square)
+  )
 
-  ;; (if (< (frame-height) (frame-width))
-  ;;     (split-window-right)
-  ;;   (split-window-below))
-)
+(add-hook 'after-init-hook
+          (lambda ()
+            (case (shape/frame)
+              (frame-shape-landscape (split-window-right))
+              (frame-shape-portrait (split-window-below))
+              (frame-shap-square nil))))
 
 
 (provide 'init-server)

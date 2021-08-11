@@ -24,6 +24,25 @@
     (bound-and-true-p emacs-lock-mode)))
 
 
+(defun shape/display ()
+  (let* ((geo (assoc 'geometry (frame-monitor-attributes)))
+         (w (nth 3 geo))
+         (h (nth 4 geo)))
+    (cond ((= w h) 'display-shape-square)
+          ((> w h) 'display-shape-landscape)
+          (t 'display-shape-portrait))))
+
+(defun shape/frame ()
+  (let* ((w (frame-width))
+         (h (frame-height))
+         (aspect (/ w h))
+         (square (and (>= aspect 0.5) (<= aspect 2))))
+    (message "aspect %s/%s = %s" w h aspect)
+    (cond ((= w h) 'frame-shape-square)
+          (square 'frame-shape-square)
+          ((> w h) 'frame-shape-landscape)
+          (t 'frame-shape-portrait))))
+
 ;;
 ;; Interactive prompts for regions/lines
 ;;

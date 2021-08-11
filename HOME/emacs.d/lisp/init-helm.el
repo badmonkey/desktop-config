@@ -41,11 +41,19 @@
 
 (use-package helm-posframe
   :after helm
+  :custom-face
+  (helm-posframe-border ((t (:background "#b58900"))))
+  :custom
+  (helm-posframe-border-width 3)
+  (helm-posframe-parameters '((left-fringe . 10)
+                              (right-fringe . 10)))
   :config
+  (setq helm-posframe-poshandler
+        'posframe-poshandler-frame-center
+        helm-posframe-height (frame-height)
+        helm-posframe-width (frame-width))
   (helm-posframe-enable)
-  (setq helm-posframe-parameters
-        '((left-fringe . 10)
-          (right-fringe . 10))))
+  (remove-hook 'delete-frame-functions 'helm--delete-frame-function))
 
 (use-package helm-projectile
   :config

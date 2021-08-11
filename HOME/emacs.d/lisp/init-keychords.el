@@ -14,6 +14,13 @@
   ;; (general-chord "jj")      'avy-goto-char-2
   (general-chord "jj")      'avy-goto-char-timer
 
+  ;; kk
+  ;; (general-chord "qq")      'toggle-superword
+  ;; vv
+  (general-chord "ww")      'toggle-supersub-mode
+  ;; yy
+  ;; https://www.johndcook.com/blog/2015/02/01/rare-bigrams/
+
   (general-chord "/.")      'hydra-mark/body
 
   (general-chord "\'\'")    'ispell-word

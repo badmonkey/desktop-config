@@ -108,7 +108,17 @@
   "["       'point-to-buffer-start
   "]"       'point-to-buffer-end
 
-  "1"       'flycheck-first-error
+  "1"       'goto-line-with-prefix
+  "2"       'goto-line-with-prefix
+  "3"       'goto-line-with-prefix
+  "4"       'goto-line-with-prefix
+  "5"       'goto-line-with-prefix
+  "6"       'goto-line-with-prefix
+  "7"       'goto-line-with-prefix
+  "8"       'goto-line-with-prefix
+  "9"       'goto-line-with-prefix
+
+  ;; "1"       'flycheck-first-error
 
 ;; c        goto-char
 ;; g        goto-line
@@ -134,6 +144,7 @@
   "f"       'kill-orphan-buffers
   "k"       'kill-or-bury-buffer
   "u"       'kill-unmodified-buffers
+  "w"       'kill-with-linenum
   )
 
 
@@ -151,7 +162,11 @@
   ;; "]"       'flycheck-buffer
   "]"       'hydra-flycheck/body
   "["       'hl-todo-occur
-  "-"       'posframe-delete-all
+  "1"       'toggle-window-dedicated
+  "0"       'toggle-window-transparency
+
+  "="       'toggle-frame-maximized
+  "DEL"     'posframe-delete-all
 
   "b"       'ibuffer
 
@@ -188,10 +203,12 @@
 
   "b"       'crux-rename-buffer-and-file
   "k"       'query-kill-matching-lines
+  "n"       'narrow-to-region-indirect
   "r"       'query-replace-from-region
   "C-r"     'repeat-query-replace
   "x"       'query-replace-regexp
   "C-x"     'repeat-query-replace-regexp
+  ;; replace with top of kill buffer
   )
 
 

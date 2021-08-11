@@ -213,16 +213,15 @@
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict"))
 
 
-;; (use-package which-key
-;;   :diminish which-key-mode
-;;   :config
-;;   (which-key-mode))
+(use-package which-key
+  :diminish which-key-mode
+  :config)
 
-;; (use-package which-key-posframe
-;;   :after (which-key posframe)
-;;   :config
-;;   (setq which-key-posframe-poshandler 'posframe-poshandler-window-top-right-corner)
-;;   (which-key-posframe-mode))
+(use-package which-key-posframe
+  :after (which-key posframe)
+  :config
+  (setq which-key-posframe-poshandler 'posframe-poshandler-frame-top-center)
+  (which-key-posframe-mode))
 
 
 
