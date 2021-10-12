@@ -52,7 +52,7 @@
  :straight (py-pyment :host github :repo "humitos/py-cmd-buffer.el")
  :diminish
  :config
- :hook (python-mode . py-pyment-mode)
+ ;; :hook (python-mode . py-pyment-mode)
  :custom
  (py-pyment-options '("--output" "reST")))
 
@@ -63,15 +63,13 @@
 
 (use-package py-isort
   :init
-  (setq py-isort-options '("-l 120"))
+  (setq py-isort-options (format "-l %d" global-line-max-width))
   (add-hook 'before-save-hook 'py-isort-before-save))
 
 
 (with-eval-after-load 'flycheck
 
   (flycheck-def-config-file-var flycheck-pylamarc python-pylama "pylama.ini"
-    :safe #'stringp)
-  (flycheck-def-config-file-var flycheck-pylavarc python-pylama "pylava.ini"
     :safe #'stringp)
   (flycheck-def-config-file-var flycheck-pylama-setuprc python-pylama "setup.cfg"
     :safe #'stringp)
@@ -81,7 +79,6 @@
               (setq flycheck-python-pylama-executable (with-venv (executable-find "python")))))
 
 
-
   (flycheck-define-checker python-pylama
     "A Python syntax and style checker using pylama/pylava."
     ;; Not calling pylama/pylava directly makes it easier to switch between different
@@ -89,7 +86,6 @@
     :command ("python"
               (eval (flycheck-python-module-args 'python-pylama "pylamashim"))
               (config-file "-o" flycheck-pylamarc)
-              (config-file "-o" flycheck-pylavarc)
               (config-file "-o" flycheck-pylama-setuprc)
               ;; Need `source-inplace' for relative imports (e.g. `from .foo
               ;; import bar'), see https://github.com/flycheck/flycheck/issues/280

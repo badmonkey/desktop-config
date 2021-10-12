@@ -4,9 +4,6 @@
 
 ;; https://github.com/Fuco1/indicators.el
 
-(defvar global-line-max-width)
-(setq global-line-max-width 120)
-
 ;; Theme
 (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
 (load-theme 'hipster t)
@@ -18,6 +15,9 @@
 (add-hook 'after-make-frame-functions (lambda (frame) (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")))
 (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
 
+(set-fontset-font
+ t 'symbol
+ (font-spec :family "Symbola") nil 'prepend)
 
 ;; Line mode
 (global-linum-mode t)

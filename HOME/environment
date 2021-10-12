@@ -7,7 +7,8 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 
-export EDITOR="emacsclient -q"
+export EDITOR="emacsclient -n -q"
+export VISUAL="emacsclient -n -q"
 
 
 #export REQUESTS_CA_BUNDLE=/usr/lib/ssl/certs/

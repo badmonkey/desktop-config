@@ -73,6 +73,9 @@
 
 (setq-default scroll-conservatively 101)
 
+(defvar global-line-max-width)
+(setq global-line-max-width 100)
+
 ;; the blinking cursor is nothing, but an annoyance
 (blink-cursor-mode -1)
 

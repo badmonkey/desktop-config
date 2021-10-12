@@ -9,6 +9,8 @@
   )
 
 
+;; smart-backspace
+
 (general-define-key
   "<home>"  'move-beginning-of-line
   "<end>"   'move-end-of-line
@@ -16,16 +18,27 @@
   "M-DEL"   'region-delete-back-word
   "<M-tab>" 'ac-complete-with-helm
   "M-RET"   'multi-term-dedicated-toggle
+;; M-SPC region commands
+;; M-. at-point commands
   "M-;"     'comment-dwim
   "M-\\"    'helm-bm
+  "M-/"     'helm-dabbrev
+
+  "M-="     'smart-region
 
   "M-a"     'unfill-region
 
   "M-c"     'subword-capitalize
+;; M-g goto commands
+;; M-k kill buffer commands
+;; M-p project commands
   "M-q"     'fill-region-or-line
+;; M-r replace commands
+;; M-s search commands
+;; M-t tag commands
+;; M-u text commands
   "M-x"     'helm-M-x
-
-
+  "M-y"     'helm-show-kill-ring
   )
 
 
@@ -45,14 +58,20 @@
 
   "a"       'region-qp-decode
 
+  "b"       'mc/edit-lines
+
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-region)
 
-  "e"       'mc/edit-lines
+  "e"       'toggle-fancy-narrow
+
   "i"       'kill-inner-region
   "j"       'hydra-mark/body
   "k"       'region-kill-whole-line
+
   "m"       'mc/mark-all-like-this
+  "n"       'narrow-to-region-indirect
+
   "o"       'kill-outer-region
   "p"       'mark-paragraph
   "q"       'region-qp-encode
@@ -82,6 +101,7 @@
   "h"       (general-predicate-dispatch nil
               (derived-mode-p 'emacs-lisp-mode) 'describe-function-at-point
               (derived-mode-p 'python-mode) 'pydoc-at-point)
+  "i"       'helm-info-at-point
 
   "s"       'ispell-word
   ;; "t"       'ggtags-
@@ -118,8 +138,6 @@
   "8"       'goto-line-with-prefix
   "9"       'goto-line-with-prefix
 
-  ;; "1"       'flycheck-first-error
-
 ;; c        goto-char
 ;; g        goto-line
 
@@ -154,7 +172,7 @@
   :prefix "M-p"
   :prefix-command 'project-keymap
 
-  "TAB"     'neotree
+  "TAB"     'helm-recentf
 
   "RET"     (general-predicate-dispatch 'multi-term-dedicated-toggle
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
@@ -168,7 +186,7 @@
   "="       'toggle-frame-maximized
   "DEL"     'posframe-delete-all
 
-  "b"       'ibuffer
+  ;; "b"       'ibuffer
 
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-buffer)
@@ -186,12 +204,15 @@
 
   "m"       'hydra-magit/body
   "o"       'helm-projectile-find-file
+  "C-o"     'helm-find-files
   "p"       'projectile-switch-project
   "r"       'revbufs
   "s"       'ispell
   "t"       'transpose-windows
   "v"       'venv-workon
   "x"       'delete-window
+
+  ;;  helm-buffers-list
   )
 
 
@@ -203,7 +224,6 @@
 
   "b"       'crux-rename-buffer-and-file
   "k"       'query-kill-matching-lines
-  "n"       'narrow-to-region-indirect
   "r"       'query-replace-from-region
   "C-r"     'repeat-query-replace
   "x"       'query-replace-regexp
@@ -213,13 +233,14 @@
 
 
 
-;;; M-s  search commands;;;
+;;; M-s  search commands ;;;
 (general-define-key
   :prefix "M-s"
 
 ;; .        isearch-forward-symbol-at-point
 
-;; o        occur
+  ;; o        occur
+  "g"       'google-this-search
   "r"       'isearch-backward
   "C-r"     'isearch-backward-regexp
   "s"       'isearch-forward
@@ -231,7 +252,7 @@
 
 
 
-;;; M-t transpose-word
+;;; M-t tag commands ;;;
 (general-define-key
   :prefix "M-t"
 

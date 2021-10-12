@@ -71,6 +71,7 @@
 (require 'init-general-defuns)
 
 (require 'init-editor)
+(require 'init-snippets)
 (require 'init-project)
 (require 'init-flycheck)
 (require 'init-helm)

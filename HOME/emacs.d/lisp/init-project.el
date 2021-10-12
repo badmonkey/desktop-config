@@ -3,18 +3,6 @@
 ;;; Code:
 
 
-(use-package neotree
-  :config
-  (setq neo-dont-be-alone t
-        neo-theme 'nerd)
-  (bind-keys :map neotree-mode-map
-             ("ESC" . neotree-hide)
-             ("u" . neotree-select-up-node)
-             ;;("d" . *-neo-down-and-next)
-             ("i" . neotree-enter)
-             ("K" . neotree-delete-node)))
-
-
 (use-package projectile
   :diminish
   :init

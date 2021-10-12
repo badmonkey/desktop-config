@@ -26,7 +26,7 @@
   (key-chord-mode 1))
 
 
-;;; Hydra!
+;;; Hail Hydra!
 
 (use-package posframe)
 
@@ -49,13 +49,25 @@
 
 ;;; multi/smart selection
 
+(use-package region-state
+  :init
+  (region-state-mode 1))
+
 (use-package multiple-cursors)
 
-(use-package expand-region)
+(use-package expand-region
+  :config
+  (setq-default er/try-expand-list
+                (append er/try-expand-list
+                        '(er/mark-line
+                          er/mark-sentence
+                          er/mark-paragraph))))
 
 (use-package smart-region)
 
 (use-package change-inner)
+
+(use-package fancy-narrow)
 
 
 (use-package avy
@@ -169,20 +181,11 @@
   (add-hook 'after-revert-hook #'bm-buffer-restore))
 
 
-;; yasnippet
-;; (use-package yasnippet
-;;   :straight t
-;;   :bind
-;;   (:map yas-minor-mode-map
-;;         ("<tab>" . nil)
-;;         ("TAB" . nil))
-;;   :hook (yas-before-expand-snippet . expand-for-web-mode)
-;;   :config
-;;   (yas-global-mode)
-
-;;   )
+(use-package eval-expr)
 
 (use-package magit)
+
+(use-package repo)
 
 (use-package goto-last-change)
 
@@ -194,8 +197,6 @@
 ;;(require 'xclip)
 ;;(xclip-mode 1)
 ;;(turn-on-xclip)
-
-(use-package ibuffer)
 
 (use-package auto-complete
   :init
@@ -211,6 +212,11 @@
                    python-mode
                    lua-mode))
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict"))
+
+(use-package ac-emoji
+  :config
+  (add-hook 'markdown-mode-hook 'ac-emoji-setup)
+  (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
 
 
 (use-package which-key

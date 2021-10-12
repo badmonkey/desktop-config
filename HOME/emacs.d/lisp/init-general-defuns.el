@@ -148,6 +148,13 @@
       (load-file buffer-path))))
 
 
+(defun er/mark-line ()
+  "mark one line"
+  (let ((inhibit-field-text-motion t))
+    (end-of-line)
+    (push-mark nil t t)
+    (beginning-of-line)))
+
 
 ;;
 ;; Icon funs

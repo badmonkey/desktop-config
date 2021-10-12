@@ -145,10 +145,22 @@
 (defun narrow-to-region-indirect (start end)
   "Restrict editing in this buffer to the current region, indirectly."
   (interactive "r")
-  (let ((buf (clone-indirect-buffer nil nil)))
-    (with-current-buffer buf
-      (narrow-to-region start end))
-    (switch-to-buffer buf)))
+  (progn
+    (deactivate-mark)
+    (let ((buf (clone-indirect-buffer nil nil)))
+      (with-current-buffer buf
+        (narrow-to-region start end))
+      (switch-to-buffer buf))))
+
+(defun toggle-fancy-narrow (start end)
+  "Toggle fancy narrow-to-region"
+  (interactive (input-region-or-everything))
+  (if (fancy-narrow-active-p)
+      (fancy-widen)
+    (progn
+      (deactivate-mark)
+      (fancy-narrow-to-region start end)
+      (point-to-buffer-end))))
 
 
 ;;
@@ -156,13 +168,13 @@
 ;;
 
 (defadvice indent-rigidly (after deactivate-mark-nil activate)
-     (if (called-interactively-p 'any)
-         (setq deactivate-mark nil)))
+  (if (called-interactively-p 'any)
+      (setq deactivate-mark nil)))
 
 
 (defadvice indent-code-rigidly (after deactivate-mark-nil activate)
-     (if (called-interactively-p 'any)
-         (setq deactivate-mark nil)))
+  (if (called-interactively-p 'any)
+      (setq deactivate-mark nil)))
 
 
 ;;
