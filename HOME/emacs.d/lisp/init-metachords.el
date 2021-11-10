@@ -176,6 +176,7 @@
 
   "RET"     (general-predicate-dispatch 'multi-term-dedicated-toggle
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
+  "."       'helm-mini
 
   ;; "]"       'flycheck-buffer
   "]"       'hydra-flycheck/body

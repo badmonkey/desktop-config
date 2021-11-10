@@ -120,6 +120,7 @@
     (dolist (buffer (buffer-list))
       (and (buffer-live-p buffer)
            (not (buffer-modified-p buffer))
+           (buffer-file-name buffer)
            (not (file-exists-p (buffer-file-name buffer)))
            (kill-buffer buffer)))))
 

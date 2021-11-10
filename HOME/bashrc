@@ -3,7 +3,7 @@
 #
 
 # config bash settings
-. "$HOME/.bash/bashrc"
+source "$HOME/.bash/bashrc"
 
 
 PATH="$HOME/.local/bin:$PATH"
@@ -14,15 +14,20 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 
-. "$HOME/.bash/environment.sh"
-. "$HOME/.bash/commands.sh"
+source "$HOME/.bash/environment.sh"
+source "$HOME/.bash/commands.sh"
 
 if [ -f "$HOME/.environment" ]; then
-   . "$HOME/.environment"
+   source "$HOME/.environment"
 fi
 
+if [ -f "$HOME/.local_profile" ]; then
+    source "$HOME/.local_profile"
+fi
+
+
 if is-login-shell; then
-   . "$HOME/.bash/login.sh"
+   source "$HOME/.bash/login.sh"
 fi
 
 
