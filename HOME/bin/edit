@@ -1,78 +1,156 @@
 #!/bin/bash
 
-APP=`basename ${0}`
+APP=$(basename "${0}")
 MODE=
 WAIT="-n"
-EDEMPTY=
+ALLOWEMPTY=
+QUERY=
+SELECT=
 
 
-# ack --type=python -l  match  dir/
+if [ ! -e "/run/user/${UID}/emacs/server" ]; then
+    echo "Starting server"
+
+    emacs & disown
+
+    echo "Waiting for server..."
+    emacsclient -e 't' 2>/dev/null
+    while [ $? -ne 0 ]; do
+        sleep 5
+        echo "Waiting for server..."
+        emacsclient -e 't' 2>/dev/null
+    done
+    echo "Server ready"
+fi
 
 
-function set_mode () {
-	if [ -z "${MODE}" ]; then
-		EXT="${1##*.}"
-		if [ "${EXT}" != "${1}" ]; then
-			MODE="${EXT}"
-			echo "mode ${MODE}"
-		elif [ "${1}" == "edit" ]; then
-			# skip it
-			:
-		elif [ "${1:(-4)}" == "edit" ]; then
-			MODE="${APP:0:-4}"
-			echo "mode ${MODE}"
-		fi
-	fi
+
+function setup_mode () {
+    if [ -z "$MODE" ] && [ "${1}" != "edit" ]; then
+        EXT="${1##*.}"
+        if [ "$EXT" != "${1}" ]; then
+            MODE="$EXT"
+        elif [ "${1:(-4)}" == "edit" ]; then
+            MODE="${1:0:-4}"
+        fi
+        echo "$MODE" > ~/.edit-mode
+        echo "Editing '$MODE' files"
+    fi
 }
 
-set_mode "${APP}"
+function update_mode () {
+    MODE="$1"
+    echo "$MODE" > ~/.edit-mode
+    echo "Working with '$MODE' files"
+}
+
+setup_mode "${APP}"
 
 
 function assert_have_mode () {
-	if [ -z "${MODE}" ]; then
-		echo "No mode set, use --XXX to use use XXX as extension "
-		exit
-	fi
+    if [ -z "$MODE" ]; then
+        if [ -e ~/.edit-mode ]; then
+            MODE=$(cat ~/.edit-mode)
+            echo "Working with '$MODE' files"
+        else
+            echo "No mode set, use --XXX to work with extension XXX"
+            exit
+        fi
+    fi
+}
+
+function batch_open () {
+    xargs -r -n 8 -0 emacsclient -nq
+}
+
+function find_files () {
+    fzf-tmux -m --border --margin=5,0 --query "$1" --print0
+}
+
+function select_files () {
+    fzf-tmux -m --border --margin=5,0 --print0
+}
+
+function search_files () {
+    ack --type-set "SEARCH=.$MODE" --type=SEARCH -l "$QUERY" "$1"
 }
 
 EDITING=
 
-while [ -n "${1}" ]; do
-	if [ "${1:0:2}" == "--" ]; then
-		MODE="${1:2}"
-		echo "Changing mode ${MODE}"
-	elif [ "${1}" == "-n" ]; then
-		WAIT="-n"
-	elif [ "${1}" == "-w" ]; then
-		WAIT=""
-	elif [ "${1}" == "-z" ]; then
-		EDEMPTY="z"
-	elif [ -f "${1}" ]; then
-		set_mode `basename ${1}`
-		echo "Edit ${1} ..."
-		emacsclient ${WAIT} -q "${1}"
-        EDITING="${1}"
-	elif [ -d "${1}" ]; then
-		assert_have_mode
-		echo "Edit files from ${1}/*.${MODE}"
-		if [ -z "${EDEMPTY}" ] ; then
-			find ${1} -type f \! -empty -iname "*.${MODE}" -print0 | xargs -r -n 8 -0 emacsclient -nq
-		else
-			find ${1} -type f -iname "*.${MODE}" -print0 | xargs -r -n 8 -0 emacsclient -nq
-		fi
-        EDITING="*.${MODE}"
-	elif ! [ -e "${1}" ]; then
-		set_mode ${1}
-		echo "Creating ${1} ..."
-		emacsclient ${WAIT} -q "${1}"
-        EDITING="${1}"
-	else
-		echo "Not sure what to do with ${1}  skipping"
-	fi
-	shift
+while [ -n "$1" ]; do
+    ARG="$1"
+
+    case $ARG in
+        --*)
+            update_mode "${ARG:2}"
+            ;;
+
+        -s)
+            SELECT="y"
+            ;;
+
+        -n)
+            WAIT="-n"
+            ;;
+
+        -w)
+            WAIT=""
+            ;;
+
+        -z)
+            ALLOWEMPTY="y"
+            ;;
+
+        -f)
+            shift
+            if [ -n "$1" ]; then
+                QUERY="$1"
+                echo "Searching for term '$QUERY' ..."
+            else
+                echo "Missing search term"
+                exit
+            fi
+            ;;
+
+        -*)
+            update_mode "${ARG:1}"
+            ;;
+
+        *)
+            if [ -f "$ARG" ]; then
+                setup_mode "$(basename $ARG)"
+                echo "Edit $ARG ..."
+                emacsclient "$WAIT" -q "$ARG"
+                EDITING="$ARG"
+            elif [ -d "$ARG" ]; then
+                assert_have_mode
+                if [ -z "$QUERY" ]; then
+                    echo "Edit files from $ARG/*.$MODE"
+                    if [ -z "$ALLOWEMPTY" ] ; then
+                        find "$ARG" -type f \! -empty -iname "*.${MODE}" -print0 | batch_open
+                    else
+                        find "$ARG" -type f -iname "*.${MODE}" -print0 | batch_open
+                    fi
+                    EDITING="*.$MODE"
+                else
+                    search_files "$ARG" | select_files | batch_open
+                    EDITING="*.$MODE"
+                fi
+            elif ! [ -e "$ARG" ]; then
+                setup_mode "$ARG"
+                echo "Creating $ARG ..."
+                emacsclient "$WAIT" -q "$ARG"
+                EDITING="$ARG"
+            else
+                echo "Not sure what to do with $ARG ... skipping"
+            fi
+            ;;
+    esac
+
+    shift
 done
 
 
 if [ -z "${EDITING}" ]; then
-    fzf-tmux -m --border --margin=5,0 --query "${MODE}" --print0 | xargs -r -n 8 -0 emacsclient -nq
+    find_files "$MODE" | batch_open
 fi

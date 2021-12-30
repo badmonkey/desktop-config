@@ -32,5 +32,7 @@
     squash = rebase -i
     latest = describe --abbrev=0 --tags
     taglist = tag -l --sort=-version:refname
+    diverge = !sh -c 'git rev-list --boundary $1...$2 | grep "^-" | cut -c2-'
+    branch-squash = rebase -i $(git merge-base HEAD master)
 [commit]
     template = /home/mfagan/.gitmessage
