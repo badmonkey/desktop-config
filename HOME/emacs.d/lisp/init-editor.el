@@ -19,6 +19,11 @@
 (ad-activate 'ansi-term)
 
 
+;; https://github.com/raxod502/selectrum
+;; https://github.com/raxod502/prescient.el
+;; https://github.com/oantolin/embark/
+;; https://github.com/minad/consult
+
 (use-package general)
 
 (use-package key-chord
@@ -68,6 +73,8 @@
 (use-package change-inner)
 
 (use-package fancy-narrow)
+
+;; (use-package puni)
 
 
 (use-package avy

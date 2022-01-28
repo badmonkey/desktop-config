@@ -121,14 +121,17 @@
     :diminish fira-code-mode)
 )
 
-(use-package indent-guide
+
+(use-package highlight-indent-guides
   :config
-  (indent-guide-global-mode)
-  (set-face-foreground 'indent-guide-face "DarkRed")
-  (setq indent-guide-recursive t)
-  (setq indent-guide-char "|")
-  (setq indent-guide-delay 0.2)
-  :diminish 'indent-guide-mode)
+  ;; (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  ;; (set-face-background 'highlight-indent-guides-even-face "darkred")
+  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "darkred")
+  (setq highlight-indent-guides-responsive 'top)
+  (setq highlight-indent-guides-method 'bitmap)
+  (setq highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-dots)
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
 
 (use-package rainbow-delimiters
   :init
