@@ -1,8 +1,5 @@
 
-# XXX-nnn: TYPE: Summary
-##- 8< -------- 50 characters ------------- 8< -##
-## BLANK LINE BLANK LINE  BLANK LINE BLANK LINE ##
-
-##- 8< -------- 72 characters ------------- 8< ------------------ 8< -##
+##--- 8< --------- 50 characters --------- 8< ---|--- 72 characters ---|
 # fix,feat,build,chore,docs,ci,style,refactor,perf,test,revert
-#
+# !notice
+## --------------------------------------------------------------------|
