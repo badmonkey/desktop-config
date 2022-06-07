@@ -23,6 +23,9 @@
 (global-linum-mode t)
 (set-default 'truncate-lines t)
 
+;; max line width indicator
+(display-fill-column-indicator-mode)
+
 
 ;; Indent setting
 (setq-default tab-always-indent nil)
@@ -163,6 +166,13 @@
 (indicate-change-mode)
 
 (use-package all-the-icons)
+
+;; (use-package auto-dim-other-buffers
+;;   :init
+;;   (add-hook 'after-init-hook (lambda ()
+;;   (when (fboundp 'auto-dim-other-buffers-mode)
+;;     (auto-dim-other-buffers-mode t)))))
+
 
 (provide 'init-visuals)
 ;;; init-visuals.el ends here

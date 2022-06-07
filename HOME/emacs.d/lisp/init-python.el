@@ -112,8 +112,8 @@
     :verify (lambda (_) (flycheck-python-verify-module 'python-pylama "pylamashim"))
     :modes python-mode)
 
-  (add-to-list 'flycheck-checkers 'python-pylama))
-
+  ;; (add-to-list 'flycheck-checkers 'python-pylama))
+)
 
 
 (provide 'init-python)

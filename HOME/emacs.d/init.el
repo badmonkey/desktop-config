@@ -39,6 +39,7 @@
 
 
 ;; bootstrap straight
+(message "Starting straight...")
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -57,19 +58,21 @@
 (setq straight-cache-autoloads t)
 
 ;; Load somne library packages
+(message "Loading libraries...")
 (use-package dash)
-(use-package dash-functional)
 (use-package s)
 (use-package s-buffer)
 (use-package f)
 
 ;; start loading packages
+(message "Loading packages...")
 (require 'init-settings)
 (require 'init-package)
 (require 'init-visuals)
 
 (require 'init-general-defuns)
 
+(message "Loading editor packages...")
 (require 'init-editor)
 (require 'init-snippets)
 (require 'init-project)
@@ -85,6 +88,7 @@
 (require 'init-interactive-defuns)
 (require 'init-powerline)
 
+(message "Loading key bindings...")
 (general-auto-unbind-keys)
 (require 'init-hydra)
 (require 'init-ctrlchords)
@@ -92,6 +96,7 @@
 (require 'init-keychords)
 (general-auto-unbind-keys t)
 
+(message "Starting server...")
 (require 'init-server)
 
 

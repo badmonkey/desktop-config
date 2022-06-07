@@ -33,13 +33,12 @@
           (t 'display-shape-portrait))))
 
 (defun shape/frame ()
-  (let* ((w (frame-width))
-         (h (frame-height))
+  (let* ((w (float (frame-width)))
+         (h (float (frame-height)))
          (aspect (/ w h))
-         (square (and (>= aspect 0.5) (<= aspect 2))))
-    (message "aspect %s/%s = %s" w h aspect)
-    (cond ((= w h) 'frame-shape-square)
-          (square 'frame-shape-square)
+         (squareish (and (>= aspect 0.87) (<= aspect 1.15))))
+    (message "frame %s x %s = %s aspect (squareish? %s)" w h aspect squareish)
+    (cond (squareish 'frame-shape-square)
           ((> w h) 'frame-shape-landscape)
           (t 'frame-shape-portrait))))
 

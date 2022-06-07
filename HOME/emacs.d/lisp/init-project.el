@@ -3,6 +3,8 @@
 ;;; Code:
 
 
+;; https://github.com/KaratasFurkan/.emacs.d#treemacs-1
+
 (use-package projectile
   :diminish
   :init
@@ -40,8 +42,8 @@
   ;; (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  ;; (setq dashboard-set-footer nil)
-  (setq dashboard-footer (shell-command-to-string "fortune -s"))
+  (setq dashboard-set-footer nil)
+  ;; (setq dashboard-footer (shell-command-to-string "fortune -s"))
   (setq dashboard-items '((recents   . 10)
                           ;; (projects  . 5)
                           ;; (project-status . 10)

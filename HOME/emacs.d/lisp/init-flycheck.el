@@ -13,7 +13,7 @@
   (setq flycheck-temp-prefix "__flycheck_")
   (setq flycheck-indication-mode 'left-fringe)
   (setq flycheck-highlighting-mode 'lines)
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint python-flake8))
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy))
   (global-flycheck-mode))
 
 

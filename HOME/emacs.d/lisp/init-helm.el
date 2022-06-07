@@ -3,6 +3,9 @@
 ;;; Code:
 
 
+;; https://github.com/KaratasFurkan/.emacs.d#helm
+;; https://github.com/KaratasFurkan/.emacs.d#helm-projectile
+
 (use-package helm
   :diminish helm-mode
   :config
@@ -23,18 +26,50 @@
   :custom-face
   (helm-posframe-border ((t (:background "#b58900"))))
   :custom
+  (helm-display-header-line nil)
+  (helm-echo-input-in-header-line t)
   (helm-posframe-border-width 3)
   (helm-posframe-parameters '((left-fringe . 10)
                               (right-fringe . 10)))
+  ;; (helm-posframe-size-function 'fk/helm-posframe-get-size)
   :config
-  (setq helm-posframe-poshandler
-        'posframe-poshandler-frame-center
+  (setq helm-posframe-poshandler 'posframe-poshandler-frame-center
         helm-posframe-height (frame-height)
         helm-posframe-width (frame-width))
+
   (helm-posframe-enable)
-  (remove-hook 'delete-frame-functions 'helm--delete-frame-function))
+
+  (remove-hook 'delete-frame-functions 'helm--delete-frame-function)
+
+  ;; Fix helm-posframe-display: Wrong type argument: window-live-p, #<window XYZ>
+  (defun fk/helm-posframe-disable-on-minibuffer (orig-func &rest args)
+    "Disable `helm-posframe' if it is called from minibuffer."
+    (let ((helm-display-function 'helm-default-display-buffer))
+      (apply orig-func args)))
+
+  (advice-add 'helm-read-pattern-maybe :around 'fk/helm-posframe-disable-on-minibuffer)
+
+  (defun fk/helm-posframe-get-size ()
+    (list
+     :min-width (or helm-posframe-min-width
+                    (let ((half-frame-width (round (* (frame-width) 0.5)))
+                          (three-quarter-frame-width (round (* (frame-width) 0.75))))
+                      (if (> half-frame-width 100)
+                          half-frame-width
+                        three-quarter-frame-width)))
+     :min-height (or helm-posframe-min-height
+                     (let ((half-frame-height (round (* (frame-height) 0.5)))
+                           (three-quarter-frame-height (round (* (frame-height) 0.75))))
+                       (if (> half-frame-height 25)
+                           half-frame-height
+                         three-quarter-frame-height))))))
 
 (use-package helm-projectile
+  :custom
+  (helm-projectile-sources-list '(helm-source-projectile-buffers-list
+                                  helm-source-projectile-recentf-list
+                                  helm-source-projectile-files-list
+                                  helm-source-projectile-projects))
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))

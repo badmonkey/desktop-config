@@ -25,6 +25,10 @@
 (defvar backup-dir (f-join user-home-dir ".backup"))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
+(setq desktop-dirname user-emacs-directory)
+(setq desktop-base-file-name "desktop.session")
+(setq desktop-base-lock-name "desktop.lock")
+
 
 (when (string-equal system-type "darwin")
   ;;  used for compiling and callign stuff with eshell
@@ -61,6 +65,14 @@
 ;; ridiculously bizarre thing entirely.
 (fset 'display-startup-echo-area-message #'ignore)
 
+(setq frame-title-format "%b%+")
+;; (setq frame-title-format (list "%b (" user-login-name "@" system-name ")"))
+;; frame-title-format '((:eval  ; TODO: maybe better in "* Better Defaults"
+;;                        (let ((project-name (projectile-project-name)))
+;;                          (unless (string= "-" project-name)
+;;                            (format "%s| " project-name))))
+;;                       "%b"))  ; project-name| file-name
+
 ;; Get rid of tool bar, menu bar and scroll bars.  On OS X we preserve the menu
 ;; bar, since the top menu bar is always visible anyway, and we'd just empty it
 ;; which is rather pointless.
@@ -70,6 +82,15 @@
   (menu-bar-mode -1))
 (when (fboundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
+
+;; (push '(menu-bar-lines . 0)   default-frame-alist)
+;; (push '(tool-bar-lines . 0)   default-frame-alist)
+;; (push '(vertical-scroll-bars) default-frame-alist)
+
+;; (setq menu-bar-mode nil
+;;       tool-bar-mode nil
+;;       scroll-bar-mode nil)
+
 
 (setq-default scroll-conservatively 101)
 
@@ -96,7 +117,6 @@
 (setq-default transient-mark-mode t)
 
 (delete-selection-mode 1)
-(desktop-save-mode 1)
 
 ;; treat CamelCase as words
 ;; (global-subword-mode 1)

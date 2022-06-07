@@ -5,12 +5,28 @@
 ;; https://github.com/jpkotta/syntax-subword/tree/9aa9b3f846bfe2474370642458a693ac4760d9fe
 ;; https://github.com/akicho8/string-inflection/tree/c4a519be102cb99dd86be3ee8c387f008d097635
 ;; https://github.com/knu/replace-with-inflections.el/tree/d9201e047856492f282da65459b28aba25998dbb
+;; https://github.com/codemac/config/blob/master/emacs.d/boot.org
 
 
 (with-current-buffer "*scratch*"
 	  (emacs-lock-mode 'kill))
 (with-current-buffer "*Messages*"
 	  (emacs-lock-mode 'kill))
+
+
+(defun fk/my-remove-stale-lock-file ()
+  (let ((pid (desktop-owner)))
+    (when pid
+      (let ((infile nil)
+            (destination nil)
+            (display nil))
+        (unless (= (call-process "ps" infile destination display "-p"
+                                 (number-to-string pid)) 0)
+          (let ((lock-fn (desktop-full-lock-name)))
+            (delete-file lock-fn)))))))
+
+;;(fk/my-remove-stale-lock-file desktop-dirname)
+(desktop-save-mode 1)
 
 
 (defvar my-term-shell "/bin/bash")
@@ -23,6 +39,7 @@
 ;; https://github.com/raxod502/prescient.el
 ;; https://github.com/oantolin/embark/
 ;; https://github.com/minad/consult
+;; https://github.com/minad/marginalia
 
 (use-package general)
 
@@ -73,6 +90,7 @@
 (use-package change-inner)
 
 (use-package fancy-narrow)
+
 
 ;; (use-package puni)
 
@@ -226,15 +244,15 @@
   (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
 
 
-(use-package which-key
-  :diminish which-key-mode
-  :config)
+;; (use-package which-key
+;;   :diminish which-key-mode
+;;   :config)
 
-(use-package which-key-posframe
-  :after (which-key posframe)
-  :config
-  (setq which-key-posframe-poshandler 'posframe-poshandler-frame-top-center)
-  (which-key-posframe-mode))
+;; (use-package which-key-posframe
+;;   :after (which-key posframe)
+;;   :config
+;;   (setq which-key-posframe-poshandler 'posframe-poshandler-frame-top-center)
+;;   (which-key-posframe-mode))
 
 
 

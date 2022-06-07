@@ -1,5 +1,6 @@
 auto-save-list/
 elpa/
+straight/
 transient/
 .mc-lists.el
 ac-comphist.dat
@@ -7,5 +8,5 @@ recentf
 helm-adaptive-history
 projectile-bookmarks.eld
 projectile.cache
-.emacs.desktop
-.emacs.desktop.lock
+desktop.session
+desktop.lock
