@@ -19,6 +19,8 @@
         helm-bookmark-show-location           t)
   (helm-mode 1)
   (helm-adaptive-mode 1)
+  (setq helm-boring-buffer-regexp-list
+        (list (rx " *") (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-")))
   )
 
 (use-package helm-posframe
@@ -70,6 +72,13 @@
                                   helm-source-projectile-recentf-list
                                   helm-source-projectile-files-list
                                   helm-source-projectile-projects))
+  :init
+  (defun project-open-file ()
+    "Open file using projectile if in project"
+    (interactive)
+    (if (projectile-project-p)
+        (helm-projectile)
+      (helm-for-files)))
   :config
   (setq projectile-completion-system 'helm)
   (helm-projectile-on))

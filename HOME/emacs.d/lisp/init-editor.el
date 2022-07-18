@@ -14,18 +14,7 @@
 	  (emacs-lock-mode 'kill))
 
 
-(defun fk/my-remove-stale-lock-file ()
-  (let ((pid (desktop-owner)))
-    (when pid
-      (let ((infile nil)
-            (destination nil)
-            (display nil))
-        (unless (= (call-process "ps" infile destination display "-p"
-                                 (number-to-string pid)) 0)
-          (let ((lock-fn (desktop-full-lock-name)))
-            (delete-file lock-fn)))))))
-
-;;(fk/my-remove-stale-lock-file desktop-dirname)
+(setq desktop-load-locked-desktop t)
 (desktop-save-mode 1)
 
 
@@ -40,6 +29,30 @@
 ;; https://github.com/oantolin/embark/
 ;; https://github.com/minad/consult
 ;; https://github.com/minad/marginalia
+
+(use-package keyfreq
+  :init
+  (setq keyfreq-excluded-commands
+        '(self-insert-command
+          abort-recursive-edit
+          forward-char
+          backward-char
+          left-char
+          right-char
+          previous-line
+          next-line
+          helm-next-line
+          helm-previous-line
+          helm-M-x
+          newline
+          proj-open-file
+          save-buffer
+          yank))
+  :config
+  (setq keyfreq-file (f-join user-emacs-directory "keyfreq.dat"))
+  (setq keyfreq-file-lock (f-join user-emacs-directory "keyfreq.lock"))
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 
 (use-package general)
 
@@ -208,6 +221,15 @@
 
 (use-package eval-expr)
 
+;; liberated from https://github.com/fejfighter/fejfighter-emacs.d/blob/master/fejfighter-packages.el
+(defun auto-display-magit-process-buffer (&rest args)
+  "Automatically display the process buffer when it is updated."
+  (let ((magit-display-buffer-noselect t))
+    (magit-process-buffer)))
+
+(advice-add 'magit-process-set-mode-line-error-status :before
+	        #'auto-display-magit-process-buffer)
+
 (use-package magit)
 
 (use-package repo)
@@ -242,6 +264,11 @@
   :config
   (add-hook 'markdown-mode-hook 'ac-emoji-setup)
   (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
+
+
+;; (use-package eglot
+;;   :config
+;;   (setq eglot-server-programs `()))
 
 
 ;; (use-package which-key

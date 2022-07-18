@@ -22,8 +22,9 @@
     :after flycheck
     :config
     (flycheck-posframe-configure-pretty-defaults)
-    ;; frame-center  frame-top-center  window-center
-    (setq flycheck-posframe-position 'window-bottom-right-corner)
+    ;; frame-center  frame-top-center frame-bottom-center
+    ;; window-bottom-right-corner
+    (setq flycheck-posframe-position 'frame-bottom-center)
     (setq flycheck-posframe-border-width 2)
     (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
 

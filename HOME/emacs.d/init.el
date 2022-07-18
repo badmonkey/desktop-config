@@ -6,26 +6,26 @@
 
 ;; Fiddle with Garbage Collection
 
-(defvar gc-cons-threshold-large)
-(defvar gc-cons-threshold-original)
+;; (defvar gc-cons-threshold-large)
+;; (defvar gc-cons-threshold-original)
 
-(setq gc-cons-threshold-large (* 1024 1024 100))
-(setq gc-cons-threshold-original gc-cons-threshold)
-(setq gc-cons-threshold gc-cons-threshold)
+;; (setq gc-cons-threshold-large (* 1024 1024 100))
+;; (setq gc-cons-threshold-original gc-cons-threshold)
+;; (setq gc-cons-threshold gc-cons-threshold)
 
-(run-with-idle-timer 5 nil
-  (lambda ()
-    (setq gc-cons-threshold gc-cons-threshold-original)
-    (message "gc-cons-threshold restored")))
+;; (run-with-idle-timer 5 nil
+;;   (lambda ()
+;;     (setq gc-cons-threshold gc-cons-threshold-original)
+;;     (message "gc-cons-threshold restored")))
 
-(defun my-minibuffer-setup-hook ()
-  (setq gc-cons-threshold gc-cons-threshold-large))
+;; (defun my-minibuffer-setup-hook ()
+;;   (setq gc-cons-threshold gc-cons-threshold-large))
 
-(defun my-minibuffer-exit-hook ()
-  (setq gc-cons-threshold gc-cons-threshold-original))
+;; (defun my-minibuffer-exit-hook ()
+;;   (setq gc-cons-threshold gc-cons-threshold-original))
 
-(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
-(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+;; (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+;; (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
 
 ;; Add custom code to the load path.
@@ -56,6 +56,15 @@
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 (setq straight-cache-autoloads t)
+
+
+(use-package esup)
+
+(use-package gcmh
+  :config
+  (setq garbage-collection-messages t)
+  (gcmh-mode t))
+
 
 ;; Load somne library packages
 (message "Loading libraries...")

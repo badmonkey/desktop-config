@@ -42,6 +42,16 @@
   (remove-hook 'with-venv-find-venv-dir-functions
                'with-venv-find-venv-dir-pipenv))
 
+;; (nougat-hydra hydra-pyvenv (:color red)
+;;   ("pyvenv - virtualenv" (("c" (call-interactively 'pyvenv-create)
+;; 		"create")
+;; 	       ("w" (call-interactively 'pyvenv-workon) "work on")
+;; 	       ("a" (call-interactively 'pyvenv-activate)	"activate")
+;; 	       ("d" (call-interactively 'pyvenv-deactivate) "deactivate")
+;; 	       ("t" (call-interactively 'pyvenv-tracking-mode) "tracking mode")
+;; 	       ("r" (call-interactively 'pyvenv-restart-python) "restart python")
+;; 	       )))
+
 (use-package flycheck-virtualenv
   :straight (flycheck-virtualenv :type nil :local-repo "~/.emacs.d/contrib/flycheck-virtualenv"))
 

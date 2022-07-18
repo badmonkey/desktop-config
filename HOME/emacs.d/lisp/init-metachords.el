@@ -205,6 +205,7 @@
 
   "m"       'hydra-magit/body
   "o"       'helm-projectile-find-file
+  ;; "o"       'proj-open-file
   "C-o"     'helm-find-files
   "p"       'projectile-switch-project
   "r"       'revbufs

@@ -20,19 +20,25 @@
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [alias]
-    sw = !git checkout $(git branch -a --format '%(refname:short)' | sed 's~origin/~~' | sort | uniq | fzf)
-    root = rev-parse --show-toplevel
-    fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
-    blog = log master..
-    sw = checkout
-    switch = checkout
     amend = commit --amend
-    ll = log --all --decorate --oneline --graph --first-parent
+    base = merge-base HEAD master
+    blog = log master..
+    br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+    branch-squash = !git rebase -i $(git merge-base HEAD master)
+    find = !git rev-list --all | xargs git grep -F
+    fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
+    # force = push origin FEATURE --force-with-lease
     history = log --graph --abbrev-commit --decorate --first-parent
-    squash = rebase -i
+    last = log -1 HEAD --stat
     latest = describe --abbrev=0 --tags
+    lg = !git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+    ll = log --all --decorate --oneline --graph --first-parent -30
+    root = rev-parse --show-toplevel
+    squash = rebase -i
+    st = status -sb
+    sw = !git checkout $(git branch -a --format '%(refname:short)' | sed 's~origin/~~' | sort | uniq | fzf)
+    switch = checkout
     taglist = tag -l --sort=-version:refname
-    diverge = !sh -c 'git rev-list --boundary $1...$2 | grep "^-" | cut -c2-'
-    branch-squash = rebase -i $(git merge-base HEAD master)
+    up = push origin HEAD
 [commit]
     template = /home/mfagan/.gitmessage

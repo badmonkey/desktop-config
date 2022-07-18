@@ -36,13 +36,14 @@
   ;;                `(project-status . ,(dashboard-project-status "/opt/projects/owlbear")))
   ;;   (add-to-list 'dashboard-items '(project-status) t))
   (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "~/.emacs.d/logo.png")
-  (setq dashboard-banner-logo-title "Kill all humans")
+  (setq dashboard-startup-banner (expand-file-name "logo.png" user-emacs-directory))
+  (setq dashboard-banner-logo-title "/A/lways /B/e /C/oding")
   (setq dashboard-set-init-info nil)
   ;; (setq dashboard-center-content t)
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-set-footer nil)
+  (setq dashboard-set-navigator t)
   ;; (setq dashboard-footer (shell-command-to-string "fortune -s"))
   (setq dashboard-items '((recents   . 10)
                           ;; (projects  . 5)
@@ -54,6 +55,23 @@
           '(lambda ()
              (switch-to-buffer dashboard-buffer-name)
              (emacs-lock-mode 'kill)))
+
+
+;; https://protesilaos.com/emacs/denote
+;; (use-package denote)
+;;   :config
+;;   (setq denote-directory (expand-file-name "~/notes/"))
+;;   (setq denote-known-keywords '("emacs" "code" "ideas"))
+;;   (setq denote-infer-keywords t)
+;;   (setq denote-sort-keywords t)
+;;   (setq denote-file-type 'text)
+;;   (setq denote-prompts '(title keywords))
+;;   (setq denote-allow-multi-word-keywords t)
+;;   (setq denote-date-format "%d/%m/%y")
+;;   (setq denote-link-fontify-backlinks t)
+;;   )
+
+;; (add-hook 'find-file-hook #'denote-link-buttonize-buffer)
 
 
 ;; (require 'subr-x)
