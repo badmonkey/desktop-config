@@ -4,6 +4,7 @@
 
 
 # set a fancy prompt (non-color, unless we know we "want" color)
+color_prompt=
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
@@ -11,10 +12,7 @@ esac
 
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	color_prompt=yes
-else
-	color_prompt=
 fi
-
 
 if [ "$color_prompt" = yes ]; then
 	if [ $(id -u) -eq 0 ]; then

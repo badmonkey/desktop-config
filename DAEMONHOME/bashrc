@@ -1,0 +1,38 @@
+#
+# non-interactive login
+#
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+
+PATH="$HOME/.local/bin:$PATH"
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+
+# History
+#
+
+HISTCONTROL=ignoreboth
+
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+
+if [ -f "$HOME/.environment" ]; then
+   source "$HOME/.environment"
+fi
+
+if [ -f "$HOME/.local_profile" ]; then
+    source "$HOME/.local_profile"
+fi
+
+
+if [ -n "$SETUP_PYENV" ]; then
+    eval "$(pyenv init -)"
+    pyenv virtualenvwrapper_lazy
+fi

@@ -1,0 +1,37 @@
+#
+# interactive login
+#
+
+# setup bash
+source "$HOME/.bashrc"
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+color_prompt=
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	color_prompt=yes
+fi
+
+if [ "$color_prompt" = yes ]; then
+	if [ $(id -u) -eq 0 ]; then
+		PRMPT_HOST='\[\e[01;31m\]\u@\h\[\e[00m\]'
+	else
+		PRMPT_HOST='\[\e[01;32m\]\u@\h\[\e[00m\]'
+	fi
+	PRMPT_HOST="${PRMPT_HOST}:\[\e[01;36m\]\$(work-dir)\[\e[00m\]"
+else
+    PRMPT_HOST='\u@\h:\w'
+fi
+unset color_prompt
+
+
+[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+
+for bcfile in ~/.completion.d/*.bash ; do
+    source $bcfile
+done
+
+complete -cf sudo
