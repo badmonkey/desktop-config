@@ -31,8 +31,15 @@
     history = log --graph --abbrev-commit --decorate --first-parent
     last = log -1 HEAD --stat
     latest = describe --abbrev=0 --tags
-    lg = !git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+    lg = log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
     ll = log --all --decorate --oneline --graph --first-parent -30
+    reset2remote = "!f() {                                      \
+                        BRANCH=$(git branch --show-current)     \
+                        echo git fetch origin;                       \
+                        echo git reset --hard origin/$BRANCH;        \
+                        echo git submodule deinit --all -f;          \
+                        echo git submodule update --init;            \
+                    }; f"
     root = rev-parse --show-toplevel
     squash = rebase -i
     st = status -sb

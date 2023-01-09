@@ -33,7 +33,7 @@
   (helm-posframe-border-width 3)
   (helm-posframe-parameters '((left-fringe . 10)
                               (right-fringe . 10)))
-  ;; (helm-posframe-size-function 'fk/helm-posframe-get-size)
+  (helm-posframe-size-function 'fk/helm-posframe-get-size)
   :config
   (setq helm-posframe-poshandler 'posframe-poshandler-frame-center
         helm-posframe-height (frame-height)
@@ -53,18 +53,8 @@
 
   (defun fk/helm-posframe-get-size ()
     (list
-     :min-width (or helm-posframe-min-width
-                    (let ((half-frame-width (round (* (frame-width) 0.5)))
-                          (three-quarter-frame-width (round (* (frame-width) 0.75))))
-                      (if (> half-frame-width 100)
-                          half-frame-width
-                        three-quarter-frame-width)))
-     :min-height (or helm-posframe-min-height
-                     (let ((half-frame-height (round (* (frame-height) 0.5)))
-                           (three-quarter-frame-height (round (* (frame-height) 0.75))))
-                       (if (> half-frame-height 25)
-                           half-frame-height
-                         three-quarter-frame-height))))))
+     :min-width (round (* (frame-width) 0.75))
+     :min-height (round (* (frame-height) 0.5)))))
 
 (use-package helm-projectile
   :custom

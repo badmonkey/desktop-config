@@ -159,8 +159,8 @@
   "1"       'kill-other-buffers
   "a"       'kill-all-buffers
   "b"       'bury-buffer
-  "f"       'kill-orphan-buffers
   "k"       'kill-or-bury-buffer
+  "o"       'kill-orphan-buffers
   "u"       'kill-unmodified-buffers
   "w"       'kill-with-linenum
   )
@@ -192,7 +192,10 @@
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-buffer)
 
-  "f"       (general-predicate-dispatch nil
+  "f"       (general-predicate-dispatch 'helm-find-files
+              (projectile-project-p) 'helm-projectile-find-file)
+
+  "h"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'helm-pydoc)
 
   "g"       'projectile-ripgrep
@@ -204,9 +207,8 @@
               (derived-mode-p 'markdown-mode) 'markdown-live-preview-mode)
 
   "m"       'hydra-magit/body
-  "o"       'helm-projectile-find-file
-  ;; "o"       'proj-open-file
-  "C-o"     'helm-find-files
+
+  "o"       'project-open-file
   "p"       'projectile-switch-project
   "r"       'revbufs
   "s"       'ispell

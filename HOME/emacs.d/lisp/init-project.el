@@ -18,11 +18,21 @@
            (venv-projectile-auto-workon)
            (projectile-dired)))
   (projectile-register-project-type
-    'adhocsh '(".adhoc.sh")
-    :compile "/bin/bash  .adhoc.sh build "
-    :test "/bin/bash  .adhoc.sh test "
-    :run "/bin/bash  .adhoc.sh run "))
-;; (add-to-list 'projectile-project-root-files ".projectile"))
+    'buildsh '("build.sh")
+    :compile "/bin/bash  build.sh build"
+    :test "/bin/bash  build.sh test"
+    :run "/bin/bash  build.sh run")
+  (projectile-register-project-type
+    'spm '("Package.swift")
+    :compile "swift build"
+    :test "swift test"
+    :run "swift run")
+  (projectile-register-project-type
+    'pypi '("setup.py")
+    :compile "pip build"
+    :test "pip test"
+    :run "pip run")
+  )
 
 
 (use-package projectile-ripgrep)
@@ -52,9 +62,9 @@
 
 
 (add-hook 'emacs-startup-hook
-          '(lambda ()
-             (switch-to-buffer dashboard-buffer-name)
-             (emacs-lock-mode 'kill)))
+          #'(lambda ()
+              (switch-to-buffer dashboard-buffer-name)
+              (emacs-lock-mode 'kill)))
 
 
 ;; https://protesilaos.com/emacs/denote

@@ -29,6 +29,8 @@
 ;; https://github.com/oantolin/embark/
 ;; https://github.com/minad/consult
 ;; https://github.com/minad/marginalia
+;; https://github.com/minad/corfu
+
 
 (use-package keyfreq
   :init
