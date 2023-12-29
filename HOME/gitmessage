@@ -1,4 +1,4 @@
 
 ##--- 8< --------- 50 characters --------- 8< ---|--- 72 characters ---|
-# fix,feat,build,chore,docs,ci,style,refactor,perf,test,revert,!notice |
-## --------------------------------------------------------------------|
+# feat, fix, refactor, lint, docs, test, build, revert, wip, !notice   |
+##---------------------------------------------------------------------|

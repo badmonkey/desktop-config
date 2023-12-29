@@ -20,11 +20,13 @@
  (font-spec :family "Symbola") nil 'prepend)
 
 ;; Line mode
-(global-linum-mode t)
+;; (global-display-line-numbers-mode t)
 (set-default 'truncate-lines t)
 
 ;; max line width indicator
-(display-fill-column-indicator-mode)
+(setq-default display-fill-column-indicator-column 80)
+;; (setq-default display-fill-column-indicator-character ?|)
+(global-display-fill-column-indicator-mode t)
 
 
 ;; Indent setting
@@ -162,8 +164,14 @@
 
 (use-package indicators)
 
-(use-package indicate-changes)
-(indicate-change-mode)
+;; (use-package indicate-changes
+;;   :init
+;;   (indicate-change-mode t))
+
+
+(use-package aggressive-indent
+  :init
+  (global-aggressive-indent-mode 1))
 
 (use-package all-the-icons)
 

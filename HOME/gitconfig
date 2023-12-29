@@ -1,8 +1,13 @@
 [user]
     name = Michael Fagan
     email = michael.fagan@penten.com
+[color]
+    ui = auto
 [push]
     default = simple
+    autoSetupRemote = true
+[pull]
+    rebase = false
 [core]
     editor = emacsclient
 [diff]
@@ -25,6 +30,7 @@
     blog = log master..
     br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
     branch-squash = !git rebase -i $(git merge-base HEAD master)
+    diff-branch = !git diff $(git merge-base HEAD develop)
     find = !git rev-list --all | xargs git grep -F
     fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
     # force = push origin FEATURE --force-with-lease

@@ -83,6 +83,28 @@
             (region-end))
     (error "Requires a selected region")))
 
+(defun input-region-ws-right ()
+  (if (region-active-p)
+      (list (point)
+            (save-excursion
+              (skip-chars-forward "[:space:]" (region-end))
+              (point)))
+    (list (point)
+          (save-excursion
+            (skip-chars-forward "[:space:]")
+            (point)))))
+
+(defun input-region-ws-left ()
+  (if (region-active-p)
+      (list (save-excursion
+              (skip-chars-backward "[:space:]" (region-beginning))
+              (point))
+            (point))
+    (list (save-excursion
+            (skip-chars-backward "[:space:]")
+            (point))
+          (point))))
+
 ;;
 ;; Interactive prompts for misc
 ;;

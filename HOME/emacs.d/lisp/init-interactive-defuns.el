@@ -163,6 +163,18 @@
       (fancy-narrow-to-region start end)
       (point-to-buffer-end))))
 
+;;
+;; General interactive functions
+;;
+(defun delete-ws-right (start end)
+  "Delete all spaces and tabs from point to next non-white char."
+  (interactive (input-region-ws-right))
+  (delete-region start end))
+
+(defun delete-ws-left (start end)
+  "Delete all spaces and tabs from the previous non-white char to point."
+  (interactive (input-region-ws-left))
+  (delete-region start end))
 
 ;;
 ;; advice for indent funs
@@ -196,6 +208,10 @@
   (if (use-region-p)
       (indent-code-rigidly start end tab-width)
     (indent-for-tab-command)))
+
+(defun region-indent-left (start end)
+  (interactive (input-region-or-line))
+  (indent-rigidly-left-to-tab-stop start end))
 
 
 (defun region-kill-line (start &optional end)
@@ -232,6 +248,11 @@
       (kill-ring-save start end)
     (copy-region-as-kill start end)))
 
+(defun region-join-lines (start &optional end)
+  (interactive (input-region-or-point))
+  (if (use-region-p)
+      (delete-indentation nil start end)
+    (delete-indentation)))
 
 (defun region-delete-back-word (start &optional end)
   (interactive (input-region-or-point))

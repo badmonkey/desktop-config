@@ -23,9 +23,13 @@
   ;; Recommended: Enable Corfu globally.
   ;; This is recommended since dabbrev can be used globally (M-/).
   :init
-  (corfu-global-mode))
+  (global-corfu-mode))
 
-(use-package eglot)
+
+;; (use-package eglot
+;;   :config
+;;   (setq eglot-server-programs `()))
+
 
 (use-package lua-mode
   :mode (("\\.lua\\'" . lua-mode))

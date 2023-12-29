@@ -18,6 +18,7 @@
   "M-DEL"   'region-delete-back-word
   "<M-tab>" 'ac-complete-with-helm
   "M-RET"   'multi-term-dedicated-toggle
+  "<M-up>"    'region-join-lines
 ;; M-SPC region commands
 ;; M-. at-point commands
   "M-;"     'comment-dwim
@@ -51,8 +52,9 @@
   "SPC"     'smart-region
   "DEL"     'delete-region
   "TAB"     'indent-rigidly
+
   ";"       'region-toggle-comment
-  "."       'hydra-mark/body
+  ;; "."       'hydra-mark/body
 
   "1"       'just-one-space
 
@@ -66,15 +68,16 @@
   "e"       'toggle-fancy-narrow
 
   "i"       'kill-inner-region
-  "j"       'hydra-mark/body
+  "j"       'region-join-lines
   "k"       'region-kill-whole-line
 
-  "m"       'mc/mark-all-like-this
+  "m"       'hydra-mark/body
   "n"       'narrow-to-region-indirect
 
   "o"       'kill-outer-region
   "p"       'mark-paragraph
   "q"       'region-qp-encode
+  "s"       'mc/mark-all-like-this
   "w"       'region-copy-whole-line
   "M-w"     'kill-ring-save
   "y"       'clipmon-autoinsert-toggle
@@ -88,7 +91,14 @@
   :prefix-command 'at-point-keymap
 
   "TAB"     'completion-at-point
-  "SPC"     'helm-dash-at-point
+  "SPC"     'just-one-space
+  "DEL"     'delete-horizontal-space
+
+  "<left>"  'delete-ws-right
+  "["       'delete-ws-right
+  "]"       'delete-ws-left
+
+  "/"       'helm-dash-at-point
   "\\"      'bm-annotate-or-create
   "?"       'symbol-at-point
 
@@ -120,50 +130,54 @@
 
 ;;; M-g  goto commands ;;;
 (general-define-key
-  :prefix "M-g"
+ :prefix "M-g"
 
-;; TAB      move-to-column
-  "\\"      'goto-last-change
-  "`"       'switch-to-last-buffer
-  "["       'point-to-buffer-start
-  "]"       'point-to-buffer-end
+ ;; TAB      move-to-column
+ "\\"      'goto-last-change
+ "`"       'switch-to-last-buffer
+ "["       'point-to-buffer-start
+ "]"       'point-to-buffer-end
 
-  "1"       'goto-line-with-prefix
-  "2"       'goto-line-with-prefix
-  "3"       'goto-line-with-prefix
-  "4"       'goto-line-with-prefix
-  "5"       'goto-line-with-prefix
-  "6"       'goto-line-with-prefix
-  "7"       'goto-line-with-prefix
-  "8"       'goto-line-with-prefix
-  "9"       'goto-line-with-prefix
+ "1"       'goto-line-with-prefix
+ "2"       'goto-line-with-prefix
+ "3"       'goto-line-with-prefix
+ "4"       'goto-line-with-prefix
+ "5"       'goto-line-with-prefix
+ "6"       'goto-line-with-prefix
+ "7"       'goto-line-with-prefix
+ "8"       'goto-line-with-prefix
+ "9"       'goto-line-with-prefix
 
-;; c        goto-char
-;; g        goto-line
+ ;; c        goto-char
+ ;; g        goto-line
 
-;; n        next-error
-;; p        previous-error
-  "l"       'avy-goto-line
-  "t"       'hl-todo-next
-  "C-t"     'hl-todo-previous
-  )
+ "j"       'avy-goto-line
+ "l"       'dogears-go
+
+ ;; n        next-error
+ ;; p        previous-error
+
+ "t"       'hl-todo-next
+ "C-t"     'hl-todo-previous
+ )
 
 
 
 ;;; M-k  kill buffer commands ;;;
 (general-define-key
-  :prefix "M-k"
-  :prefix-command 'killbuffer-keymap
-  "DEL"     'crux-delete-file-and-buffer
+ :prefix "M-k"
+ :prefix-command 'killbuffer-keymap
+ "DEL"     'crux-delete-file-and-buffer
 
-  "1"       'kill-other-buffers
-  "a"       'kill-all-buffers
-  "b"       'bury-buffer
-  "k"       'kill-or-bury-buffer
-  "o"       'kill-orphan-buffers
-  "u"       'kill-unmodified-buffers
-  "w"       'kill-with-linenum
-  )
+ "0"       'kill-all-buffers
+ "1"       'kill-other-buffers
+
+ "b"       'bury-buffer
+ "k"       'kill-or-bury-buffer
+ "o"       'kill-orphan-buffers
+ "u"       'kill-unmodified-buffers
+ "w"       'kill-with-linenum
+ )
 
 
 

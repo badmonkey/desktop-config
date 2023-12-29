@@ -53,7 +53,7 @@
   :config
   (setq keyfreq-file (f-join user-emacs-directory "keyfreq.dat"))
   (setq keyfreq-file-lock (f-join user-emacs-directory "keyfreq.lock"))
-  (keyfreq-mode 1)
+  (keyfreq-mode nil)
   (keyfreq-autosave-mode 1))
 
 (use-package general)
@@ -233,6 +233,13 @@
 	        #'auto-display-magit-process-buffer)
 
 (use-package magit)
+;; (defun mu-magit-kill-buffers (param)
+;;   "Restore window configuration and kill all Magit buffers."
+;;   (let ((buffers (magit-mode-get-buffers)))
+;;     (magit-restore-window-configuration)
+;;     (mapc #'kill-buffer buffers)))
+
+;; (validate-setq magit-bury-buffer-function #'mu-magit-kill-buffers)
 
 (use-package repo)
 
@@ -266,12 +273,6 @@
   :config
   (add-hook 'markdown-mode-hook 'ac-emoji-setup)
   (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
-
-
-;; (use-package eglot
-;;   :config
-;;   (setq eglot-server-programs `()))
-
 
 ;; (use-package which-key
 ;;   :diminish which-key-mode

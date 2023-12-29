@@ -101,6 +101,12 @@
 
 (use-package imenu-anywhere)
 
+(use-package dogears
+  :config
+  (dogears-mode))
+
+(use-package helm-dogears)
+
 
 (provide 'init-helm)
 ;;; init-helm.el ends here

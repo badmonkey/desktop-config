@@ -4,32 +4,40 @@
 
 
 (general-define-key
-  (general-chord ";;")      'region-toggle-comment
+ ;; https://www.johndcook.com/blog/2015/02/01/rare-bigrams/
 
-  (general-chord "\\\\")    'bm-toggle
+ (general-chord ";;")      'region-toggle-comment
 
-  (general-chord "``")      'point-to-buffer-start
-  (general-chord "\,\,")    'switch-to-last-buffer
+ (general-chord "\\\\")    'bm-toggle
 
-  (general-chord "jj")      'avy-goto-char-timer
+ (general-chord "``")      'point-to-buffer-start
+ (general-chord "\,\,")    'switch-to-last-buffer
 
-  ;; kk
-  ;; (general-chord "qq")      'toggle-superword
-  (general-chord "vv")      'toggle-supersub-mode
-  ;; ww ... except www. addresses
-  ;; yy
-  ;; https://www.johndcook.com/blog/2015/02/01/rare-bigrams/
+ ;; aa
+ ;; hh
 
-  (general-chord "/.")      'hydra-mark/body
+ (general-chord "jj")      'avy-goto-char-timer
+ (general-chord "kk")      'goto-last-change
 
-  (general-chord "\'\'")    'ispell-word
+ ;; qq
+ ;; uu
 
-  (general-chord "[[")      'previous-error
-  (general-chord "]]")      'next-error
+ (general-chord "vv")      'toggle-supersub-mode
 
-  (general-chord "\\[")     'bm-previous
-  (general-chord "\\]")     'bm-next
-  )
+ ;; "ww" clashes with www. addresses
+ ;; xx
+ ;; yy
+ ;; zz
+ ;; "//" clashes with comments and 3-slash comments
+
+ (general-chord "\'\'")    'ispell-word
+
+ (general-chord "[[")      'previous-error
+ (general-chord "]]")      'next-error
+
+ (general-chord "\\[")     'bm-previous
+ (general-chord "\\]")     'bm-next
+ )
 
 
 (provide 'init-keychords)

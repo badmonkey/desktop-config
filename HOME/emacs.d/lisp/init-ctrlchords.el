@@ -12,43 +12,44 @@
 ;; Stop uppercase-region warning from fucking with undo
   "C-x C-u"
 
-;; Need to delete this at the metsource
+;; Need to delete this at the source
   "C-x C-b"
   )
 
 
 (general-define-key
-  "<f5>"            'projectile-compile-project
+ "<f5>"            'projectile-compile-project
+ "<backtab>"       'region-indent-left
 
-  "C-="             'er/expand-region
-  "C-+"             'er/contract-region
+ "C-="             'er/expand-region
+ "C-+"             'er/contract-region
 
-  "<C-return>"      'crux-smart-open-line
-  "<S-return>"      'crux-smart-open-line-above
-  "<C-backspace>"   'region-kill-to-left-margin
-  "<C-tab>"         'region-indent-code
+ "<C-return>"      'crux-smart-open-line
+ "<S-return>"      'crux-smart-open-line-above
+ "<C-backspace>"   'region-kill-to-left-margin
+ "<C-tab>"         'region-indent-code
 
-  "<C-SPC>"         'smart-region
+ "<C-SPC>"         'smart-region
 
-  "C-a"             'crux-move-beginning-of-line
+ "C-a"             'crux-move-beginning-of-line
 
-  "C-k"             'region-kill-line
-  "C-w"             'region-copy-line
-  ;; "C-y"           'yank
+ "C-k"             'region-kill-line
+ "C-w"             'region-copy-line
+ ;; "C-y"           'yank
 
-  "C-s"             'swiper-helm
-  "C-o"             'imenu-anywhere
+ "C-s"             'swiper-helm
+ "C-o"             'imenu-anywhere
 
-  "C->"             'mc/mark-next-like-this
-  "C-<"             'mc/mark-previous-like-this
+ "C->"             'mc/mark-next-like-this
+ "C-<"             'mc/mark-previous-like-this
 
-  "C-`"             'switch-to-last-buffer
+ "C-`"             'switch-to-last-buffer
 
-  "C-."             'helm-ucs
+ "C-."             'helm-ucs
 
-  "<home>"          'crux-move-beginning-of-line
-  "<end>"           'move-end-of-line
-  )
+ "<home>"          'crux-move-beginning-of-line
+ "<end>"           'move-end-of-line
+ )
 
 
 (general-define-key
