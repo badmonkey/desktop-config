@@ -19,8 +19,8 @@
   "<M-tab>" 'ac-complete-with-helm
   "M-RET"   'multi-term-dedicated-toggle
   "<M-up>"    'region-join-lines
-;; M-SPC region commands
-;; M-. at-point commands
+  ;; M-SPC region commands
+  ;; M-. at-point commands
   "M-;"     'comment-dwim
   "M-\\"    'helm-bm
   "M-/"     'helm-dabbrev
@@ -30,14 +30,14 @@
   "M-a"     'unfill-region
 
   "M-c"     'subword-capitalize
-;; M-g goto commands
-;; M-k kill buffer commands
-;; M-p project commands
+  ;; M-g goto commands
+  ;; M-k kill buffer commands
+  ;; M-p project commands
   "M-q"     'fill-region-or-line
-;; M-r replace commands
-;; M-s search commands
-;; M-t tag commands
-;; M-u text commands
+  ;; M-r replace commands
+  ;; M-s search commands
+  ;; M-t tag commands
+  ;; M-u text commands
   "M-x"     'helm-M-x
   "M-y"     'helm-show-kill-ring
   )
@@ -130,54 +130,54 @@
 
 ;;; M-g  goto commands ;;;
 (general-define-key
- :prefix "M-g"
+  :prefix "M-g"
 
- ;; TAB      move-to-column
- "\\"      'goto-last-change
- "`"       'switch-to-last-buffer
- "["       'point-to-buffer-start
- "]"       'point-to-buffer-end
+  ;; TAB      move-to-column
+  "\\"      'goto-last-change
+  "`"       'switch-to-last-buffer
+  "["       'point-to-buffer-start
+  "]"       'point-to-buffer-end
 
- "1"       'goto-line-with-prefix
- "2"       'goto-line-with-prefix
- "3"       'goto-line-with-prefix
- "4"       'goto-line-with-prefix
- "5"       'goto-line-with-prefix
- "6"       'goto-line-with-prefix
- "7"       'goto-line-with-prefix
- "8"       'goto-line-with-prefix
- "9"       'goto-line-with-prefix
+  "1"       'goto-line-with-prefix
+  "2"       'goto-line-with-prefix
+  "3"       'goto-line-with-prefix
+  "4"       'goto-line-with-prefix
+  "5"       'goto-line-with-prefix
+  "6"       'goto-line-with-prefix
+  "7"       'goto-line-with-prefix
+  "8"       'goto-line-with-prefix
+  "9"       'goto-line-with-prefix
 
- ;; c        goto-char
- ;; g        goto-line
+  ;; c        goto-char
+  ;; g        goto-line
 
- "j"       'avy-goto-line
- "l"       'dogears-go
+  "j"       'avy-goto-line
+  "l"       'dogears-go
 
- ;; n        next-error
- ;; p        previous-error
+  ;; n        next-error
+  ;; p        previous-error
 
- "t"       'hl-todo-next
- "C-t"     'hl-todo-previous
- )
+  "t"       'hl-todo-next
+  "C-t"     'hl-todo-previous
+  )
 
 
 
 ;;; M-k  kill buffer commands ;;;
 (general-define-key
- :prefix "M-k"
- :prefix-command 'killbuffer-keymap
- "DEL"     'crux-delete-file-and-buffer
+  :prefix "M-k"
+  :prefix-command 'killbuffer-keymap
+  "DEL"     'crux-delete-file-and-buffer
 
- "0"       'kill-all-buffers
- "1"       'kill-other-buffers
+  "0"       'kill-all-buffers
+  "1"       'kill-other-buffers
 
- "b"       'bury-buffer
- "k"       'kill-or-bury-buffer
- "o"       'kill-orphan-buffers
- "u"       'kill-unmodified-buffers
- "w"       'kill-with-linenum
- )
+  "b"       'bury-buffer
+  "k"       'kill-or-bury-buffer
+  "o"       'kill-orphan-buffers
+  "u"       'kill-unmodified-buffers
+  "w"       'kill-with-linenum
+  )
 
 
 
@@ -234,7 +234,6 @@
   )
 
 
-
 ;;; M-r  replace commands ;;;
 (general-define-key
   :prefix "M-r"
@@ -255,17 +254,17 @@
 (general-define-key
   :prefix "M-s"
 
-;; .        isearch-forward-symbol-at-point
+  ;; .        isearch-forward-symbol-at-point
 
   ;; o        occur
   "g"       'google-this-search
   "r"       'isearch-backward
   "C-r"     'isearch-backward-regexp
   "s"       'isearch-forward
-;; t        counsel-etags-find-tag
-;; C-t      counsel-etags-grep-symbol-at-point
+  ;; t        counsel-etags-find-tag
+  ;; C-t      counsel-etags-grep-symbol-at-point
   "x"       'isearch-forward-regexp
-;; w        isearch-forward-word
+  ;; w        isearch-forward-word
   )
 
 

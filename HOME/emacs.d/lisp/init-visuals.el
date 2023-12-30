@@ -44,8 +44,7 @@
 (setq-default c-basic-offset 4)
 (setq tab-stop-list (monkey-generate-tab-stops))
 
-(set-variable 'python-indent-offset 4)
-(set-variable 'python-indent-guess-indent-offset nil)
+(setq lisp-indent-offset 2)
 
 ;;(electric-indent-mode 1)
 
