@@ -59,18 +59,13 @@
 (use-package helm-projectile
   :custom
   (helm-projectile-sources-list '(helm-source-projectile-buffers-list
-                                  helm-source-projectile-recentf-list
-                                  helm-source-projectile-files-list
-                                  helm-source-projectile-projects))
+                                   helm-source-projectile-recentf-list
+                                   helm-source-projectile-files-list
+                                   helm-source-projectile-projects))
   :init
-  (defun project-open-file ()
-    "Open file using projectile if in project"
-    (interactive)
-    (if (projectile-project-p)
-        (helm-projectile)
-      (helm-for-files)))
   :config
   (setq projectile-completion-system 'helm)
+  (setq helm-projectile-fuzzy-match nil)
   (helm-projectile-on))
 
 (use-package helm-pydoc
@@ -79,6 +74,8 @@
 (use-package helm-google)
 
 (use-package helm-bm)
+
+(use-package helm-xref)
 
 ;; (use-package helm-unicode)
 

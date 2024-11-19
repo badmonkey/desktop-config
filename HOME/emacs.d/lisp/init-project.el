@@ -10,13 +10,14 @@
   :init
   (projectile-global-mode)
   :custom
-  (projectile-enable-caching t)
+  (projectile-enable-caching nil)
   (projectile-indexing-method 'alien)
   :config
   (setq projectile-switch-project-action
     '(lambda ()
        (venv-projectile-auto-workon)
        (projectile-dired)))
+
   (projectile-register-project-type
     'buildsh '("build.sh")
     :compile "/bin/bash  build.sh build"

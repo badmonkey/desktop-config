@@ -237,19 +237,17 @@
 
 (use-package magit)
 
-(defun mu-magit-kill-buffers (param)
-  "Restore window configuration and kill all Magit buffers."
-  (let ((buffers (magit-mode-get-buffers)))
-    (magit-restore-window-configuration)
-    (mapc #'kill-buffer buffers)))
+(defun kill-magit-diff-buffer-in-current-repo (&rest _)
+  "Delete the magit-diff buffer related to the current repo"
+  (let ((magit-diff-buffer-in-current-repo
+          (magit-mode-get-buffer 'magit-diff-mode)))
+    (kill-buffer magit-diff-buffer-in-current-repo)))
 
-(setq magit-bury-buffer-function #'mu-magit-kill-buffers)
-
-;; (defadvice git-commit-commit (after delete-window activate)
-;;   (delete-window))
-
-;; (defadvice git-commit-abort (after delete-window activate)
-;;   (delete-window))
+(add-hook 'git-commit-setup-hook
+  (lambda ()
+    (add-hook 'with-editor-post-finish-hook
+      #'kill-magit-diff-buffer-in-current-repo
+      nil t))) ; the t is important
 
 ;; liberated from https://github.com/fejfighter/fejfighter-emacs.d/blob/master/fejfighter-packages.el
 (defun auto-display-magit-process-buffer (&rest args)

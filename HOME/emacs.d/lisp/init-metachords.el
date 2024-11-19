@@ -137,6 +137,7 @@
               (derived-mode-p 'python-mode) 'py-pyment-generate-docstring-at-point)
 
   "e"       'flycheck-display-error-at-point
+  ;;"f"       'xref-...
   "g"       'google-this
 
   "h"       (general-predicate-dispatch nil
@@ -245,6 +246,8 @@
 
   "f"       (general-predicate-dispatch 'helm-find-files
               (projectile-project-p) 'helm-projectile-find-file)
+  "F"       (general-predicate-dispatch 'helm-find-files
+              (projectile-project-p) 'helm-projectile-find-file-in-known-projects)
 
   "h"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'helm-pydoc)
@@ -259,8 +262,10 @@
 
   "m"       'hydra-magit/body
 
-  "o"       'project-open-file
-  "p"       'projectile-switch-project
+  "o"       (general-predicate-dispatch 'helm-for-files
+              (projectile-project-p) 'helm-projectile)
+
+  "p"       'helm-projectile-switch-project
   "q"       'neotree-toggle
   "r"       'revbufs
   "s"       'ispell
@@ -296,6 +301,7 @@
   ;; .      isearch-forward-symbol-at-point
   ;; _      isearch-forward-symbol
 
+  ;; "f"       'xref-find -apropos -definitions
   "g"       'google-this-search
   ;; o      occur
   "r"       'isearch-backward
