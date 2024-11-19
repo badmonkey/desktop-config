@@ -8,6 +8,10 @@
 ;; Interactive buffer funs
 ;;
 
+(defun debug-beep ()
+  (interactive)
+  (message "beep %s" (char-to-string last-command-event)))
+
 (defun switch-to-last-buffer ()
   (interactive)
   (switch-to-buffer (buffer-list-next)))
@@ -269,7 +273,7 @@
   (interactive (input-region-from-to-args "Query replace" nil))
   (progn
     (when mark-active
-      (goto-char (mark))
+      (goto-char (region-beginning))
       (deactivate-mark))
     (query-replace from-string to-string)))
 

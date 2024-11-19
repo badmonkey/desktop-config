@@ -33,30 +33,27 @@
 (when (string-equal system-type "darwin")
   ;;  used for compiling and callign stuff with eshell
   (setenv "PATH"
-          (concat
-           "/usr/local/bin" ":"
-           "/bin" ":"
-           "/usr/bin" ":"
-           (getenv "PATH")
-           )
-          )
+    (concat
+      "/usr/local/bin" ":"
+      "/bin" ":"
+      "/usr/bin" ":"
+      (getenv "PATH")
+      )
+    )
 
   ;;  used for loading flyc make and the like
   (setq exec-path
-        (append exec-path
-                '("~/bin"
-                  "/usr/local/bin"
-                  "/bin"
-                  "/usr/bin"
-                  ))))
-
-
-(setq vc-handled-backends nil)
-
+    (append exec-path
+      '("~/bin"
+         "/usr/local/bin"
+         "/bin"
+         "/usr/bin"
+         ))))
 
 ;; emacs machine settings
 (setq load-prefer-newer t)
 
+;;(setq vc-handled-backends '(Git))
 
 ;; disable startup message
 (setq inhibit-startup-message t)

@@ -34,7 +34,10 @@
 (use-package lua-mode
   :mode (("\\.lua\\'" . lua-mode))
   :config
-  (setq lua-indent-level 4))
+  (setq lua-indent-nested-block-content-align nil)
+  (setq lua-indent-close-paren-align nil)
+  (setq lua-indent-level 2)
+  )
 
 
 (use-package erlang

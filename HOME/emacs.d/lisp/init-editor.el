@@ -32,29 +32,30 @@
 ;; https://github.com/minad/corfu
 
 
-(use-package keyfreq
-  :init
-  (setq keyfreq-excluded-commands
-        '(self-insert-command
-          abort-recursive-edit
-          forward-char
-          backward-char
-          left-char
-          right-char
-          previous-line
-          next-line
-          helm-next-line
-          helm-previous-line
-          helm-M-x
-          newline
-          proj-open-file
-          save-buffer
-          yank))
-  :config
-  (setq keyfreq-file (f-join user-emacs-directory "keyfreq.dat"))
-  (setq keyfreq-file-lock (f-join user-emacs-directory "keyfreq.lock"))
-  (keyfreq-mode nil)
-  (keyfreq-autosave-mode 1))
+;; (use-package keyfreq
+;;   :init
+;;   (setq keyfreq-excluded-commands
+;;         '(self-insert-command
+;;           abort-recursive-edit
+;;           forward-char
+;;           backward-char
+;;           left-char
+;;           right-char
+;;           previous-line
+;;           next-line
+;;           helm-next-line
+;;           helm-previous-line
+;;           helm-M-x
+;;           newline
+;;           proj-open-file
+;;           save-buffer
+;;           yank))
+;;   :config
+;;   (setq keyfreq-file (f-join user-emacs-directory "keyfreq.dat"))
+;;   (setq keyfreq-file-lock (f-join user-emacs-directory "keyfreq.lock"))
+;;   (keyfreq-mode nil)
+;;   (keyfreq-autosave-mode 1))
+
 
 (use-package general)
 
@@ -150,9 +151,20 @@
   (setq ediff-window-setup-function 'ediff-setup-windows-plain)
   (setq ediff-split-window-function 'split-window-horizontally))
 
+;; (defun my-kill-ediff-buffers ()
+;;   (kill-buffer ediff-buffer-A)
+;;   (kill-buffer ediff-buffer-B)
+;;   (kill-buffer ediff-buffer-C)
+;;   (ediff-kill-buffer-carefully "*Ediff Control Panel*"))
+
+;; (add-hook 'ediff-quit-hook 'my-kill-ediff-buffers)
+
 
 (use-package fringe-helper)
 
+;;
+;; Bookmarks
+;;
 (use-package bm
   :init
   (setq bm-restore-repository-on-load t)
@@ -168,12 +180,12 @@
   (setq-default bm-buffer-persistence t)
 
   (set-face-attribute 'bm-persistent-face nil
-                      :foreground "DarkGreen"
-                      :background "gray18")
+    :foreground "DarkGreen"
+    :background "gray18")
 
   (set-face-attribute 'bm-fringe-persistent-face nil
-                      :foreground "DarkGreen"
-                      :background "gray18")
+    :foreground "DarkGreen"
+    :background "gray18")
 
   (when (display-graphic-p) ; Add fringe only if display is graphic (GUI)
     ;; (fringe-helper-define 'bm-marker-left '(top repeat)
@@ -223,6 +235,22 @@
 
 (use-package eval-expr)
 
+(use-package magit)
+
+(defun mu-magit-kill-buffers (param)
+  "Restore window configuration and kill all Magit buffers."
+  (let ((buffers (magit-mode-get-buffers)))
+    (magit-restore-window-configuration)
+    (mapc #'kill-buffer buffers)))
+
+(setq magit-bury-buffer-function #'mu-magit-kill-buffers)
+
+;; (defadvice git-commit-commit (after delete-window activate)
+;;   (delete-window))
+
+;; (defadvice git-commit-abort (after delete-window activate)
+;;   (delete-window))
+
 ;; liberated from https://github.com/fejfighter/fejfighter-emacs.d/blob/master/fejfighter-packages.el
 (defun auto-display-magit-process-buffer (&rest args)
   "Automatically display the process buffer when it is updated."
@@ -230,16 +258,8 @@
     (magit-process-buffer)))
 
 (advice-add 'magit-process-set-mode-line-error-status :before
-	        #'auto-display-magit-process-buffer)
+  #'auto-display-magit-process-buffer)
 
-(use-package magit)
-;; (defun mu-magit-kill-buffers (param)
-;;   "Restore window configuration and kill all Magit buffers."
-;;   (let ((buffers (magit-mode-get-buffers)))
-;;     (magit-restore-window-configuration)
-;;     (mapc #'kill-buffer buffers)))
-
-;; (validate-setq magit-bury-buffer-function #'mu-magit-kill-buffers)
 
 (use-package repo)
 

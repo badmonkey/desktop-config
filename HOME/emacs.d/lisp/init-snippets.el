@@ -17,20 +17,21 @@
 
 ;;   )
 
+;; https://github.com/minad/tempel
 
 (use-package aas
   :hook (lisp-mode . aas-activate-for-major-mode)
   :hook (org-mode . aas-activate-for-major-mode)
   :config
   (aas-set-snippets 'lisp-mode
-                    "use-" "(use-package )")
+    "use-" "(use-package )")
   (aas-set-snippets 'text-mode
-                    ;; expand unconditionally
-                    "o-" "?"
-                    "i-" "?"
-                    "a-" "?"
-                    "u-" "?"
-                    "e-" "?")
+    ;; expand unconditionally
+    "o-" "?"
+    "i-" "?"
+    "a-" "?"
+    "u-" "?"
+    "e-" "?")
   ;; (aas-set-snippets 'latex-mode
   ;;                   ;; set condition!
   ;;                   :cond #'texmathp ; expand only while in math

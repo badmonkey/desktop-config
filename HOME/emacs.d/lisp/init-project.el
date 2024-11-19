@@ -14,9 +14,9 @@
   (projectile-indexing-method 'alien)
   :config
   (setq projectile-switch-project-action
-        '(lambda ()
-           (venv-projectile-auto-workon)
-           (projectile-dired)))
+    '(lambda ()
+       (venv-projectile-auto-workon)
+       (projectile-dired)))
   (projectile-register-project-type
     'buildsh '("build.sh")
     :compile "/bin/bash  build.sh build"
@@ -34,8 +34,12 @@
     :run "pip run")
   )
 
-
 (use-package projectile-ripgrep)
+
+(use-package neotree
+  :after all-the-icons
+  :config
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 
 (use-package dashboard
@@ -56,9 +60,9 @@
   (setq dashboard-set-navigator t)
   ;; (setq dashboard-footer (shell-command-to-string "fortune -s"))
   (setq dashboard-items '((recents   . 10)
-                          ;; (projects  . 5)
-                          ;; (project-status . 10)
-                          (bookmarks . 10))))
+                           ;; (projects  . 5)
+                           ;; (project-status . 10)
+                           (bookmarks . 10))))
 
 
 (add-hook 'emacs-startup-hook

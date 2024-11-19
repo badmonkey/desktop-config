@@ -44,9 +44,6 @@ function update_mode () {
     echo "Working with '$MODE' files"
 }
 
-setup_mode "${APP}"
-
-
 function assert_have_mode () {
     if [ -z "$MODE" ]; then
         if [ -e ~/.edit-mode ]; then
@@ -81,6 +78,19 @@ while [ -n "$1" ]; do
     ARG="$1"
 
     case $ARG in
+        --help)
+            echo "edit --XXX|-XXX -s -n -w -z -f srch FILE|DIR..."
+            echo "  --XXX|-XXX  set the file suffix to match"
+            echo "  -s set SELECT does nothing atm"
+            echo "  -n  Don't wait for editor to finish opening files"
+            echo "  -w  Wait until editor has finished opening files"
+            echo "  -z  if FILE|DIR result in no files select ask for file to open"
+            echo "  -f srch  set search term for selcting files in a DIR"
+            echo "FILE  if file exists, open in editor, set mode based on file"
+            echo "      otherwise tell the editor to open an empty buffer (dont set mode)"
+            echo "DIR"
+            ;;
+
         --*)
             update_mode "${ARG:2}"
             ;;
@@ -137,10 +147,20 @@ while [ -n "$1" ]; do
                     EDITING="*.$MODE"
                 fi
             elif ! [ -e "$ARG" ]; then
-                setup_mode "$ARG"
-                echo "Creating $ARG ..."
-                emacsclient "$WAIT" -q "$ARG"
-                EDITING="$ARG"
+                # check if we have a glob that doesn't match anything
+                case "$ARG" in
+                    *\**)
+                        echo "No files matching $ARG  skipping"
+                        ;;
+                    *\?*)
+                        echo "No files matching $ARG  skipping"
+                        ;;
+                    *)
+                        echo "Creating $ARG ..."
+                        emacsclient "$WAIT" -q "$ARG"
+                        EDITING="$ARG"
+                        ;;
+                esac
             else
                 echo "Not sure what to do with $ARG ... skipping"
             fi

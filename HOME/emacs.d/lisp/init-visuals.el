@@ -16,11 +16,11 @@
 (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol")
 
 (set-fontset-font
- t 'symbol
- (font-spec :family "Symbola") nil 'prepend)
+  t 'symbol
+  (font-spec :family "Symbola") nil 'prepend)
 
 ;; Line mode
-;; (global-display-line-numbers-mode t)
+(global-display-line-numbers-mode t)
 (set-default 'truncate-lines t)
 
 ;; max line width indicator
@@ -119,12 +119,12 @@
 
 (when (display-graphic-p)
   (use-package fira-code-mode
-    :config
-    ;; (fira-code-mode)
-    (add-hook 'prog-mode-hook 'fira-code-mode)
+    :custom
+    (fira-code-mode-enable-hex-literal nil)
+    (setq fira-code-mode-disabled-ligatures '("x"))
+    :hook prog-mode
     :diminish fira-code-mode)
-)
-
+  )
 
 (use-package highlight-indent-guides
   :config

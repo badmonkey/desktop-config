@@ -3,26 +3,34 @@
 ;;; Code:
 
 
+(pretty-hydra-define hydra-magit
+  (:hint nil :color teal :quit-key "q" :title (with-faicon "code-fork" "Git" 1 -0.05))
+  ("Action"
+    (("b" magit-blame "blame")
+      ("c" magit-commit "commit")
+      ("i" magit-init "init")
+      ("l" magit-log-buffer-file "commit log (current file)")
+      ("L" magit-log-current "commit log (project)")
+      ("s" magit-status "status"))))
 
 
 (pretty-hydra-define hydra-toggles
   (:color amaranth :quit-key "q" :title (with-faicon "toggle-on" "Toggles" 1 -0.05))
   ("Basic"
-   (("n" linum-mode "line number" :toggle t)
-    ("w" whitespace-mode "whitespace" :toggle t)
-    ("W" whitespace-cleanup-mode "whitespace cleanup" :toggle t)
-    ("r" rainbow-mode "rainbow" :toggle t)
-    ("L" page-break-lines-mode "page break lines" :toggle t))
-   "Highlight"
-   (("s" symbol-overlay-mode "symbol" :toggle t)
-    ("l" hl-line-mode "line" :toggle t)
-    ("x" highlight-sexp-mode "sexp" :toggle t)
-    ("t" hl-todo-mode "todo" :toggle t))
-   "Coding"
-   (("p" smartparens-mode "smartparens" :toggle t)
-    ("P" smartparens-strict-mode "smartparens strict" :toggle t)
-    ("S" show-smartparens-mode "show smartparens" :toggle t)
-    ("f" flycheck-mode "flycheck" :toggle t))))
+    (("w" whitespace-mode "whitespace" :toggle t)
+      ("W" whitespace-cleanup-mode "whitespace cleanup" :toggle t)
+      ("r" rainbow-mode "rainbow" :toggle t)
+      ("L" page-break-lines-mode "page break lines" :toggle t))
+    "Highlight"
+    (("s" symbol-overlay-mode "symbol" :toggle t)
+      ("l" hl-line-mode "line" :toggle t)
+      ("x" highlight-sexp-mode "sexp" :toggle t)
+      ("t" hl-todo-mode "todo" :toggle t))
+    "Coding"
+    (("p" smartparens-mode "smartparens" :toggle t)
+      ("P" smartparens-strict-mode "smartparens strict" :toggle t)
+      ("S" show-smartparens-mode "show smartparens" :toggle t)
+      ("f" flycheck-mode "flycheck" :toggle t))))
 
 
 ;; (defhydra hydra-multiple-cursors (:color blue :hint nil)
@@ -80,31 +88,18 @@
 (pretty-hydra-define hydra-flycheck
   (:hint nil :color teal :quit-key "q" :title (with-faicon "plane" "Flycheck" 1 -0.05))
   ("Checker"
-   (("?" flycheck-describe-checker "describe")
-    ("d" flycheck-disable-checker "disable")
-    ("m" flycheck-mode "mode")
-    ("s" flycheck-select-checker "select"))
-   "Errors"
-   (("<" flycheck-previous-error "previous" :color pink)
-    (">" flycheck-next-error "next" :color pink)
-    ("f" flycheck-buffer "check")
-    ("l" flycheck-list-errors "list"))
-   "Other"
-   (("M" flycheck-manual "manual")
-    ("v" flycheck-verify-setup "verify setup"))))
-
-
-(pretty-hydra-define hydra-magit
-  (:hint nil :color teal :quit-key "q" :title (with-faicon "code-fork" "Git" 1 -0.05))
-  ("Action"
-   (("b" magit-blame "blame")
-    ("c" magit-commit "commit")
-    ("i" magit-init "init")
-    ("l" magit-log-buffer-file "commit log (current file)")
-    ("L" magit-log-current "commit log (project)")
-    ("s" magit-status "status"))))
-
-
+    (("?" flycheck-describe-checker "describe")
+      ("d" flycheck-disable-checker "disable")
+      ("m" flycheck-mode "mode")
+      ("s" flycheck-select-checker "select"))
+    "Errors"
+    (("<" flycheck-previous-error "previous" :color pink)
+      (">" flycheck-next-error "next" :color pink)
+      ("f" flycheck-buffer "check")
+      ("l" flycheck-list-errors "list"))
+    "Other"
+    (("M" flycheck-manual "manual")
+      ("v" flycheck-verify-setup "verify setup"))))
 
 
 ;; (defhydra hydra-help (:color blue :columns 8)

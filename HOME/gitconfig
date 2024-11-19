@@ -15,6 +15,8 @@
 [difftool "ediff"]
     cmd = ec-merge "$LOCAL" "$REMOTE"
     trustExitCode = true
+[difftool "ediffclient"]
+    cmd = emacsclient --eval \"(ediff-files \\\"$LOCAL\\\" \\\"$REMOTE\\\")\"
 [difftool "meld"]
     cmd = meld "$LOCAL" "$REMOTE"
 [merge]
@@ -25,27 +27,40 @@
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
 [alias]
-    amend = commit --amend
-    base = merge-base HEAD master
+    base = "!f() {                                              \
+                ONTO=${1:-master};                              \
+                git merge-base HEAD ${ONTO};                    \
+            }; f"
     blog = log master..
     br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
-    branch-squash = !git rebase -i $(git merge-base HEAD master)
-    diff-branch = !git diff $(git merge-base HEAD develop)
+    branch-squash = "!f() {                                     \
+                        ONTO=$(1:-master};                      \
+                        BASE=$(git merge-base HEAD ${ONTO});    \
+                        git rebase -i ${BASE};                  \
+                     }; f"
+    diff-branch = "!f() {                                       \
+                        ONTO=$(1:-master};                      \
+                        git diff HEAD ${ONTO};                  \
+                   }; f"
     find = !git rev-list --all | xargs git grep -F
     fix = !edit $(git diff --name-only --relative --diff-filter=U | uniq)
     # force = push origin FEATURE --force-with-lease
     history = log --graph --abbrev-commit --decorate --first-parent
     last = log -1 HEAD --stat
     latest = describe --abbrev=0 --tags
-    lg = log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+    lg = log --all --decorate --oneline --graph --simplify-by-decoration
+    lg2 = log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+    lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+    lg4 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
     ll = log --all --decorate --oneline --graph --first-parent -30
     reset2remote = "!f() {                                      \
                         BRANCH=$(git branch --show-current)     \
-                        echo git fetch origin;                       \
-                        echo git reset --hard origin/$BRANCH;        \
-                        echo git submodule deinit --all -f;          \
-                        echo git submodule update --init;            \
+                        echo git fetch origin;                  \
+                        echo git reset --hard origin/$BRANCH;   \
+                        echo git submodule deinit --all -f;     \
+                        echo git submodule update --init;       \
                     }; f"
+    revise = commit --amend
     root = rev-parse --show-toplevel
     squash = rebase -i
     st = status -sb

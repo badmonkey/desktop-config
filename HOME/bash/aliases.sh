@@ -26,7 +26,7 @@ alias l='ls -CF'
 
 alias rless='less -R'
 
-alias rm=trash-rm
+alias rm=trash-put
 
 # fast cd, adds `z` cd-like command
 eval "$(fasd --init auto)"

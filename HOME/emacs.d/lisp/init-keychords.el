@@ -4,40 +4,45 @@
 
 
 (general-define-key
- ;; https://www.johndcook.com/blog/2015/02/01/rare-bigrams/
+  ;; https://www.johndcook.com/blog/2015/02/01/rare-bigrams/
 
- (general-chord ";;")      'region-toggle-comment
+  (general-chord ";;")      'region-toggle-comment
 
- (general-chord "\\\\")    'bm-toggle
+  (general-chord "\\\\")    'bm-toggle
 
- (general-chord "``")      'point-to-buffer-start
- (general-chord "\,\,")    'switch-to-last-buffer
+  (general-chord "``")      'point-to-buffer-start
+  (general-chord "\,\,")    'switch-to-last-buffer
+  ;; ".." is likely to clash
 
- ;; aa
- ;; hh
+  (general-chord "aa")      'debug-beep
+  (general-chord "bb")      'debug-beep
+  (general-chord "hh")      'debug-beep
 
- (general-chord "jj")      'avy-goto-char-timer
- (general-chord "kk")      'goto-last-change
+  (general-chord "jj")      'avy-goto-char-timer
+  (general-chord "kk")      'goto-last-change
 
- ;; qq
- ;; uu
+  (general-chord "LL")      'debug-beep
 
- (general-chord "vv")      'toggle-supersub-mode
+  (general-chord "qq")      'debug-beep
+  (general-chord "uu")      'debug-beep
 
- ;; "ww" clashes with www. addresses
- ;; xx
- ;; yy
- ;; zz
- ;; "//" clashes with comments and 3-slash comments
+  (general-chord "vv")      'toggle-supersub-mode
 
- (general-chord "\'\'")    'ispell-word
+  ;; "ww" clashes with www. addresses
+  (general-chord "xx")      'debug-beep
+  (general-chord "yy")      'debug-beep
+  (general-chord "zz")      'debug-beep
 
- (general-chord "[[")      'previous-error
- (general-chord "]]")      'next-error
+  ;; "//" clashes with comments and 3-slash comments
 
- (general-chord "\\[")     'bm-previous
- (general-chord "\\]")     'bm-next
- )
+  (general-chord "\'\'")    'ispell-word
+
+  (general-chord "[[")      'previous-error
+  (general-chord "]]")      'next-error
+
+  (general-chord "\\[")     'bm-previous
+  (general-chord "\\]")     'bm-next
+  )
 
 
 (provide 'init-keychords)

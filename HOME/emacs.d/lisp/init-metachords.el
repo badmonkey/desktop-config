@@ -19,27 +19,59 @@
   "<M-tab>" 'ac-complete-with-helm
   "M-RET"   'multi-term-dedicated-toggle
   "<M-up>"    'region-join-lines
-  ;; M-SPC region commands
-  ;; M-. at-point commands
-  "M-;"     'comment-dwim
-  "M-\\"    'helm-bm
+  ;; M-SPC      region commands
+  ;; M-!    shell-command
+  ;; M-$    ispell-word
+  ;; M-%    query-replace
+  ;; M-&    async-shell-command
+  ;; M-'    abbrev-prefix-mark
+  ;; M-(    insert-parentheses
+  ;; M-)    move-past-close-and-reindent
+  ;; M-,    xref-go-back
+  ;; M-.        at-point commands
+  ;; M--    negative-argument
   "M-/"     'helm-dabbrev
-
+  ;; M-:    eval-expression
+  "M-;"     'comment-dwim
+  ;; M-<    beginning-of-buffer
   "M-="     'smart-region
+  ;; M->    end-of-buffer
+  ;; M-?    xref-find-references
+  ;; M-@    mark-word
+  "M-\\"    'helm-bm
+  ;; M-^    delete-indentation
+  ;; M-`    tmm-menubar
+  ;; M-{    backward-paragraph
+  ;; M-|    shell-command-on-region
+  ;; M-}    forward-paragraph
+  ;; M-~    not-modified
 
   "M-a"     'unfill-region
-
+  ;; M-b    backward-word
   "M-c"     'subword-capitalize
-  ;; M-g goto commands
-  ;; M-k kill buffer commands
-  ;; M-p project commands
+  ;; M-d    kill-word
+  ;; M-e    forward-sentence
+  ;; M-f    forward-word
+  ;; M-g        goto commands
+  ;; M-h    mark-paragraph
+  ;; M-i    tab-to-tab-stop
+  ;; M-j    default-indent-new-line
+  ;; M-k        kill buffer commands
+  ;; M-l    downcase-word
+  ;; M-m    back-to-indentation
+  ;; M-n
+  ;; M-o
+  ;; M-p        project commands
   "M-q"     'fill-region-or-line
-  ;; M-r replace commands
-  ;; M-s search commands
-  ;; M-t tag commands
-  ;; M-u text commands
+  ;; M-r        replace commands
+  ;; M-s        search commands
+  ;; M-t        tag commands
+  ;; M-u        text commands
+  ;; M-v    scroll-down-command
+  ;; M-w    kill-ring-save
   "M-x"     'helm-M-x
   "M-y"     'helm-show-kill-ring
+  ;; M-z    zap-to-char
   )
 
 
@@ -54,8 +86,8 @@
   "TAB"     'indent-rigidly
 
   ";"       'region-toggle-comment
-  ;; "."       'hydra-mark/body
 
+  "0"       'mark-sexp
   "1"       'just-one-space
 
   "a"       'region-qp-decode
@@ -79,7 +111,6 @@
   "q"       'region-qp-encode
   "s"       'mc/mark-all-like-this
   "w"       'region-copy-whole-line
-  "M-w"     'kill-ring-save
   "y"       'clipmon-autoinsert-toggle
   )
 
@@ -114,7 +145,7 @@
   "i"       'helm-info-at-point
 
   "s"       'ispell-word
-  ;; "t"       'ggtags-
+  ;; "t"    'ggtags- ??
   "u"       'crux-view-url
   "x"       'exchange-point-and-mark
   "z"       'zeal-at-point
@@ -132,11 +163,14 @@
 (general-define-key
   :prefix "M-g"
 
-  ;; TAB      move-to-column
+  ;; TAB    move-to-column
   "\\"      'goto-last-change
   "`"       'switch-to-last-buffer
   "["       'point-to-buffer-start
   "]"       'point-to-buffer-end
+
+  ","       'backward-list
+  "."       'forward-list
 
   "1"       'goto-line-with-prefix
   "2"       'goto-line-with-prefix
@@ -148,14 +182,16 @@
   "8"       'goto-line-with-prefix
   "9"       'goto-line-with-prefix
 
-  ;; c        goto-char
-  ;; g        goto-line
+  ;; c      goto-char
+  ;; g      goto-line
+
+  ;; i      imenu
 
   "j"       'avy-goto-line
   "l"       'dogears-go
 
-  ;; n        next-error
-  ;; p        previous-error
+  ;; n      next-error
+  ;; p      previous-error
 
   "t"       'hl-todo-next
   "C-t"     'hl-todo-previous
@@ -192,16 +228,17 @@
               (derived-mode-p 'python-mode) 'switch-to-python-shell)
   "."       'helm-mini
 
-  ;; "]"       'flycheck-buffer
+  "0"       'toggle-window-transparency
+  "1"       'toggle-window-dedicated
+  "="       'toggle-frame-maximized
+
+  ;; "]"    'flycheck-buffer ??
   "]"       'hydra-flycheck/body
   "["       'hl-todo-occur
-  "1"       'toggle-window-dedicated
-  "0"       'toggle-window-transparency
 
-  "="       'toggle-frame-maximized
   "DEL"     'posframe-delete-all
 
-  ;; "b"       'ibuffer
+  ;; "b"    'ibuffer ??
 
   "d"       (general-predicate-dispatch nil
               (derived-mode-p 'python-mode) 'py-pyment-buffer)
@@ -224,9 +261,11 @@
 
   "o"       'project-open-file
   "p"       'projectile-switch-project
+  "q"       'neotree-toggle
   "r"       'revbufs
   "s"       'ispell
   "t"       'transpose-windows
+  "u"       'desktop-save
   "v"       'venv-workon
   "x"       'delete-window
 
@@ -254,17 +293,18 @@
 (general-define-key
   :prefix "M-s"
 
-  ;; .        isearch-forward-symbol-at-point
+  ;; .      isearch-forward-symbol-at-point
+  ;; _      isearch-forward-symbol
 
-  ;; o        occur
   "g"       'google-this-search
+  ;; o      occur
   "r"       'isearch-backward
   "C-r"     'isearch-backward-regexp
   "s"       'isearch-forward
-  ;; t        counsel-etags-find-tag
-  ;; C-t      counsel-etags-grep-symbol-at-point
+  ;; t      counsel-etags-find-tag ??
+  ;; C-t    counsel-etags-grep-symbol-at-point ??
+  ;; w      isearch-forward-word
   "x"       'isearch-forward-regexp
-  ;; w        isearch-forward-word
   )
 
 
