@@ -18,18 +18,19 @@
        (venv-projectile-auto-workon)
        (projectile-dired)))
 
-  (projectile-register-project-type
-    'buildsh '("build.sh")
-    :compile "/bin/bash  build.sh build"
-    :test "/bin/bash  build.sh test"
-    :run "/bin/bash  build.sh run")
-  (projectile-register-project-type
-    'spm '("Package.swift")
+  (projectile-register-project-type 'buildsh '("build.sh")
+    :project-file "build.sh"
+    :configure "build.sh config"
+    :compile "build.sh build"
+    :test "build.sh test"
+    :run "build.sh run")
+  (projectile-register-project-type 'spm '("Package.swift")
+    :project-file "Package.swift"
     :compile "swift build"
     :test "swift test"
     :run "swift run")
-  (projectile-register-project-type
-    'pypi '("setup.py")
+  (projectile-register-project-type 'pypi '("setup.py")
+    :project-file "setup.py"
     :compile "pip build"
     :test "pip test"
     :run "pip run")

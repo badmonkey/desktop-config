@@ -102,7 +102,8 @@
   :config
   (dogears-mode))
 
-(use-package helm-dogears)
+(use-package helm-dogears
+  :after dogears)
 
 
 (provide 'init-helm)

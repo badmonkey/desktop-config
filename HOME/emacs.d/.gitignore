@@ -2,6 +2,7 @@ auto-save-list/
 elpa/
 straight/
 transient/
+eln-cache/
 .mc-lists.el
 ac-comphist.dat
 recentf

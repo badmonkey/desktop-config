@@ -1,6 +1,6 @@
 [user]
-    name = Michael Fagan
-    email = michael.fagan@penten.com
+    name = FIRST LAST
+    email = FIRST.LAST@email.com
 [color]
     ui = auto
 [push]
@@ -69,4 +69,4 @@
     taglist = tag -l --sort=-version:refname
     up = push origin HEAD
 [commit]
-    template = /home/mfagan/.gitmessage
+    template = ~/.gitmessage

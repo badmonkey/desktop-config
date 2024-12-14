@@ -105,7 +105,7 @@
 
 (use-package change-inner)
 
-(use-package fancy-narrow)
+;; (use-package fancy-narrow)
 
 
 ;; (use-package puni)

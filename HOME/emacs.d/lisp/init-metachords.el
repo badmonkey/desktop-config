@@ -212,6 +212,7 @@
   "b"       'bury-buffer
   "k"       'kill-or-bury-buffer
   "o"       'kill-orphan-buffers
+  "p"       'projectile-kill-buffers
   "u"       'kill-unmodified-buffers
   "w"       'kill-with-linenum
   )
