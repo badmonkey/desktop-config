@@ -25,10 +25,38 @@
   :init
   (global-corfu-mode))
 
+;; (use-package corfu
+;;   :custom
+;;   (corfu-cycle t)
+;;   :init
+;;   (global-corfu-mode)
+;;   :config
+;;   (with-eval-after-load 'savehist
+;;     (corfu-history-mode 1)
+;;     (add-to-list 'savehist-additional-variables 'corfu-history)))
+
 
 ;; (use-package eglot
 ;;   :config
 ;;   (setq eglot-server-programs `()))
+
+;; (use-package eglot
+;;   :ensure nil
+;;   :custom
+;;   (eldoc-echo-area-use-multiline-p nil)
+;;   (completion-category-defaults nil)
+;;   :config
+;;   (push '(rustic-ts-mode . eglot-rust-analyzer) eglot-server-programs)
+;;   (add-to-list 'eglot-server-programs
+;;     '((rust-mode rustic-ts-mode)
+;;        . (eglot-rust-analyzer "rust-analyzer")))
+;;   :bind (:map eglot-mode-map
+;;           ("M-(" . flymake-goto-next-error)
+;;           ("C-c ," . eglot-code-actions)))
+
+;; (use-package breadcrumb
+;;   :ensure (:host github :repo "joaotavora/breadcrumb")
+;;   :config (breadcrumb-mode))
 
 
 (use-package lua-mode

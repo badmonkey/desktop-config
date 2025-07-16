@@ -9,9 +9,9 @@
 
 
 (with-current-buffer "*scratch*"
-	  (emacs-lock-mode 'kill))
+  (emacs-lock-mode 'kill))
 (with-current-buffer "*Messages*"
-	  (emacs-lock-mode 'kill))
+  (emacs-lock-mode 'kill))
 
 
 (setq desktop-load-locked-desktop t)
@@ -30,6 +30,23 @@
 ;; https://github.com/minad/consult
 ;; https://github.com/minad/marginalia
 ;; https://github.com/minad/corfu
+
+;; (use-package marginalia
+;;   :defer t
+;;   :init
+;;   (marginalia-mode)
+;;   (setq marginalia-annotators '(marginalia-annotators-heavy nil)))
+
+;; (use-package cape
+;;   :init
+;;   (dolist (fn (list #'cape-file
+;;                 (cape-capf-super #'cape-dabbrev #'cape-dict #'org-block-capf #'cape-keyword)))
+;;     (add-to-list 'completion-at-point-functions fn))
+;;   :config
+;;   (let ((wordlist (getenv "WORDLIST")))
+;;     (setq
+;;       cape-dict-file wordlist
+;;       ispell-alternate-dictionary wordlist)))
 
 
 ;; (use-package keyfreq
@@ -291,6 +308,10 @@
   :config
   (add-hook 'markdown-mode-hook 'ac-emoji-setup)
   (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
+
+(use-package dirvish
+  :config
+  (dirvish-override-dired-mode))
 
 ;; (use-package which-key
 ;;   :diminish which-key-mode

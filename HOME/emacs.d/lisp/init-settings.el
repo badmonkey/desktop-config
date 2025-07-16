@@ -105,7 +105,8 @@
 ;; transient mode
 (setq-default transient-mark-mode t)
 
-(delete-selection-mode 1)
+(delete-selection-mode)
+
 
 ;; treat CamelCase as words
 ;; (global-subword-mode 1)
@@ -134,6 +135,38 @@
 (make-variable-buffer-local 'compile-command)
 
 
+;; (setq
+;;   ring-bell-function 'ignore
+;;   auth-sources my/auth-sources
+;;   tramp-default-method "ssh"
+;;   inhibit-startup-message t
+;;   inhibit-startup-echo-area-message t
+;;   initial-scratch-message nil
+;;   use-dialog-box nil
+;;   tab-always-indent 'complete)
+
+;; (setq
+;;   backup-by-copying t
+;;   backup-directory-alist `(("." . ,my/backup-dir))
+;;   auto-save-file-name-transforms `((".*" ,my/backup-dir t))
+;;   delete-old-versions t
+;;   kept-new-versions 6
+;;   kept-old-versions 2
+;;   version-control t)
+
+;; (setq load-prefer-newer t)
+
+;; (setq tab-bar-show 1
+;;   tab-bar-new-tab-choice #'crux-create-scratch-buffer)
+
+;; (column-number-mode t)
+
+(setq warning-suppress-types '((native-compiler lexical-binding))
+  warning-suppress-log-types '((native-compiler)))
+
+(setq warning-minimum-level :error)
+
+;; https://gitlab.com/jdm204/dotfiles/-/blob/master/config.org
 
 (provide 'init-settings)
 ;;; init-settings.el ends here

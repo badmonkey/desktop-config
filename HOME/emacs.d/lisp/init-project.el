@@ -5,13 +5,36 @@
 
 ;; https://github.com/KaratasFurkan/.emacs.d#treemacs-1
 
+;; (defvar projectile-working-project-root nil)
+
+;; (defun set-main-project (&optional dir)
+;;   "Set the projectile main project based on the current buffer.
+;; When called with argument DIR, make that main project instead."
+;;   (interactive)
+;;   (if dir
+;;     (setq projectile-main-project dir)
+;;     (let ((current-project))
+;;       (let ((projectile-main-project nil))
+;;         (setq current-project (projectile-project-root)))
+;;       (setq projectile-main-project current-project))))
+
+;; (defun use-main-project (&rest args)
+;;   "Skip calling `projectile-project-root' when there is a main project defined."
+;;   (when projectile-main-project
+;;     projectile-main-project))
+
+;; (advice-add #'projectile-project-root :before-until #'use-main-project)
+
+
 (use-package projectile
+  :after dirvish
   :diminish
   :init
   (projectile-global-mode)
   :custom
-  (projectile-enable-caching nil)
+  (projectile-enable-caching t)
   (projectile-indexing-method 'alien)
+  (projectile-sort-order 'recently-active)
   :config
   (setq projectile-switch-project-action
     '(lambda ()
@@ -36,7 +59,8 @@
     :run "pip run")
   )
 
-(use-package projectile-ripgrep)
+(use-package projectile-ripgrep
+  :after projectile)
 
 (use-package neotree
   :after all-the-icons
