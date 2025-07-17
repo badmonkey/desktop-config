@@ -28,6 +28,7 @@
 ;; (setq-default display-fill-column-indicator-character ?|)
 (global-display-fill-column-indicator-mode t)
 
+(setq-default indicate-buffer-boundaries t)
 
 ;; Indent setting
 (setq-default tab-always-indent nil)
@@ -167,6 +168,13 @@
 ;;   :init
 ;;   (indicate-change-mode t))
 
+(use-package visible-mark
+  :init
+  (global-visible-mark-mode)
+  :custom
+  (visible-mark-faces '(visible-mark-face1 visible-mark-face2))
+  (visible-mark-forward-faces '(visible-mark-face1 visible-mark-face2))
+  (visible-mark-max 2))
 
 (use-package aggressive-indent
   :init
