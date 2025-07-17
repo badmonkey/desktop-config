@@ -9,19 +9,18 @@
 (use-package helm
   :diminish helm-mode
   :config
-  (setq helm-split-window-in-side-p           t
-        helm-move-to-line-cycle-in-source     t
-        helm-ff-search-library-in-sexp        t
-        helm-scroll-amount                    8
-        helm-ff-file-name-history-use-recentf t
-        helm-move-to-line-cycle-in-source     t
-        helm-prevent-escaping-from-minibuffer t
-        helm-bookmark-show-location           t)
+  (setq
+    helm-split-window-in-side-p           t
+    helm-move-to-line-cycle-in-source     t
+    helm-ff-search-library-in-sexp        t
+    helm-scroll-amount                    8
+    helm-ff-file-name-history-use-recentf t
+    helm-move-to-line-cycle-in-source     t
+    helm-prevent-escaping-from-minibuffer t
+    helm-bookmark-show-location           t)
   (helm-mode 1)
   (helm-adaptive-mode 1)
-  (setq helm-boring-buffer-regexp-list
-        (list (rx " *") (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-")))
-  )
+  (setq helm-boring-buffer-regexp-list boring-buffer-regexp-list))
 
 (use-package helm-posframe
   :after helm

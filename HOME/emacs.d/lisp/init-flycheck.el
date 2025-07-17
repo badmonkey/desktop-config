@@ -48,19 +48,19 @@
 ;;   :hook (flycheck-mode . flycheck-indicator-mode))
 
 (with-eval-after-load 'flycheck
-  (flycheck-def-config-file-var flycheck-swiftlintrc flycheck-swiftlint "~/.swiftlink.yml")
-  (flycheck-def-executable-var flycheck-swiftlint "/usr/local/bin/swiftlint")
+  (flycheck-def-config-file-var flycheck-swiftlintrc swiftlink ".swiftlink.yml")
+  (flycheck-def-executable-var swiftlint "swiftlint")
 
   (flycheck-define-checker swiftlint
     "Swift syntax and style checker"
     :command ("swiftlint"
-              "--strict"
-              (config-file "--config" flycheck-swiftlintrc)
-              "--quiet"
-              source)
+               "--strict"
+               (config-file "--config" flycheck-swiftlintrc)
+               "--quiet"
+               source)
     :error-patterns
     ((error line-start (file-name) ":" line ":" column ": " "error: " (message) line-end)
-     (warning line-start (file-name) ":" line ":" column ": " "warning: " (message) line-end))
+      (warning line-start (file-name) ":" line ":" column ": " "warning: " (message) line-end))
     :modes swift-mode)
 
   (add-to-list 'flycheck-checkers 'swiftlint))

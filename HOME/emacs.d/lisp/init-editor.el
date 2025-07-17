@@ -245,9 +245,8 @@
 
 (add-hook 'git-commit-setup-hook
   (lambda ()
-    (add-hook 'with-editor-post-finish-hook
-      #'kill-magit-diff-buffer-in-current-repo
-      nil t))) ; the t is important
+    (add-hook 'with-editor-post-finish-hook #'kill-magit-diff-buffer-in-current-repo nil t)
+    (add-hook 'with-editor-post-cancel-hook #'kill-magit-diff-buffer-in-current-repo nil t)))
 
 ;; liberated from https://github.com/fejfighter/fejfighter-emacs.d/blob/master/fejfighter-packages.el
 (defun auto-display-magit-process-buffer (&rest args)

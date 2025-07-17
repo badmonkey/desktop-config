@@ -210,7 +210,7 @@
   "1"       'kill-other-buffers
 
   "b"       'bury-buffer
-  "k"       'kill-or-bury-buffer
+  "k"       'kill-or-bury-current-buffer
   "o"       'kill-orphan-buffers
   "p"       'projectile-kill-buffers
   "u"       'kill-unmodified-buffers

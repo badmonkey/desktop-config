@@ -133,6 +133,13 @@
 ;; make compile-command local
 (make-variable-buffer-local 'compile-command)
 
+;; transient can be purged if we're not in the middle of another interactive
+(defvar transient-buffer-regexp-list
+  (list (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-")))
+
+;; boring buffers shouldn't be selectable
+(defvar boring-buffer-regexp-list
+  (append (rx " *") transient-buffer-regexp-list)
 
 
 (provide 'init-settings)
