@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-editor --- Configure editor features
-;;; Commentary:
-;;; Code:
 
 ;; https://github.com/jpkotta/syntax-subword/tree/9aa9b3f846bfe2474370642458a693ac4760d9fe
 ;; https://github.com/akicho8/string-inflection/tree/c4a519be102cb99dd86be3ee8c387f008d097635
@@ -124,7 +124,6 @@
 
 ;; (use-package fancy-narrow)
 
-
 ;; (use-package puni)
 
 
@@ -205,13 +204,6 @@
     :background "gray18")
 
   (when (display-graphic-p) ; Add fringe only if display is graphic (GUI)
-    ;; (fringe-helper-define 'bm-marker-left '(top repeat)
-    ;;   "....XXXX"
-    ;;   "....XXXX"
-    ;;   "....XXXX"
-    ;;   "....XXXX"
-    ;;   )
-
     (fringe-helper-define 'bm-marker-left nil
       "xx.xx..."
       ".xx.xx.."
@@ -221,13 +213,6 @@
       ".xx.xx.."
       "xx.xx..."
       )
-
-    ;; (fringe-helper-define 'bm-marker-right '(top repeat)
-    ;;   "XXXX...."
-    ;;   "XXXX...."
-    ;;   "XXXX...."
-    ;;   "XXXX...."
-    ;;   )
 
     (fringe-helper-define 'bm-marker-right nil
 

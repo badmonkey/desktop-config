@@ -1,8 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-snippets --- expanding snippets
-;;; Commentary:
-;;; Code:
-
-
 
 ;; yasnippet
 ;; (use-package yasnippet

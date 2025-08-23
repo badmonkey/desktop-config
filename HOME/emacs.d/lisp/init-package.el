@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-package --- Initialize the package system.
-;;; Commentary:
-;;; Code:
 
 (defvar package-use-network t)
 

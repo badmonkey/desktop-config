@@ -1,18 +1,17 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-ctrlchords --- Add ctrl-chord bindings
-;;; Commentary:
-;;; Code:
-
 
 
 (general-unbind
-;; So you can't accidently quit or suspend the emacs server
+  ;; So you can't accidently quit or suspend the emacs server
   "C-x C-c"
   "C-z"
 
-;; Stop uppercase-region warning from fucking with undo
+  ;; Stop uppercase-region warning from fucking with undo
   "C-x C-u"
 
-;; Need to delete this at the source
+  ;; Need to delete this at the source
   "C-x C-b"
   )
 
@@ -61,7 +60,7 @@
   "<backspace>"     'delete-window
   "/"               'what-cursor-position
   "b"               'helm-buffers-list
-  "k"               'kill-or-bury-ask-buffer
+  "k"               'kill-or-bury-selected-buffer
   )
 
 

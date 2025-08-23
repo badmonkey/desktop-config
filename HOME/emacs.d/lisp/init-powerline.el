@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-spaceline --- Config spaceline
-;;; Commentary:
-;;; Code:
 
 ;; https://github.com/dbordak/telephone-line
 ;; https://github.com/dbordak/telephone-line/blob/110c578ccf6c0421cfd9eec7aa3e960b6fd49fb4/examples.org

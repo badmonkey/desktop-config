@@ -1,11 +1,10 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-project --- Configure project features
-;;; Commentary:
-;;; Code:
-
 
 ;; https://github.com/KaratasFurkan/.emacs.d#treemacs-1
 
-;; (defvar projectile-working-project-root nil)
+(defvar projectile-working-project-root nil)
 
 ;; (defun set-main-project (&optional dir)
 ;;   "Set the projectile main project based on the current buffer.

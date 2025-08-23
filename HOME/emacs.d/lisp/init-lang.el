@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-lang --- Configure lang modes - lua, erlang
-;;; Commentary:
-;;; Code:
 
 
 (use-package corfu

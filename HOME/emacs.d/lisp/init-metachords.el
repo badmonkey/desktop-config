@@ -1,7 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-metachords --- Add meta-chord bindings
-;;; Commentary:
-;;; Code:
-
 
 (general-define-key
   :prefix "ESC"
@@ -210,7 +209,7 @@
   "1"       'kill-other-buffers
 
   "b"       'bury-buffer
-  "k"       'kill-or-bury-current-buffer
+  "k"       'kill-or-bury-buffer
   "o"       'kill-orphan-buffers
   "p"       'projectile-kill-buffers
   "u"       'kill-unmodified-buffers

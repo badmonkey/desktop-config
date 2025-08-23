@@ -1,7 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-settings --- Personal settings
-;;; Commentary:
-;;; Code:
-
 
 (defvar user-home-dir (getenv "HOME"))
 
@@ -73,12 +72,11 @@
 ;; Get rid of tool bar, menu bar and scroll bars.  On OS X we preserve the menu
 ;; bar, since the top menu bar is always visible anyway, and we'd just empty it
 ;; which is rather pointless.
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (and (not (eq system-type 'darwin)) (fboundp 'menu-bar-mode))
-  (menu-bar-mode -1))
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (and
+        (not (eq system-type 'darwin))
+        (fboundp 'menu-bar-mode)) (menu-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 
 (setq-default scroll-conservatively 101)
@@ -134,13 +132,23 @@
 ;; make compile-command local
 (make-variable-buffer-local 'compile-command)
 
-;; transient can be purged if we're not in the middle of another interactive
-(defvar transient-buffer-regexp-list
-  (list (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-")))
 
-;; boring buffers shouldn't be selectable
-(defvar boring-buffer-regexp-list
-  (append (rx " *") transient-buffer-regexp-list)
+;;  classify buffers
+(defvar meta-buffer-regexp-list)
+(setq meta-buffer-regexp-list
+  (list (rx "*")))
+
+;; transient can be purged if we're not in the middle of another interactive
+(defvar transient-buffer-regexp-list)
+(setq transient-buffer-regexp-list
+  (list (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-") (rx "*swiper*")))
+
+;; check "*magit-" vs "magit-"
+
+(defvar hidden-buffer-regexp-list)
+(setq hidden-buffer-regexp-list
+  (list (rx " *")))
+
 
 ;; (setq
 ;;   ring-bell-function 'ignore

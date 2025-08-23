@@ -1,14 +1,12 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-python --- Configure python
-;;; Commentary:
-;;; Code:
-
-
 
 (use-package python
   :init
   (setq-default python-indent-offset 4)
   (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args "-i --simple-prompt"))
+    python-shell-interpreter-args "-i --simple-prompt"))
 
 ;; (use-package jedi)
 

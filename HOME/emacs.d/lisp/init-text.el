@@ -1,8 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-text --- Configure text modes
-;;; Commentary:
-;;; Code:
-
-
 
 (use-package markdown-mode
   :custom

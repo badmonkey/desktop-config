@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-flycheck --- Configure flycheck
-;;; Commentary:
-;;; Code:
 
 
 (use-package flycheck
@@ -11,26 +11,28 @@
   ;; (setq flycheck-python-pylint-executable "pylint-shim-pylava")
   ;; (setq flycheck-pylintrc "setup.cfg")
   (setq flycheck-temp-prefix "__flycheck_")
-  (setq flycheck-indication-mode 'left-fringe)
+  (setq flycheck-indication-mode nil)
+  ;; (setq flycheck-indication-mode 'left-fringe)
   (setq flycheck-highlighting-mode 'lines)
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy))
   (global-flycheck-mode))
 
 
-(when (display-graphic-p)
-  (use-package flycheck-posframe
-    :after flycheck
-    :config
-    (flycheck-posframe-configure-pretty-defaults)
-    ;; frame-center  frame-top-center frame-bottom-center
-    ;; window-bottom-right-corner
-    (setq flycheck-posframe-position 'frame-bottom-center)
-    (setq flycheck-posframe-border-width 2)
-    (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
+;; (when (display-graphic-p)
+;;   (use-package flycheck-posframe
+;;     :after flycheck
+;;     :config
+;;     (flycheck-posframe-configure-pretty-defaults)
+;;     ;; frame-center  frame-top-center frame-bottom-center
+;;     ;; window-bottom-right-corner
+;;     (setq flycheck-posframe-position 'frame-bottom-center)
+;;     (setq flycheck-posframe-border-width 2)
+;;     (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode)
 
-    :custom-face
-    (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
-)
+;;     :custom-face
+;;     (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
+;;   )
+
 
 (use-package flycheck-pony)
 

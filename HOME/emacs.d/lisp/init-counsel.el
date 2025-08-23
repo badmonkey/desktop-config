@@ -1,33 +1,33 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-counsel --- Configure counsel
-;;; Commentary:
-;;; Code:
 
 
 (use-package counsel
   :bind (("M-x" . counsel-M-x)
-         ("C-x C-f" . counsel-find-file)
-         ("<f1> f" . counsel-describe-function)
-         ("<f1> v" . counsel-describe-variable)
-         ("<f1> l" . counsel-find-library)
-         ("<f2> i" . counsel-info-lookup-symbol)
-         ("<f2> u" . counsel-unicode-char)
-         ("C-c g" . counsel-git-grep)
-         ("C-c j" . counsel-git)
-         ("C-c k" . counsel-ag)
-         ("C-c r" . counsel-rg)
-         ("C-x l" . counsel-locate)
-         :map minibuffer-local-map
-         ("C-r" . counsel-minibuffer-add))
+          ("C-x C-f" . counsel-find-file)
+          ("<f1> f" . counsel-describe-function)
+          ("<f1> v" . counsel-describe-variable)
+          ("<f1> l" . counsel-find-library)
+          ("<f2> i" . counsel-info-lookup-symbol)
+          ("<f2> u" . counsel-unicode-char)
+          ("C-c g" . counsel-git-grep)
+          ("C-c j" . counsel-git)
+          ("C-c k" . counsel-ag)
+          ("C-c r" . counsel-rg)
+          ("C-x l" . counsel-locate)
+          :map minibuffer-local-map
+          ("C-r" . counsel-minibuffer-add))
   :config
   (if (executable-find "rg")
-      ;; use ripgrep instead of grep because it's way faster
-      (setq counsel-grep-base-command
-            "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
-            counsel-rg-base-command
-            "rg -i -M 120 --no-heading --line-number --color never %s .")
-      (warn "\nWARNING: Could not find the ripgrep executable. It "
-            "is recommended you install ripgrep.")
-  ))
+    ;; use ripgrep instead of grep because it's way faster
+    (setq counsel-grep-base-command
+      "rg -i -M 120 --no-heading --line-number --color never '%s' %s"
+      counsel-rg-base-command
+      "rg -i -M 120 --no-heading --line-number --color never %s .")
+    (warn "\nWARNING: Could not find the ripgrep executable. It "
+      "is recommended you install ripgrep.")
+    ))
 
 ;; Use universal ctags to build the tags database for the project.
 ;; When you first want to build a TAGS database run 'touch TAGS'

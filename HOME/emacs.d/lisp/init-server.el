@@ -1,7 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-server --- Server settings
-;;; Commentary:
-;;; Code:
-
 
 ;; Remove trailing white space upon saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

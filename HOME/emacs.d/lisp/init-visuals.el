@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-visuals --- Visual settings
-;;; Commentary:
-;;; Code:
 
 ;; https://github.com/Fuco1/indicators.el
 
@@ -164,9 +164,20 @@
 
 (use-package indicators)
 
-;; (use-package indicate-changes
-;;   :init
-;;   (indicate-change-mode t))
+(use-package line-reminder
+  :config
+  (setq line-reminder-show-option 'indicators)
+  (global-line-reminder-mode t))
+
+(use-package sideline
+  :hook (flycheck-mode . sideline-mode)
+  :init
+  (setq sideline-backends-right '(sideline-flycheck)))
+
+(use-package sideline-flycheck
+  :hook (flycheck-mode . sideline-flycheck-setup)
+  :init
+  (setq sideline-flycheck-display-mode 'line))
 
 (use-package visible-mark
   :init

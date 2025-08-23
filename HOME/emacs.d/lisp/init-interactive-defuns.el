@@ -1,8 +1,7 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-interactive-defuns --- Interactive funs that require packages are loaded and
 ;;; are use by key bindings
-;;; Commentary:
-;;; Code:
-
 
 ;;
 ;; Interactive buffer funs
@@ -59,56 +58,62 @@
     (skip-chars-backward "\n \t")
     (setq end (point))
     (let* ((chunk (buffer-substring beg end))
-           (chunk (concat
-                   (format "%s%s #%-d %s %s %s\n%s "
-                           box/top-left
-                           box/top-long
-                           (line-number-at-pos beg)
-                           box/top
-                           (or (buffer-file-name) (buffer-name))
-                           (s-repeat 2 box/top)
-                           box/left)
-                   (replace-regexp-in-string "\n" (format "\n%s " box/left) chunk)
-                   (format "\n%s%s #%-d %s"
-                           box/bot-left
-                           box/top-long
-                           (line-number-at-pos end)
-                           box/top-long))))
+            (chunk (concat
+                     (format "%s%s #%-d %s %s %s\n%s "
+                       box/top-left
+                       box/top-long
+                       (line-number-at-pos beg)
+                       box/top
+                       (or (buffer-file-name) (buffer-name))
+                       (s-repeat 2 box/top)
+                       box/left)
+                     (replace-regexp-in-string "\n" (format "\n%s " box/left) chunk)
+                     (format "\n%s%s #%-d %s"
+                       box/bot-left
+                       box/top-long
+                       (line-number-at-pos end)
+                       box/top-long))))
       (kill-new chunk)))
   (deactivate-mark))
 
-(defun kill-or-bury-current-buffer ()
+
+;;
+;;  Buffer killing functions
+;;
+
+(defun kill-or-bury-buffer (&optional buffer-or-name)
+  "Kill specified buffer (or current-buffer if nil).
+If the buffer is locked, bury it instead of attempting to kill it"
   (interactive)
-  (if (bound-and-true-p emacs-lock-mode)
-    (progn
-      (switch-to-buffer (buffer-list-next))
-      (bury-buffer))
-    (kill-buffer)))
-
-
-(defun kill-or-bury-ask-buffer (buffer unlocked)
-  (interactive (input-buffer))
-  (if unlocked
-    (let ((next-buffer (buffer-list-next)) )
-      (switch-to-buffer next-buffer)
+  (let* ((current (current-buffer))
+          (buffer (or buffer-or-name current))
+          (is-current (eq (get-buffer buffer) current))
+          (locked (buffer-lockedp buffer)))
+    (when is-current (switch-to-buffer (buffer-list-next)))
+    (if locked
       (bury-buffer buffer)
-      (message "bury %s" buffer) )
-    (kill-buffer buffer)))
+      (kill-buffer buffer))))
+
+
+(defun kill-or-bury-selected-buffer (buffer)
+  (interactive (input-buffer #'buffer-is-killable-p))
+  (kill-or-bury-buffer buffer))
 
 
 (defun kill-all-buffers ()
+  "kill all buffers (excluding locked buffers), including transient and hidden buffers"
   (interactive)
-  (mapc 'kill-buffer (buffer-list)))
+  (mapc #'kill-buffer (buffer-list)))
 
 
 (defun kill-other-buffers ()
-  "Kill all other buffers."
+  "Kill all other buffers except the current buffer (and locked buffers)"
   (interactive)
-  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+  (mapc #'kill-buffer (delq (current-buffer) (buffer-list))))
 
 
 (defun kill-unmodified-buffers ()
-  "Kill all unmodified buffers and closes all but the selected frame."
+  "Kill all unmodified working buffers"
   (interactive)
   (save-window-excursion
     (dolist (buffer (buffer-list))

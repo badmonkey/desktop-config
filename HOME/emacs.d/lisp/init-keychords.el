@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-keychords --- Custom behaviour
-;;; Commentary:
-;;; Code:
 
 
 (general-define-key

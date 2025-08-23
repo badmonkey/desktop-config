@@ -1,53 +1,61 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-general-defuns --- funs that are used when loading packages
-;;; Commentary:
-;;; Code:
-
 
 
 ;;
 ;; Buffer related general purpose functions
 ;;
 
-;;  "*..."
-;;  "*dashboard*"
-;;  "*Messages*"
-;;  "*scratch*"
+;; buffers are fitlered in to classes based on buffer names
+;; "hidden" buffer begin with " *" and are usually buffers for communicating
+;;      with subprocesses
+;; "transient" buffers are buffers from modes or other functionality that aren't
+;;      closed automatically when they're not needed anymore
+;; "metabuffer" buffers starting "*.." that are not included as `transient`
+;; "project" buffer belongs to a project
+;;
+;; "general.el"                             - killable ordinary
+;; "library.el"     project                 - killable ordinary
+;; "commit_msg"     locked                  - ordinary
+;; "*scratch*"      metabuffer locked       -
+;; "*Backtrace*"    metabuffer              - killable
+;; "*magit-diff*"   metabuffer transient    - boring killable
+;; " *Minibuf-1*"   hidden                  - boring
 
-;;  match-buffers condition &optional buffer-list &rest args ¶
-;; helm-boring-buffer-regexp-list
 
-(defun buffer-boring-p (buffer)
-  (let ((name (cond ((not buffer) nil)
-                ((stringp buffer) buffer)
-                ((bufferp buffer) (buffer-name buffer)))))
-    (if name
-      (-any? (lambda (x) (s-matches-p x name)) boring-buffer-regexp-list)
-      t)
-    ))
+(defun buffer-matches-any (buffer-or-name regexp-list)
+  "true if buffer-or-name matches and of the regexp in regexp-list"
+  (let ((name (buffer-get-name buffer-or-name)))
+    (-any? #'(lambda (x) (s-matches-p x name)) regexp-list)))
 
+(defun buffer-is-transient-p (buffer-or-name)
+  (buffer-matches-any buffer-or-name transient-buffer-regexp-list))
 
-(defun buffer-interesting-list (&optional predicate buffers)
-  (unless predicate (setq predicate (-const t)))
-  (unless buffers (setq buffers (buffer-list)))
-  (let ((fullpredicate (lambda (x) (and
-                                (not (buffer-boring-p x))
-                                (predicate x)))))
-    (match-buffers fullpredicate buffers))
-  )
+(defun buffer-is-hidden-p (buffer-or-name)
+  (buffer-matches-any buffer-or-name hidden-buffer-regexp-list))
 
-;; (defun buffer-interesting-list (&optional predicate buffers)
-;;   (let* ((predicate (if (not predicate) (lambda (x) t) predicate))
-;;           (buffers (if (not buffers) (buffer-list) buffers))
-;;           (fullpredicate (lambda (x) (and
-;;                                   (not (buffer-boring-p x))
-;;                                   (predicate x)))))
-;;     (match-buffers fullpredicate buffers))
-;;   )
+(defun buffer-is-metabuffer-p (buffer-or-name)
+  (buffer-matches-any buffer-or-name meta-buffer-regexp-list))
 
-;; (defun command (a &optional b)
-;;   (unless b (setq b default))
-;;   (command-body a b))
+(defun buffer-is-locked-p (buffer-or-name)
+  (with-current-buffer buffer-or-name
+    (bound-and-true-p emacs-lock-mode)))
 
+(defun buffer-is-boring-p (buffer-or-name)
+  (or
+    (buffer-is-transient-p buffer-or-name)
+    (buffer-is-hidden-p buffer-or-name)))
+
+(defun buffer-is-killable-p (buffer-or-name)
+  (not (or
+         (buffer-is-locked-p buffer-or-name)
+         (buffer-is-hidden-p buffer-or-name))))
+
+(defun buffer-is-ordinary-p (buffer-or-name)
+  (not (or
+         (buffer-is-metabuffer-p buffer-or-name)
+         (buffer-is-hidden-p buffer-or-name))))
 
 ;; (defun modi/kill-non-project-buffers (&optional kill-special)
 ;;   "Kill buffers that do not belong to a `projectile' project.
@@ -66,27 +74,32 @@
 ;;               (message "Killing buffer %s" buf-name)
 ;;               (kill-buffer buf))))))))
 
+(defun buffer-list-grouped (prefer-pred &optional select)
+  (let ((buffers (if (not select) (buffer-list) (match-buffers select))))
+    (-flatten (-separate #'(lambda (x) (funcall prefer-pred x)) buffers))))
+
 (defun buffer-list-next ()
   (seq-some
-    '(lambda (x) (if (s-starts-with? " *" (buffer-name x)) nil x))
-    (cdr (buffer-list))) )
+    #'(lambda (x) (unless (buffer-is-boring-p x) x))
+    (cdr (buffer-list))))
 
+(defun buffer-get-name (buffer-or-name)
+  (cond
+    ((stringp buffer-or-name) buffer-or-name)
+    ((bufferp buffer-or-name) (buffer-name buffer-or-name))))
 
-(defun as-buffer-name (buffer)
-  (cond ((not buffer) (buffer-name (current-buffer)))
-    ((stringp buffer) buffer)
-    ((bufferp buffer) (buffer-name buffer)) ))
-
-(defun buffer-lockedp (buffer)
-  (with-current-buffer buffer
+(defun buffer-lockedp (buffer-or-name)
+  (with-current-buffer buffer-or-name
     (bound-and-true-p emacs-lock-mode)))
+
 
 
 (defun shape/display ()
   (let* ((geo (assoc 'geometry (frame-monitor-attributes)))
           (w (nth 3 geo))
           (h (nth 4 geo)))
-    (cond ((= w h) 'display-shape-square)
+    (cond
+      ((= w h) 'display-shape-square)
       ((> w h) 'display-shape-landscape)
       (t 'display-shape-portrait))))
 
@@ -96,7 +109,8 @@
           (aspect (/ w h))
           (squareish (and (>= aspect 0.87) (<= aspect 1.15))))
     (message "frame %s x %s = %s aspect (squareish? %s)" w h aspect squareish)
-    (cond (squareish 'frame-shape-square)
+    (cond
+      (squareish 'frame-shape-square)
       ((> w h) 'frame-shape-landscape)
       (t 'frame-shape-portrait))))
 
@@ -178,24 +192,10 @@
     (list (char-to-string ch))
     (list ch)))
 
-
-(defun filter-buffer-p (buffer default)
-  (if buffer
-    (or (equal buffer default)
-      (with-current-buffer buffer
-        (let ((name (buffer-name)))
-          (not (or (bound-and-true-p emacs-lock-mode)
-                 ;; (s-starts-with? "*" name)
-                 (s-starts-with? " *" name) )))))))
-
-
-(defun input-buffer (&optional prompt default predicate)
+(defun input-buffer (predicate &optional prompt default)
   (unless prompt (setq prompt "Select Buffer: "))
   (unless default (setq default (current-buffer)))
-  (unless predicate (setq predicate '(lambda (x) (filter-buffer-p x default))))
-  (let* ((select (read-buffer prompt default t predicate))
-          (locked (buffer-lockedp select)) )
-    (list select locked) ))
+  (list (read-buffer prompt default t predicate)))
 
 
 ;;

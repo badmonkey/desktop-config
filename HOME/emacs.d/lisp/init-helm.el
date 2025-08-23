@@ -1,7 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-helm --- Configure helm
-;;; Commentary:
-;;; Code:
-
 
 ;; https://github.com/KaratasFurkan/.emacs.d#helm
 ;; https://github.com/KaratasFurkan/.emacs.d#helm-projectile
@@ -17,10 +16,12 @@
     helm-ff-file-name-history-use-recentf t
     helm-move-to-line-cycle-in-source     t
     helm-prevent-escaping-from-minibuffer t
-    helm-bookmark-show-location           t)
+    helm-bookmark-show-location           t
+    helm-buffer-max-length               64)
   (helm-mode 1)
   (helm-adaptive-mode 1)
-  (setq helm-boring-buffer-regexp-list boring-buffer-regexp-list))
+  (setq helm-boring-buffer-regexp-list
+    (append hidden-buffer-regexp-list transient-buffer-regexp-list)))
 
 (use-package helm-posframe
   :after helm
@@ -31,12 +32,12 @@
   (helm-echo-input-in-header-line t)
   (helm-posframe-border-width 3)
   (helm-posframe-parameters '((left-fringe . 10)
-                              (right-fringe . 10)))
+                               (right-fringe . 10)))
   (helm-posframe-size-function 'fk/helm-posframe-get-size)
   :config
   (setq helm-posframe-poshandler 'posframe-poshandler-frame-center
-        helm-posframe-height (frame-height)
-        helm-posframe-width (frame-width))
+    helm-posframe-height (frame-height)
+    helm-posframe-width (frame-width))
 
   (helm-posframe-enable)
 
@@ -52,8 +53,8 @@
 
   (defun fk/helm-posframe-get-size ()
     (list
-     :min-width (round (* (frame-width) 0.75))
-     :min-height (round (* (frame-height) 0.5)))))
+      :min-width (round (* (frame-width) 0.75))
+      :min-height (round (* (frame-height) 0.5)))))
 
 (use-package helm-projectile
   :custom

@@ -1,6 +1,6 @@
+;;; ...  -*- lexical-binding: t -*-
+;;;
 ;;; init-hydra --- define hydras to be used with keybindings
-;;; Commentary:
-;;; Code:
 
 
 (pretty-hydra-define hydra-magit
