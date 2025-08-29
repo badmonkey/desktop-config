@@ -149,7 +149,7 @@
 ;;   :hook (prog-mode . electric-indent-mode))
 
 (use-package multi-term
-  :load-path contrib-load-path
+  :load-path user-sitelisp-directory
   :config
   (setq multi-term-program "/bin/bash")
   (setq multi-term-dedicated-window-height 40)

@@ -3,33 +3,78 @@
 ;;; Commentary:
 ;;; Code:
 
-
+;;
+;;;;;;;; Setup variables needed for loading packages ;;;;;;;;
+;;
 (setq user-init-file (or load-file-name (buffer-file-name)))
 ;;(setq user-emacs-directory (file-name-directory user-init-file))
 
 
-;; Add custom code to the load path.
-;; `contrib' is code snippets from the internet
-;; `lisp' is for my code
-(defvar contrib-load-path)
+(defvar user-sitelisp-directory (expand-file-name "site-lisp" user-emacs-directory)
+  "Directory with user's site-lisp files saved from the internat")
 
-(setq contrib-load-path (expand-file-name "contrib" user-emacs-directory))
-(add-to-list 'load-path contrib-load-path)
+(add-to-list 'load-path user-sitelisp-directory)
+(add-to-list 'load-path (expand-file-name "startup" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
-(setq custom-file  (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-;; bootstrap straight
+;; Set eln-cache dir
+;;(when (boundp 'native-comp-eln-load-path)
+;;  (startup-redirect-eln-cache (expand-file-name "eln-cache" user-emacs-directory)))
+
+(setq native-comp-jit-compilation t
+  native-comp-async-report-warnings-errors nil
+  native-comp-speed 3)
+
+
+;;
+;;;;;;;; Setup startup features ;;;;;;;;
+;;
+
+;; slow-visuals profile
+(defvar user-startup-allow-features `("slow-visuals")
+  "List of user features to process during startup")
+
+(defmacro startup-disable (targets)
+  `(setq user-startup-allow-features
+     (-remove (lambda (x) (-contains? ,targets x)) user-startup-allow-features)))
+
+(defun startup-when (name) (-contains? user-startup-allow-features name))
+
+(message "Config for platform \"%s\"" system-type)
+(when (display-graphic-p)
+  (push "graphics" user-startup-allow-features))
+
+(cl-case system-type
+  (`darwin
+    (ignore))
+  ((`ms-dos `windows-nt `cygwin)
+    (startup-disable `("slow-visuals")))
+  (`gnu/linux
+    (ignore)))
+
+(message "Startup features %s..." user-startup-allow-features)
+
+;;
+;;;;;;;; bootstrap straight ;;;;;;;;
+;;
 (message "Starting straight...")
+(custom-set-variables
+  '(straight-repository-branch "develop")
+  '(straight-check-for-modifications '(check-on-save find-when-checking))
+  '(straight-use-package-by-default t)
+  '(straight-vc-git-default-clone-depth 1))
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 5))
+        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+       (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+      (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -39,9 +84,9 @@
 (setq straight-cache-autoloads t)
 
 
-(use-package esup)
-
-;; Fiddle with Garbage Collection
+;;
+;;;;;;;; Fiddle with the garbage collector ;;;;;;;;
+;;
 
 (add-function :after
   after-focus-change-function
@@ -53,8 +98,17 @@
   (gcmh-mode t))
 
 
+;;
+;;;;;;;; Start normal package loading ;;;;;;;;
+;;
+
+;; profiler
+(use-package esup
+  :if (startup-when "profile")
+  )
+
 ;; Load somne library packages
-(message "Loading libraries...")
+(message "Loading library packages...")
 (use-package dash)
 (use-package s)
 (use-package s-buffer)
@@ -62,6 +116,7 @@
 
 ;; start loading packages
 (message "Loading packages...")
+
 (require 'init-settings)
 (require 'init-package)
 (require 'init-visuals)
@@ -80,7 +135,7 @@
 (require 'init-lang)
 (require 'init-python)
 
-;; init that requires most packages are loaded
+;; init that requires most other init files are already loaded
 (require 'init-interactive-defuns)
 (require 'init-powerline)
 

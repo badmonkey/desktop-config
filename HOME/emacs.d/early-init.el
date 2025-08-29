@@ -1,15 +1,50 @@
-(setq gc-cons-threshold most-positive-fixnum)
+;;; -*- lexical-binding: t; -*-
+;;; early-init.el
 
-(setq package-enable-at-startup nil)
+(setq load-prefer-newer t)
+
+;; Set Garbage Collection threshold to 1GB during startup. `gcmh' will clean
+;; things up later.
+(setq gc-cons-threshold 1073741824
+  gc-cons-percentage 0.6
+  package-enable-at-startup nil)
+
+;; Faster to disable these here (before they've been initialized)
+(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+
 (advice-add #'package--ensure-init-file :override #'ignore)
 
+;; Give the frame basic coloring while waiting for the theme to load. The main
+;; purpose of this is to not blind me when it's dark by flashing a screen full
+;; of white. These colors are from doom-one.
+(set-face-attribute 'default nil :background "#282c34" :foreground "#bbc2cf")
+;; Default frame settings. This is actually maximized, not full screen.
+(push '(fullscreen . maximized) initial-frame-alist)
+(push '(ns-transparent-titlebar . t) default-frame-alist)
 
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the
 ;; font. By inhibiting this, we easily halve startup times with fonts that are
 ;; larger than the system default.
-(setq frame-inhibit-implied-resize t)
+(setq frame-inhibit-implied-resize t
+  inhibit-compacting-font-caches t
+  frame-resize-pixelwise t)
 
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
+
+;; Unset `file-name-handler-alist' too (temporarily). Every file opened and
+;; loaded by Emacs will run through this list to check for a proper handler for
+;; the file, but during startup, it won’t need any of them.
+(defvar file-name-handler-alist-old file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(add-hook 'emacs-startup-hook
+  (lambda ()
+    (setq file-name-handler-alist file-name-handler-alist-old)))
+
+(provide 'early-init)
+
+;;; early-init.el ends here

@@ -2,6 +2,12 @@
 ;;;
 ;;; init-lang --- Configure lang modes - lua, erlang
 
+;; erlang pony zig java rust go
+(defvar user-startup-langs `("erlang" "rust" "go")
+  "List of optional langs to load")
+
+(defun startup-lang (name) (-contains? user-startup-langs name))
+
 
 (use-package corfu
   ;; :custom
@@ -58,6 +64,15 @@
 ;;   :ensure (:host github :repo "joaotavora/breadcrumb")
 ;;   :config (breadcrumb-mode))
 
+;;;;;;;; elisp ;;;;;;;;
+
+(add-hook 'emacs-lisp-mode-hook
+  (lambda ()
+    (setq mode-name "λ")
+    (setq indent-tabs-mode nil)))
+
+
+;;;;;;;; lua ;;;;;;;;
 
 (use-package lua-mode
   :mode (("\\.lua\\'" . lua-mode))
@@ -68,56 +83,76 @@
   )
 
 
+;;;;;;;; erlang ;;;;;;;;
+
 (use-package erlang
+  :if (startup-lang "erlang")
   :init
   :mode (("\\.erl\\'" . erlang-mode)
-         ("\\.hrl\\'" . erlang-mode)
-         ("\\.xrl\\'" . erlang-mode)
-         ("sys\\.config\\'" . erlang-mode)
-         ("rebar\\.config\\'" . erlang-mode)
-         ("\\.app\\(\\.src\\)?\\'" . erlang-mode))
+          ("\\.hrl\\'" . erlang-mode)
+          ("\\.xrl\\'" . erlang-mode)
+          ("sys\\.config\\'" . erlang-mode)
+          ("rebar\\.config\\'" . erlang-mode)
+          ("\\.app\\(\\.src\\)?\\'" . erlang-mode))
   :config
   (setq erlang-indent-level 4)
   (add-hook 'erlang-mode-hook
-            (lambda ()
-              (setq mode-name "erl" erlang-compile-extra-opts '((i . "../include"))
-                    erlang-root-dir "/usr/local/lib/erlang"))))
+    (lambda ()
+      (setq mode-name "erl" erlang-compile-extra-opts '((i . "../include"))
+        erlang-root-dir "/usr/local/lib/erlang"))))
 
 
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (setq mode-name "λ")
-            (setq indent-tabs-mode nil)))
-
-
+;;;;;;;; pony ;;;;;;;;
 (use-package ponylang-mode
+  :if (startup-lang "pony")
   :config
   (add-hook 'ponylang-mode-hook
-            (lambda ()
-              (set-variable 'indent-tabs-mode nil)
-              (set-variable 'tab-width 4))))
+    (lambda ()
+      (set-variable 'indent-tabs-mode nil)
+      (set-variable 'tab-width 4))))
 
-(use-package rust-mode)
+
+;;;;;;;; rust ;;;;;;;;
+
+(use-package rust-mode
+  :if (startup-lang "java")
+  )
+
+
+;;;;;;;; go ;;;;;;;;
 
 (use-package go-mode
+  :if (startup-lang "go")
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
+
+;;;;;;;; swift ;;;;;;;;
+
 (use-package swift-mode)
 
-(use-package zig-mode)
+
+;;;;;;;; zig ;;;;;;;;
+
+(use-package zig-mode
+  :if (startup-lang "zig")
+  )
+
+
+;;;;;;;; elisp ;;;;;;;;
 
 (use-package google-java-format
-  :straight (google-java-format :type nil :local-repo "~/.emacs.d/contrib/google-java-format")
+  :if (startup-lang "java")
+  :straight (google-java-format
+              :type nil
+              :local-repo (expand-file-name "google-java-format" user-sitelisp-directory))
   :config
   (add-hook 'java-mode-hook
-            (lambda ()
-              (setq c-basic-offset 4
-                    tab-width 4
-                    indent-tabs-mode t)
-              (add-hook 'before-save-hook 'google-java-format-buffer nil 'local))))
-
-;;(use-package rust-mode)
+    (lambda ()
+      (setq c-basic-offset 4
+        tab-width 4
+        indent-tabs-mode t)
+      (add-hook 'before-save-hook 'google-java-format-buffer nil 'local))))
 
 
 (provide 'init-lang)

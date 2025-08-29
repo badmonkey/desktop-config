@@ -51,7 +51,9 @@
 ;; 	       )))
 
 (use-package flycheck-virtualenv
-  :straight (flycheck-virtualenv :type nil :local-repo "~/.emacs.d/contrib/flycheck-virtualenv"))
+  :straight (flycheck-virtualenv
+              :type nil
+              :local-repo (expand-file-name "flycheck-virtualenv" user-sitelisp-directory)))
 
 (use-package buftra
   :straight (buftra :host github :repo "humitos/buftra.el"))
