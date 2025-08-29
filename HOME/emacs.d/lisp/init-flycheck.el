@@ -14,7 +14,10 @@
   (setq flycheck-indication-mode nil)
   ;; (setq flycheck-indication-mode 'left-fringe)
   (setq flycheck-highlighting-mode 'lines)
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy))
+  (setq-default flycheck-disabled-checkers
+    (-union
+      '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy)
+      (if (startup-when "elisp-lint") `() `(emacs-lisp))))
   (global-flycheck-mode))
 
 
@@ -33,45 +36,8 @@
 ;;     (flycheck-posframe-border-face ((t (:foreground "DarkRed")))))
 ;;   )
 
-
-(use-package flycheck-pony)
-
-(use-package flycheck-swift
-  :after flycheck
-  :config
-  (flycheck-swift-setup))
-
-;; (use-package flycheck-swiftlint
-;;   :after flycheck
-;;   :config
-;;   (flycheck-swiftlint-setup))
-
 ;; (use-package flycheck-indicator
 ;;   :hook (flycheck-mode . flycheck-indicator-mode))
-
-(with-eval-after-load 'flycheck
-  (flycheck-def-config-file-var flycheck-swiftlintrc swiftlink ".swiftlink.yml")
-  (flycheck-def-executable-var swiftlint "swiftlint")
-
-  (flycheck-define-checker swiftlint
-    "Swift syntax and style checker"
-    :command ("swiftlint"
-               "--strict"
-               (config-file "--config" flycheck-swiftlintrc)
-               "--quiet"
-               source)
-    :error-patterns
-    ((error line-start (file-name) ":" line ":" column ": " "error: " (message) line-end)
-      (warning line-start (file-name) ":" line ":" column ": " "warning: " (message) line-end))
-    :modes swift-mode)
-
-  (add-to-list 'flycheck-checkers 'swiftlint))
-
-;;(use-package flycheck-rust)
-
-;; (use-package flycheck-gometalinter
-;;   :config
-;;   (flycheck-gometalinter-setup))
 
 
 (provide 'init-flycheck)

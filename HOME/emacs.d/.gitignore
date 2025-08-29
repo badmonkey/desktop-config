@@ -4,6 +4,7 @@ straight/
 transient/
 eln-cache/
 .mc-lists.el
+local-startup.el
 ac-comphist.dat
 recentf
 helm-adaptive-history

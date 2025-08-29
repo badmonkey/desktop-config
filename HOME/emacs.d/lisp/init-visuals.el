@@ -170,16 +170,15 @@
   (setq line-reminder-show-option 'indicators)
   (global-line-reminder-mode t))
 
-
 (use-package sideline
-  :hook (flycheck-mode . sideline-mode)
   :init
-  (setq sideline-backends-right '(sideline-flycheck)))
+  (setq sideline-backends-right '(sideline-flycheck))
+  :hook (flycheck-mode . sideline-mode))
 
 (use-package sideline-flycheck
-  :hook (flycheck-mode . sideline-flycheck-setup)
   :init
-  (setq sideline-flycheck-display-mode 'line))
+  (setq sideline-flycheck-display-mode 'line)
+  :hook (flycheck-mode . sideline-flycheck-setup))
 
 
 (use-package visible-mark

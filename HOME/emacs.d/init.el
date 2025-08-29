@@ -18,6 +18,7 @@
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq local-startup-file (expand-file-name "local-startup.el" user-emacs-directory))
 
 ;; Set eln-cache dir
 ;;(when (boundp 'native-comp-eln-load-path)
@@ -32,29 +33,15 @@
 ;;;;;;;; Setup startup features ;;;;;;;;
 ;;
 
-;; slow-visuals profile
-(defvar user-startup-allow-features `("slow-visuals")
-  "List of user features to process during startup")
+;; set up system for controlling what starts
+(require 'init-startup-features)
 
-(defmacro startup-disable (targets)
-  `(setq user-startup-allow-features
-     (-remove (lambda (x) (-contains? ,targets x)) user-startup-allow-features)))
+(when (file-readable-p local-startup-file)
+  (load-file local-startup-file :noerror))
 
-(defun startup-when (name) (-contains? user-startup-allow-features name))
+(when (startup-when "debug")
+  (message "features: %s, langs: %s" user-startup-allow-features user-startup-allow-langs))
 
-(message "Config for platform \"%s\"" system-type)
-(when (display-graphic-p)
-  (push "graphics" user-startup-allow-features))
-
-(cl-case system-type
-  (`darwin
-    (ignore))
-  ((`ms-dos `windows-nt `cygwin)
-    (startup-disable `("slow-visuals")))
-  (`gnu/linux
-    (ignore)))
-
-(message "Startup features %s..." user-startup-allow-features)
 
 ;;
 ;;;;;;;; bootstrap straight ;;;;;;;;
@@ -93,9 +80,19 @@
   (lambda () (unless (frame-focus-state) (garbage-collect))))
 
 (use-package gcmh
+  :init
+  (gcmh-mode t)
   :config
   (setq garbage-collection-messages t)
-  (gcmh-mode t))
+  :hook
+  (after-init . garbage-collect)
+
+  ;; gc-cons-* values modified in 'early-init.el'
+  (emacs-startup . (lambda ()
+                     (setq gc-cons-percentage 0.1
+                       gc-cons-threshold (* 32 1024 1024)
+                       gcmh-high-cons-threshold (* 32 1024 1024)
+                       gcmh-idle-delay 30))))
 
 
 ;;
@@ -104,15 +101,15 @@
 
 ;; profiler
 (use-package esup
-  :if (startup-when "profile")
-  )
+  :if (startup-when "profile"))
 
-;; Load somne library packages
+;; Load basic library packages
 (message "Loading library packages...")
 (use-package dash)
 (use-package s)
 (use-package s-buffer)
 (use-package f)
+
 
 ;; start loading packages
 (message "Loading packages...")
@@ -127,13 +124,13 @@
 (require 'init-editor)
 (require 'init-snippets)
 (require 'init-project)
-(require 'init-flycheck)
 (require 'init-helm)
 
 (require 'init-modes)
 (require 'init-text)
+(require 'init-flycheck)
 (require 'init-lang)
-(require 'init-python)
+
 
 ;; init that requires most other init files are already loaded
 (require 'init-interactive-defuns)
@@ -150,4 +147,5 @@
 (message "Starting server...")
 (require 'init-server)
 
-(load-file custom-file)
+(when (startup-when "load-custom")
+  (load-file custom-file :noerror))

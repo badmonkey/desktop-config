@@ -2,12 +2,6 @@
 ;;;
 ;;; init-lang --- Configure lang modes - lua, erlang
 
-;; erlang pony zig java rust go
-(defvar user-startup-langs `("erlang" "rust" "go")
-  "List of optional langs to load")
-
-(defun startup-lang (name) (-contains? user-startup-langs name))
-
 
 (use-package corfu
   ;; :custom
@@ -64,12 +58,19 @@
 ;;   :ensure (:host github :repo "joaotavora/breadcrumb")
 ;;   :config (breadcrumb-mode))
 
+
 ;;;;;;;; elisp ;;;;;;;;
 
 (add-hook 'emacs-lisp-mode-hook
   (lambda ()
     (setq mode-name "λ")
     (setq indent-tabs-mode nil)))
+
+
+;;;;;;;; python ;;;;;;;;
+
+(when (startup-lang "python")
+  (require 'init-python))
 
 
 ;;;;;;;; lua ;;;;;;;;
@@ -103,6 +104,7 @@
 
 
 ;;;;;;;; pony ;;;;;;;;
+
 (use-package ponylang-mode
   :if (startup-lang "pony")
   :config
@@ -111,12 +113,17 @@
       (set-variable 'indent-tabs-mode nil)
       (set-variable 'tab-width 4))))
 
+(use-package flycheck-pony
+  :after (flycheck ponylang-mode)
+  :if (startup-lang "pony"))
+
 
 ;;;;;;;; rust ;;;;;;;;
 
 (use-package rust-mode
-  :if (startup-lang "java")
-  )
+  :if (startup-lang "rust"))
+
+;;(use-package flycheck-rust)
 
 
 ;;;;;;;; go ;;;;;;;;
@@ -126,20 +133,52 @@
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
+;; (use-package flycheck-gometalinter
+;;   :config
+;;   (flycheck-gometalinter-setup))
+
 
 ;;;;;;;; swift ;;;;;;;;
 
 (use-package swift-mode)
 
+(use-package flycheck-swift
+  :after (flycheck swift-mode)
+  :config
+  (flycheck-swift-setup))
+
+(with-eval-after-load 'flycheck
+  (with-eval-after-load 'flycheck-swift
+    (flycheck-def-config-file-var flycheck-swiftlintrc swiftlink ".swiftlink.yml")
+    (flycheck-def-executable-var swiftlint "swiftlint")
+
+    (flycheck-define-checker swiftlint
+      "Swift syntax and style checker"
+      :command ("swiftlint"
+                 "--strict"
+                 (config-file "--config" flycheck-swiftlintrc)
+                 "--quiet"
+                 source)
+      :error-patterns
+      ((error line-start (file-name) ":" line ":" column ": " "error: " (message) line-end)
+        (warning line-start (file-name) ":" line ":" column ": " "warning: " (message) line-end))
+      :modes swift-mode)
+
+    (add-to-list 'flycheck-checkers 'swiftlint)))
+
+;; (use-package flycheck-swiftlint
+;;   :after flycheck
+;;   :config
+;;   (flycheck-swiftlint-setup))
+
 
 ;;;;;;;; zig ;;;;;;;;
 
 (use-package zig-mode
-  :if (startup-lang "zig")
-  )
+  :if (startup-lang "zig"))
 
 
-;;;;;;;; elisp ;;;;;;;;
+;;;;;;;; java ;;;;;;;;
 
 (use-package google-java-format
   :if (startup-lang "java")
