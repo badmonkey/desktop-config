@@ -169,6 +169,7 @@
   (setq line-reminder-show-option 'indicators)
   (global-line-reminder-mode t))
 
+
 (use-package sideline
   :hook (flycheck-mode . sideline-mode)
   :init
@@ -179,12 +180,12 @@
   :init
   (setq sideline-flycheck-display-mode 'line))
 
+
 (use-package visible-mark
   :init
   (global-visible-mark-mode)
   :custom
-  (visible-mark-faces '(visible-mark-face1 visible-mark-face2))
-  (visible-mark-forward-faces '(visible-mark-face1 visible-mark-face2))
+  (visible-mark-faces '(visible-mark-face2 visible-mark-face1))
   (visible-mark-max 2))
 
 (use-package aggressive-indent

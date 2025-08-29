@@ -4,6 +4,10 @@
 ;;; Code:
 
 
+(setq user-init-file (or load-file-name (buffer-file-name)))
+;;(setq user-emacs-directory (file-name-directory user-init-file))
+
+
 ;; Add custom code to the load path.
 ;; `contrib' is code snippets from the internet
 ;; `lisp' is for my code
