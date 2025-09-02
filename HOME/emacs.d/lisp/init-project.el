@@ -31,7 +31,6 @@
   :init
   (projectile-global-mode)
   :custom
-  (projectile-enable-caching t)
   (projectile-indexing-method 'alien)
   (projectile-sort-order 'recently-active)
   :config

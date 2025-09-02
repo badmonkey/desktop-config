@@ -19,16 +19,16 @@
 ;;
 ;;;;;;;;; startup functions ;;;;;;;;
 ;;
-(defun startup-lang (name) (-contains? user-startup-allow-langs name))
+(defun startup-lang (name) (seq-position user-startup-allow-langs name))
 
-(defun startup-when (name) (-contains? user-startup-allow-features name))
+(defun startup-when (name) (seq-position user-startup-allow-features name))
 
-(defun startup-unless (name) (not (-contains? user-startup-allow-features name)))
+(defun startup-unless (name) (not (seq-position user-startup-allow-features name)))
 
 ;; func so we can programatically remove features
 (defmacro startup-disable (targets)
   `(setq user-startup-allow-features
-     (-remove (lambda (x) (-contains? ,targets x)) user-startup-allow-features)))
+     (seq-remove (lambda (x) (seq-position ,targets x)) user-startup-allow-features)))
 
 
 ;;
@@ -38,16 +38,16 @@
 (when (display-graphic-p)
   (push "graphics" user-startup-allow-features))
 
-(cl-case system-type
+(pcase system-type
   (darwin
     (message "Platform macos"))
-  ((ms-dos windows-nt cygwin)
+  ((or ms-dos windows-nt cygwin)
     (progn
       (message "Platform windows")
       (startup-disable `("slow-visuals"))))
   (gnu/linux
     (message "Platform linux"))
-  (otherwise
+  (_
     (message "unknown platform %s" system-type)))
 
 
