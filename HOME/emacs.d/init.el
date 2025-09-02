@@ -9,7 +9,6 @@
 (setq user-init-file (or load-file-name (buffer-file-name)))
 ;;(setq user-emacs-directory (file-name-directory user-init-file))
 
-
 (defvar user-sitelisp-directory (expand-file-name "site-lisp" user-emacs-directory)
   "Directory with user's site-lisp files saved from the internat")
 
