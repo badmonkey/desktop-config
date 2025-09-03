@@ -1,4 +1,4 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-editor --- Configure editor features
 

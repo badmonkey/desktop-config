@@ -1,4 +1,4 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-keychords --- Custom behaviour
 

@@ -1,4 +1,4 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-project --- Configure project features
 

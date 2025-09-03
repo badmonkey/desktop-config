@@ -1,4 +1,4 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-visuals --- Visual settings
 
@@ -104,7 +104,7 @@
 ;;  '(whitespace-trailing ((t (:bold t :foreground "red" :background "black"))))
 ;;  )
 
-(global-whitespace-mode 1)
+(whitespace-mode)
 
 
 ;; fringe

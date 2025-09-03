@@ -1,4 +1,4 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-startup-features --- Settings for controlling what starts
 
@@ -7,9 +7,8 @@
 ;;
 
 ;; available: slow-visuals profile git load-custom debug elisp-lint
-(defvar user-startup-allow-features `("slow-visuals" "git" "load-custom")
+(defvar user-startup-allow-features `("slow-visuals" "git" "load-custom" "debug")
   "List of user features to process during startup")
-;; (setq user-startup-allow-features `("slow-visuals" "git" "load-custom" "debug"))
 
 ;; available: erlang pony zig java rust go python
 (defvar user-startup-allow-langs `("erlang" "rust" "go")
@@ -39,13 +38,13 @@
   (push "graphics" user-startup-allow-features))
 
 (pcase system-type
-  (darwin
+  ('darwin
     (message "Platform macos"))
-  ((or ms-dos windows-nt cygwin)
+  ((or 'ms-dos 'windows-nt 'cygwin)
     (progn
       (message "Platform windows")
       (startup-disable `("slow-visuals"))))
-  (gnu/linux
+  ('gnu/linux
     (message "Platform linux"))
   (_
     (message "unknown platform %s" system-type)))

@@ -1,4 +1,4 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-interactive-defuns --- Interactive funs that require packages are loaded and
 ;;; are use by key bindings

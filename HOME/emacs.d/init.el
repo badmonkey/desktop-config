@@ -1,7 +1,5 @@
-;;; -*- lexical-binding: t; -*-
+;;;
 ;;; init.el --- Configure all the things
-;;; Commentary:
-;;; Code:
 
 ;;
 ;;;;;;;; Setup variables needed for loading packages ;;;;;;;;

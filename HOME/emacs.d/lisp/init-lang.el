@@ -1,29 +1,29 @@
-;;; ...  -*- lexical-binding: t -*-
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init-lang --- Configure lang modes - lua, erlang
 
 
-(use-package corfu
-  ;; :custom
-  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  ;; (corfu-auto t)                 ;; Enable auto completion
-  ;; (corfu-commit-predicate nil)   ;; Do not commit selected candidates on next input
-  ;; (corfu-quit-at-boundary t)     ;; Automatically quit at word boundary
-  ;; (corfu-quit-no-match t)        ;; Automatically quit if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
-  ;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
-  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+;;(use-package corfu
+;; :custom
+;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+;; (corfu-auto t)                 ;; Enable auto completion
+;; (corfu-commit-predicate nil)   ;; Do not commit selected candidates on next input
+;; (corfu-quit-at-boundary t)     ;; Automatically quit at word boundary
+;; (corfu-quit-no-match t)        ;; Automatically quit if there is no match
+;; (corfu-preview-current nil)    ;; Disable current candidate preview
+;; (corfu-preselect-first nil)    ;; Disable candidate preselection
+;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
+;; (corfu-scroll-margin 5)        ;; Use scroll margin
 
-  ;; You may want to enable Corfu only for certain modes.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
+;; You may want to enable Corfu only for certain modes.
+;; :hook ((prog-mode . corfu-mode)
+;;        (shell-mode . corfu-mode)
+;;        (eshell-mode . corfu-mode))
 
-  ;; Recommended: Enable Corfu globally.
-  ;; This is recommended since dabbrev can be used globally (M-/).
-  :init
-  (global-corfu-mode))
+;; Recommended: Enable Corfu globally.
+;; This is recommended since dabbrev can be used globally (M-/).
+;; :init
+;;(global-corfu-mode))
 
 ;; (use-package corfu
 ;;   :custom
@@ -60,7 +60,7 @@
 
 
 ;;;;;;;; elisp ;;;;;;;;
-
+(message "elisp")
 (add-hook 'emacs-lisp-mode-hook
   (lambda ()
     (setq mode-name "λ")
@@ -85,7 +85,7 @@
 
 
 ;;;;;;;; erlang ;;;;;;;;
-
+(message "erlang")
 (use-package erlang
   :if (startup-lang "erlang")
   :init
@@ -119,7 +119,7 @@
 
 
 ;;;;;;;; rust ;;;;;;;;
-
+(message "rust")
 (use-package rust-mode
   :if (startup-lang "rust"))
 
@@ -139,7 +139,7 @@
 
 
 ;;;;;;;; swift ;;;;;;;;
-
+(message "swift")
 (use-package swift-mode)
 
 (use-package flycheck-swift
@@ -149,7 +149,7 @@
 
 (with-eval-after-load 'flycheck
   (with-eval-after-load 'flycheck-swift
-    (flycheck-def-config-file-var flycheck-swiftlintrc swiftlink ".swiftlink.yml")
+    (flycheck-def-config-file-var flycheck-swiftlintrc swiftlink ".swiftlint.yml")
     (flycheck-def-executable-var swiftlint "swiftlint")
 
     (flycheck-define-checker swiftlint
@@ -173,26 +173,26 @@
 
 
 ;;;;;;;; zig ;;;;;;;;
-
+(message "zig")
 (use-package zig-mode
   :if (startup-lang "zig"))
 
 
 ;;;;;;;; java ;;;;;;;;
+(message "java")
+;;(use-package google-java-format
+;;  :if (startup-lang "java")
+;;  :straight (google-java-format
+;;              :type nil
+;;              :local-repo (expand-file-name "google-java-format" user-sitelisp-directory))
+;;  :config
+;;  (add-hook 'java-mode-hook
+;;    (lambda ()
+;;      (setq c-basic-offset 4
+;;        tab-width 4
+;;        indent-tabs-mode t)
+;;      (add-hook 'before-save-hook 'google-java-format-buffer nil 'local))))
 
-(use-package google-java-format
-  :if (startup-lang "java")
-  :straight (google-java-format
-              :type nil
-              :local-repo (expand-file-name "google-java-format" user-sitelisp-directory))
-  :config
-  (add-hook 'java-mode-hook
-    (lambda ()
-      (setq c-basic-offset 4
-        tab-width 4
-        indent-tabs-mode t)
-      (add-hook 'before-save-hook 'google-java-format-buffer nil 'local))))
-
-
+(message "lang done")
 (provide 'init-lang)
 ;;; init-lang.el ends here
