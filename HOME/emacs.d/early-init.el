@@ -1,4 +1,5 @@
 ;;; -*- lexical-binding: t; -*-
+;;;
 ;;; early-init.el
 
 (setq load-prefer-newer t)
@@ -47,5 +48,4 @@
     (setq file-name-handler-alist file-name-handler-alist-old)))
 
 (provide 'early-init)
-
 ;;; early-init.el ends here

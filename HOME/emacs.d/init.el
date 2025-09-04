@@ -1,21 +1,39 @@
+;;; -*- lexical-binding: t; -*-
 ;;;
 ;;; init.el --- Configure all the things
 
 ;;
 ;;;;;;;; Setup variables needed for loading packages ;;;;;;;;
 ;;
-(setq user-init-file (or load-file-name (buffer-file-name)))
-;;(setq user-emacs-directory (file-name-directory user-init-file))
 
-(defvar user-sitelisp-directory (expand-file-name "site-lisp" user-emacs-directory)
-  "Directory with user's site-lisp files saved from the internat")
+(defvar user-sitelisp-directory nil
+  "Directory with user's site-lisp files saved from the internet")
 
-(add-to-list 'load-path user-sitelisp-directory)
-(add-to-list 'load-path (expand-file-name "startup" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
+(let* ((current-init-file (or load-file-name (buffer-file-name)))
+        (current-emacs-directory (file-name-directory current-init-file)))
+  (setq user-sitelisp-directory (expand-file-name "site-lisp" current-emacs-directory))
 
+  (add-to-list 'load-path user-sitelisp-directory)
+  (add-to-list 'load-path (expand-file-name "startup" current-emacs-directory))
+  (add-to-list 'load-path (expand-file-name "lisp" current-emacs-directory))
+
+  (add-to-list 'custom-theme-load-path (expand-file-name "themes" current-emacs-directory))
+
+  (when (not (equal current-emacs-directory user-emacs-directory))
+    (message "Adding %s to paths for site local customization" user-emacs-directory)
+
+    ;; We're being loaded out of the user-emacs-directory, add paths to support
+    ;; site-local customization
+    (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
+    (add-to-list 'custom-theme-load-path (expand-file-name "themes" user-emacs-directory))
+    )
+  )
+
+;; location for customization save
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(setq local-startup-file (expand-file-name "local-startup.el" user-emacs-directory))
+
+;; location for local features configurations
+(setq local-features-file (expand-file-name "local-features.el" user-emacs-directory))
 
 ;; Set eln-cache dir
 ;;(when (boundp 'native-comp-eln-load-path)
@@ -33,8 +51,8 @@
 ;; set up system for controlling what starts
 (require 'init-startup-features)
 
-(when (file-readable-p local-startup-file)
-  (load-file local-startup-file :noerror))
+(when (file-readable-p local-features-file)
+  (load-file local-features-file :noerror))
 
 (when (startup-when "debug")
   (message "features: %s, langs: %s" user-startup-allow-features user-startup-allow-langs))
