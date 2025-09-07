@@ -9,12 +9,22 @@
 (defvar user-sitelisp-directory nil
   "Directory with user's site-lisp files saved from the internet")
 
+(defvar user-startup-directory nil
+  "Directory with user's startup files")
+
+(defvar startup-banner-file nil
+  "The startup banner logo")
+
 (let* ((current-init-file (or load-file-name (buffer-file-name)))
         (current-emacs-directory (file-name-directory current-init-file)))
   (setq user-sitelisp-directory (expand-file-name "site-lisp" current-emacs-directory))
+  (setq user-startup-directory (expand-file-name "startup" current-emacs-directory))
+  (setq startup-banner-file (expand-file-name "logo.png" current-emacs-directory))
+
+  (setq user-lisp-directory (expand-file-name "lisp" current-emacs-directory))
 
   (add-to-list 'load-path user-sitelisp-directory)
-  (add-to-list 'load-path (expand-file-name "startup" current-emacs-directory))
+  (add-to-list 'load-path user-startup-directory)
   (add-to-list 'load-path (expand-file-name "lisp" current-emacs-directory))
 
   (add-to-list 'custom-theme-load-path (expand-file-name "themes" current-emacs-directory))
@@ -33,7 +43,17 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; location for local features configurations
-(setq local-features-file (expand-file-name "local-features.el" user-emacs-directory))
+(setq local-startup-file (expand-file-name "local-startup.el" user-emacs-directory))
+
+
+(defun require-by-type (which)
+  (mapc
+    #'(lambda (x)
+        (let* ((filename (file-name-nondirectory x))
+                (filesym (intern (file-name-sans-extension filename))))
+          (message "found %s" filesym)))
+    (file-expand-wildcards (format "%s/init-%s-*.el" user-startup-directory which))))
+
 
 ;; Set eln-cache dir
 ;;(when (boundp 'native-comp-eln-load-path)
@@ -51,10 +71,10 @@
 ;; set up system for controlling what starts
 (require 'init-startup-features)
 
-(when (file-readable-p local-features-file)
-  (load-file local-features-file :noerror))
+(when (file-readable-p local-startup-file)
+  (load local-startup-file :noerror))
 
-(when (startup-when "debug")
+(when (startup? 'start-debug)
   (message "features: %s, langs: %s" user-startup-allow-features user-startup-allow-langs))
 
 
@@ -116,7 +136,7 @@
 
 ;; profiler
 (use-package esup
-  :if (startup-when "profile"))
+  :if (startup? 'start-profile))
 
 ;; Load basic library packages
 (message "Loading library packages...")
@@ -146,6 +166,8 @@
 (require 'init-flycheck)
 (require 'init-lang)
 
+(require-by-type "mode")
+(require-by-type "lang")
 
 ;; init that requires most other init files are already loaded
 (require 'init-interactive-defuns)
@@ -153,14 +175,18 @@
 
 (message "Loading key bindings...")
 (general-auto-unbind-keys)
+
 (require 'init-hydra)
 (require 'init-ctrlchords)
 (require 'init-metachords)
 (require 'init-keychords)
+
+(require-by-type "keybind")
+
 (general-auto-unbind-keys t)
 
 (message "Starting server...")
 (require 'init-server)
 
-(when (startup-when "load-custom")
-  (load-file custom-file :noerror))
+(when (startup? 'start-load-custom)
+  (load custom-file :noerror))
