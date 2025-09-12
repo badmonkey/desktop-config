@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-spaceline --- Config spaceline
+;;; init-bundle-powerline --- Config the powerline
 
 ;; https://github.com/dbordak/telephone-line
 ;; https://github.com/dbordak/telephone-line/blob/110c578ccf6c0421cfd9eec7aa3e960b6fd49fb4/examples.org
@@ -98,6 +98,5 @@
   (list 'indent-guide-mode 'subword-mode))
 
 
-
-(provide 'init-powerline)
-;;; init-powerline.el ends here
+(provide 'init-bundle-powerline)
+;;; init-bundle-powerline.el ends here

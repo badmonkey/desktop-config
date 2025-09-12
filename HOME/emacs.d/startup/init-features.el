@@ -7,11 +7,12 @@
 ;;
 
 ;; available: with-heavy-visuals with-profile with-git with-load-custom
-;; with-debug with-elisp-lint with-internet
+;; with-debug with-elisp-lint with-internet with-menubar with-dashboard
 ;; lang-erlang lang-pony lang-zig lang-rust lang-go lang-python
-;; with-graphics
+;; with-graphics with-macos with-windows with-linux
 (defvar user-startup-features
-  `(with-heavy-visuals with-git with-load-custom with-internet with-debug
+  `(with-heavy-visuals with-git with-load-custom with-internet with-dashboard
+     with-debug
      lang-erlang lang-rust lang-go)
   "List of user features to process during startup")
 
@@ -28,23 +29,32 @@
   `(setq user-startup-features
      (seq-remove (lambda (x) (seq-position ,targets x)) user-startup-features)))
 
+;; func so we can programatically enable features
+(defmacro startup-enable (targets)
+  `(setq user-startup-features
+     (cl-union targets user-startup-features)))
+
 
 ;;
 ;;;;;;;;; Update features depending on platform ;;;;;;;;
 ;;
-(startup-disable `(with-graphics))
 (when (display-graphic-p)
-  (push 'with-graphics user-startup-features))
+  (startup-enable `(with-graphics)))
 
 (pcase system-type
   ('darwin
-    (message "Platform macos"))
+    (progn
+      (message "Platform macos")
+      (startup-enable `(with-menubar with-macos)))
   ((or 'ms-dos 'windows-nt 'cygwin)
     (progn
       (message "Platform windows")
+      (startup-enable `(with-windows))
       (startup-disable `(with-heavy-visuals))))
-  ('gnu/linux
-    (message "Platform linux"))
+    ('gnu/linux
+      (progn
+        (message "Platform linux")
+        (startup-enable `(with-linux))))
   (_
     (message "unknown platform %s" system-type)))
 

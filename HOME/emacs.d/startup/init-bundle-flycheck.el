@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-flycheck --- Configure flycheck
+;;; init-bundle-flycheck --- Configure flycheck
 
 
 (use-package flycheck
@@ -17,7 +17,7 @@
   (setq-default flycheck-disabled-checkers
     (-union
       '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy)
-      (when (startup? 'with-elisp-lint) `(emacs-lisp))))
+      (unless (startup? 'with-elisp-lint) `(emacs-lisp))))
   (global-flycheck-mode))
 
 
@@ -40,5 +40,5 @@
 ;;   :hook (flycheck-mode . flycheck-indicator-mode))
 
 
-(provide 'init-flycheck)
-;;; init-flycheck.el ends here
+(provide 'init-bundle-flycheck)
+;;; init-bundle-flycheck.el ends here

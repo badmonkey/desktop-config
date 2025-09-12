@@ -45,13 +45,17 @@
 ;; location for local features configurations
 (setq local-features-file (expand-file-name "local-features.el" user-emacs-directory))
 
+;; location for local settings
+(setq local-settings-file (expand-file-name "local-settings.el" user-emacs-directory))
+
 
 (defun require-by-type (which)
   (mapc
     #'(lambda (x)
         (let* ((filename (file-name-nondirectory x))
                 (filesym (intern (file-name-sans-extension filename))))
-          (message "found %s" filesym)))
+          (when (startup? 'with-debug) (message "loading %s" filesym))
+          (require filesym)))
     (file-expand-wildcards (format "%s/init-%s-*.el" user-startup-directory which))))
 
 
@@ -69,7 +73,7 @@
 ;;
 
 ;; set up system for controlling what starts
-(require 'init-startup-features)
+(require 'init-features)
 
 (when (file-readable-p local-features-file)
   (load local-features-file :noerror))
@@ -105,6 +109,8 @@
 (setq straight-use-package-by-default t)
 (setq straight-cache-autoloads t)
 
+(require 'init-package)
+
 
 ;;
 ;;;;;;;; Fiddle with the garbage collector ;;;;;;;;
@@ -134,59 +140,52 @@
 ;;;;;;;; Start normal package loading ;;;;;;;;
 ;;
 
+(require 'init-settings)
+(require-by-type "settings")
+
+(when (file-readable-p local-settings-file)
+  (load local-settings-file :noerror))
+
+
+;; https://github.com/zacwood9/.emacs.d/blob/master/lisp/init-package.el
+;; https://github.com/purcell/emacs.d/blob/master/lisp/init-markdown.el
+
 ;; profiler
 (use-package esup
   :if (startup? 'with-profile))
 
-;; Load basic library packages
+
+;; Load library packages
 (message "Loading library packages...")
 (use-package dash)
 (use-package s)
 (use-package s-buffer)
 (use-package f)
 
-
-;; start loading packages
-(message "Loading packages...")
-
-(require 'init-settings)
-(require 'init-package)
-(require 'init-visuals)
+(require-by-type "defun")
+(require-by-type "bundle")
 
 (require 'init-general-defuns)
-
-(message "Loading editor packages...")
-(require 'init-editor)
-(require 'init-snippets)
-(require 'init-project)
-(require 'init-helm)
-
-(require 'init-modes)
-(require 'init-text)
-(require 'init-flycheck)
-(require 'init-lang)
 
 (require-by-type "mode")
 (require-by-type "lang")
 
 ;; init that requires most other init files are already loaded
 (require 'init-interactive-defuns)
-(require 'init-powerline)
 
-(message "Loading key bindings...")
+
 (general-auto-unbind-keys)
+
+(require-by-type "bind")
 
 (require 'init-hydra)
 (require 'init-ctrlchords)
 (require 'init-metachords)
-(require 'init-keychords)
-
-(require-by-type "keybind")
 
 (general-auto-unbind-keys t)
 
-(message "Starting server...")
 (require 'init-server)
+
 
 (when (startup? 'with-load-custom)
   (load custom-file :noerror))

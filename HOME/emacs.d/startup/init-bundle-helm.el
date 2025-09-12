@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-helm --- Configure helm
+;;; init-bundle-helm --- Configure helm
 
 ;; https://github.com/KaratasFurkan/.emacs.d#helm
 ;; https://github.com/KaratasFurkan/.emacs.d#helm-projectile
@@ -106,5 +106,5 @@
   :after dogears)
 
 
-(provide 'init-helm)
-;;; init-helm.el ends here
+(provide 'init-bundle-helm)
+;;; init-bundle-helm.el ends here

@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-snippets --- expanding snippets
+;;; init-bundle-snippets --- Configure snippet functionality
 
 ;; yasnippet
 ;; (use-package yasnippet
@@ -47,7 +47,5 @@
   )
 
 
-
-
-(provide 'init-snippets)
-;;; init-snippets.el ends here
+(provide 'init-bundle-snippets)
+;;; init-bundle-snippets.el ends here

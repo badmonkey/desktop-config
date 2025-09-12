@@ -10,6 +10,9 @@
   gc-cons-percentage 0.6
   package-enable-at-startup nil)
 
+;; disable startup message
+(setq inhibit-startup-message t)
+
 ;; Faster to disable these here (before they've been initialized)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -32,6 +35,10 @@
 (setq frame-inhibit-implied-resize t
   inhibit-compacting-font-caches t
   frame-resize-pixelwise t)
+
+;; Opt out from the startup message in the echo area by simply disabling this
+;; ridiculously bizarre thing entirely.
+(fset 'display-startup-echo-area-message #'ignore)
 
 ;; Ignore X resources; its settings would be redundant with the other settings
 ;; in this file and can conflict with later config (particularly where the

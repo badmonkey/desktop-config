@@ -1,13 +1,11 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-package --- Initialize the package system.
+;;; init-package --- Configure the package system.
 
-(defvar package-use-network t)
 
 (require 'package)
-(setq package-enable-at-startup nil)
 
-(when package-use-network
+(when (startup? with-internet)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t))
@@ -29,7 +27,7 @@
 (setq use-package-always-ensure t)
 
 
-(when package-use-network
+(when (startup? with-internet)
   ;; Download the ELPA archive description if needed.
   ;; This informs Emacs about the latest versions of all packages, and
   ;; makes them available for download.

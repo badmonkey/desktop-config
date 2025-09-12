@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-modes --- Configure language modes
+;;; init-mode-misc --- Configure file modes
 
 (add-hook 'nxml-mode
   (lambda ()
@@ -32,5 +32,5 @@
 
 
 
-(provide 'init-modes)
-;;; init-modes.el ends here
+(provide 'init-mode-misc)
+;;; init-mode-misc.el ends here

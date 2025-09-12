@@ -96,7 +96,7 @@ If the buffer is locked, bury it instead of attempting to kill it"
 
 
 (defun kill-or-bury-selected-buffer (buffer)
-  (interactive (input-buffer #'buffer-is-killable-p))
+  (interactive (prompt-buffer #'buffer-is-killable-p))
   (kill-or-bury-buffer buffer))
 
 
@@ -163,7 +163,7 @@ If the buffer is locked, bury it instead of attempting to kill it"
 
 (defun toggle-fancy-narrow (start end)
   "Toggle fancy narrow-to-region"
-  (interactive (input-region-or-everything))
+  (interactive (prompt-region-or-everything))
   (if (fancy-narrow-active-p)
     (fancy-widen)
     (progn
@@ -176,12 +176,12 @@ If the buffer is locked, bury it instead of attempting to kill it"
 ;;
 (defun delete-ws-right (start end)
   "Delete all spaces and tabs from point to next non-white char."
-  (interactive (input-region-ws-right))
+  (interactive (prompt-region-ws-right))
   (delete-region start end))
 
 (defun delete-ws-left (start end)
   "Delete all spaces and tabs from the previous non-white char to point."
-  (interactive (input-region-ws-left))
+  (interactive (prompt-region-ws-left))
   (delete-region start end))
 
 ;;
@@ -203,7 +203,7 @@ If the buffer is locked, bury it instead of attempting to kill it"
 ;;
 
 (defun region-toggle-comment (start end)
-  (interactive (input-region-or-line))
+  (interactive (prompt-region-or-line))
   (let ((text (string-trim (buffer-substring start end))))
     (if (s-blank? text)
       (comment-dwim nil)
@@ -212,69 +212,69 @@ If the buffer is locked, bury it instead of attempting to kill it"
 
 (defun region-indent-code (start &optional end)
   "If there is an active region use indent-code-rigidly else indent-for-tab-command."
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (indent-code-rigidly start end tab-width)
     (indent-for-tab-command)))
 
 (defun region-indent-left (start end)
-  (interactive (input-region-or-line))
+  (interactive (prompt-region-or-line))
   (indent-rigidly-left-to-tab-stop start end))
 
 
 (defun region-kill-line (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (kill-region start end)
     (kill-line)))
 
 
 (defun region-kill-whole-line (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (kill-region beg end)
     (kill-whole-line)))
 
 
 (defun region-kill-to-left-margin (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (kill-region start end)
     (kill-region (line-beginning-position) start)))
 
 
 (defun region-copy-line (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (kill-ring-save start end)
     (copy-region-as-kill start (line-end-position))))
 
 
 (defun region-copy-whole-line (start end)
-  (interactive (input-region-or-line))
+  (interactive (prompt-region-or-line))
   (if (use-region-p)
     (kill-ring-save start end)
     (copy-region-as-kill start end)))
 
 (defun region-join-lines (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (delete-indentation nil start end)
     (delete-indentation)))
 
 (defun region-delete-back-word (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (delete-region start end)
     (backward-kill-word 1)))
 
 (defun untabify-everything (start end)
-  (interactive (input-region-or-everything))
+  (interactive (prompt-region-or-everything))
   (untabify start end))
 
 
 (defun query-replace-from-region (from-string to-string &optional start end interactive)
-  (interactive (input-region-from-to-args "Query replace" nil))
+  (interactive (prompt-region-from-to-args "Query replace" nil))
   (when mark-active
     (goto-char (region-beginning))
     (deactivate-mark))
@@ -282,40 +282,40 @@ If the buffer is locked, bury it instead of attempting to kill it"
 
 
 (defun repeat-query-replace (from-string to-string)
-  (interactive (input-replace-from-to-args "Query replace" nil))
+  (interactive (prompt-replace-from-to-args "Query replace" nil))
   (query-replace from-string to-string))
 
 
 (defun repeat-query-replace-regexp (from-string to-string)
-  (interactive (input-replace-from-to-args "Query replace" t))
+  (interactive (prompt-replace-from-to-args "Query replace" t))
   (query-replace-regexp from-string to-string))
 
 
 (defun fill-region-or-line (start end)
-  (interactive (input-region-or-line))
+  (interactive (prompt-region-or-line))
   (fill-region-as-paragraph start end))
 
 
 (defun ispell-region-or-line (start end)
-  (interactive (input-region-or-line))
+  (interactive (prompt-region-or-line))
   (ispell-region start end))
 
 
 (defun region-upcase-word (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (upcase-region start end)
     (upcase-word 1)))
 
 
 (defun region-downcase-word (start &optional end)
-  (interactive (input-region-or-point))
+  (interactive (prompt-region-or-point))
   (if (use-region-p)
     (downcase-region start end)
     (downcase-word 1)))
 
 (defun region-qp-encode (start end)
-  (interactive (input-region-or-line))
+  (interactive (prompt-region-or-line))
   (quoted-printable-encode-region start end t))
 
 (defun region-qp-decode (start end)
@@ -332,19 +332,19 @@ If the buffer is locked, bury it instead of attempting to kill it"
 
 
 (defun kill-inner-region (ch)
-  (interactive (input-char-from-smart-region t))
+  (interactive (prompt-char-from-smart-region t))
   (change-inner* nil ch))
 
 (defun kill-outer-region (ch)
-  (interactive (input-char-from-smart-region t))
+  (interactive (prompt-char-from-smart-region t))
   (change-outer* nil ch))
 
 (defun copy-inner-region (ch)
-  (interactive (input-char-from-smart-region t))
+  (interactive (prompt-char-from-smart-region t))
   (change-inner* t ch))
 
 (defun copy-outer-region (ch)
-  (interactive (input-char-from-smart-region t))
+  (interactive (prompt-char-from-smart-region t))
   (change-outer* t ch))
 
 
@@ -470,6 +470,28 @@ If the buffer is locked, bury it instead of attempting to kill it"
             nil
             ".svg"
             (x-export-frames nil 'svg))))))
+
+
+(defun venv-display-name ()
+  (interactive)
+  (when (bound-and-true-p venv-current-name)
+    (let ((tmp-venv-name (file-truename venv-current-name)))
+      (if (file-directory-p tmp-venv-name)
+        (venv-dir-to-name tmp-venv-name)
+        venv-current-name))))
+
+
+(defun load-buffer (&optional buffer)
+  (interactive "b")
+  (let ((buffer-path (buffer-file-name (get-buffer buffer))))
+    (when buffer-path
+      (load-file buffer-path))))
+
+(defun load-current-buffer ()
+  (interactive)
+  (let ((buffer-path (buffer-file-name)))
+    (when buffer-path
+      (load-file buffer-path))))
 
 
 (provide 'init-interactive-defuns)

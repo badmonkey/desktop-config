@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-editor --- Configure editor features
+;;; init-bundle-editor --- Configure editor features
 
 ;; https://github.com/jpkotta/syntax-subword/tree/9aa9b3f846bfe2474370642458a693ac4760d9fe
 ;; https://github.com/akicho8/string-inflection/tree/c4a519be102cb99dd86be3ee8c387f008d097635
@@ -12,6 +12,15 @@
   (emacs-lock-mode 'kill))
 (with-current-buffer "*Messages*"
   (emacs-lock-mode 'kill))
+
+
+;; Remove trailing white space upon saving
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Check (on save) whether the file edited contains a shebang, if yes,
+;; make it executable
+;; http://mbork.pl/2015-01-10_A_few_random_Emacs_tips
+(add-hook 'after-save-hook #'executable-make-buffer-file-executable-if-script-p)
 
 
 (setq desktop-load-locked-desktop t)
@@ -309,5 +318,5 @@
 
 
 
-(provide 'init-editor)
-;;; init-editor.el ends here
+(provide 'init-bundle-editor)
+;;; init-bundle-editor.el ends here

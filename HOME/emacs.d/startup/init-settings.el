@@ -5,20 +5,30 @@
 (defvar user-home-dir (getenv "HOME"))
 
 
+;;  classify buffers
+(defvar meta-buffer-regexp-list
+  (list (rx "*"))
+  "List of Rx for matching buffers that are meta-buffer")
+
+;; transient can be purged if we're not in the middle of another interactive
+(defvar transient-buffer-regexp-list
+  (list (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-") (rx "*swiper*"))
+  "List of Rx for matching buffers that are transient")
+
+;; check "*magit-" vs "magit-"
+(defvar hidden-buffer-regexp-list
+  (list (rx " *"))
+  "List of Rx for matching buffers that are hidden")
+
+
 ;; simple settings
-(setq user-full-name "Michael Fagan"
-      user-mail-address "michael.charles.fagan@gmail.com")
-
-
-
-;;  set default font
-(set-frame-font "Fira Code 18" nil t)
-;; (set-frame-font "Inconsolata 18" nil t)
+(setq user-full-name "Set full-name in local-settings.el"
+  user-mail-address "Set mail-address in local-settings.el")
 
 
 ;; Backup/Autosave
 (setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
+  `((".*" ,temporary-file-directory t)))
 
 
 (defvar backup-dir (f-join user-home-dir ".backup"))
@@ -29,7 +39,7 @@
 (setq desktop-base-lock-name "desktop.lock")
 
 
-(when (string-equal system-type "darwin")
+(when (startup? 'with-macos)
   ;;  used for compiling and callign stuff with eshell
   (setenv "PATH"
     (concat
@@ -49,17 +59,11 @@
          "/usr/bin"
          ))))
 
-;; emacs machine settings
-(setq load-prefer-newer t)
-
 ;;(setq vc-handled-backends '(Git))
 
-;; disable startup message
-(setq inhibit-startup-message t)
 
-;; Opt out from the startup message in the echo area by simply disabling this
-;; ridiculously bizarre thing entirely.
-(fset 'display-startup-echo-area-message #'ignore)
+;; (setq scroll-error-top-bottom t)
+
 
 (setq frame-title-format "%b%+")
 ;; (setq frame-title-format (list "%b (" user-login-name "@" system-name ")"))
@@ -69,23 +73,21 @@
 ;;                            (format "%s| " project-name))))
 ;;                       "%b"))  ; project-name| file-name
 
+
 ;; Get rid of tool bar, menu bar and scroll bars.  On OS X we preserve the menu
 ;; bar, since the top menu bar is always visible anyway, and we'd just empty it
 ;; which is rather pointless.
-(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
 (when (and
-        (not (eq system-type 'darwin))
-        (fboundp 'menu-bar-mode)) (menu-bar-mode -1))
-(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+        (startup-unless 'darwin)
+        (fboundp 'menu-bar-mode))
+  (menu-bar-mode -1))
+(when (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
 
 
 (setq-default scroll-conservatively 101)
-
-(defvar global-line-max-width)
-(setq global-line-max-width 100)
-
-;; the blinking cursor is nothing, but an annoyance
-(blink-cursor-mode -1)
 
 (setq-default x-stretch-cursor t)
 
@@ -133,23 +135,6 @@
 (make-variable-buffer-local 'compile-command)
 
 
-;;  classify buffers
-(defvar meta-buffer-regexp-list)
-(setq meta-buffer-regexp-list
-  (list (rx "*")))
-
-;; transient can be purged if we're not in the middle of another interactive
-(defvar transient-buffer-regexp-list)
-(setq transient-buffer-regexp-list
-  (list (rx "*magit-") (rx "*helm") (rx "*straight-") (rx "*flycheck-") (rx "*swiper*")))
-
-;; check "*magit-" vs "magit-"
-
-(defvar hidden-buffer-regexp-list)
-(setq hidden-buffer-regexp-list
-  (list (rx " *")))
-
-
 ;; (setq
 ;;   ring-bell-function 'ignore
 ;;   auth-sources my/auth-sources
@@ -168,8 +153,6 @@
 ;;   kept-new-versions 6
 ;;   kept-old-versions 2
 ;;   version-control t)
-
-;; (setq load-prefer-newer t)
 
 ;; (setq tab-bar-show 1
 ;;   tab-bar-new-tab-choice #'crux-create-scratch-buffer)

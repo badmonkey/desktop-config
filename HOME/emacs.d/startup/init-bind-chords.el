@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-keychords --- Custom behaviour
+;;; init-bind-chords --- Custom behaviour
 
 
 (general-define-key
@@ -45,5 +45,5 @@
   )
 
 
-(provide 'init-keychords)
-;;; init-keychords.el ends here
+(provide 'init-bind-chords)
+;;; init-bind-chords.el ends here
