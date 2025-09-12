@@ -31,7 +31,7 @@
   `((".*" ,temporary-file-directory t)))
 
 
-(defvar backup-dir (f-join user-home-dir ".backup"))
+(defvar backup-dir (expand-file-name ".backup" user-home-dir))
 (setq backup-directory-alist (list (cons "." backup-dir)))
 
 (setq desktop-dirname user-emacs-directory)

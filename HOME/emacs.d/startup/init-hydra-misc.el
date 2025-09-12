@@ -410,5 +410,5 @@
 ;;   ("q" nil))
 
 
-(provide 'init-hydra)
+(provide 'init-hydra-misc)
 ;;; init-hydra.el ends here

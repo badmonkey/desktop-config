@@ -49,16 +49,6 @@
 (setq local-settings-file (expand-file-name "local-settings.el" user-emacs-directory))
 
 
-(defun require-by-type (which)
-  (mapc
-    #'(lambda (x)
-        (let* ((filename (file-name-nondirectory x))
-                (filesym (intern (file-name-sans-extension filename))))
-          (when (startup? 'with-debug) (message "loading %s" filesym))
-          (require filesym)))
-    (file-expand-wildcards (format "%s/init-%s-*.el" user-startup-directory which))))
-
-
 ;; Set eln-cache dir
 ;;(when (boundp 'native-comp-eln-load-path)
 ;;  (startup-redirect-eln-cache (expand-file-name "eln-cache" user-emacs-directory)))
@@ -78,14 +68,13 @@
 (when (file-readable-p local-features-file)
   (load local-features-file :noerror))
 
-(when (startup? 'with-debug)
-  (message "features: %s" user-startup-features))
+(startup-message "features: %s" user-startup-features)
 
 
 ;;
 ;;;;;;;; bootstrap straight ;;;;;;;;
 ;;
-(message "Starting straight...")
+(startup-message "Starting straight...")
 (custom-set-variables
   '(straight-repository-branch "develop")
   '(straight-check-for-modifications '(check-on-save find-when-checking))
@@ -109,7 +98,7 @@
 (setq straight-use-package-by-default t)
 (setq straight-cache-autoloads t)
 
-(require 'init-package)
+;; (require 'init-package)
 
 
 ;;
@@ -139,6 +128,7 @@
 ;;
 ;;;;;;;; Start normal package loading ;;;;;;;;
 ;;
+(startup-message "Loading settings")
 
 (require 'init-settings)
 (require-by-type "settings")
@@ -156,33 +146,34 @@
 
 
 ;; Load library packages
-(message "Loading library packages...")
+(startup-message "Loading libraries")
 (use-package dash)
 (use-package s)
 (use-package s-buffer)
 (use-package f)
 
 (require-by-type "defun")
+
+(startup-message "Loading packages")
 (require-by-type "bundle")
-
-(require 'init-general-defuns)
-
 (require-by-type "mode")
 (require-by-type "lang")
 
-;; init that requires most other init files are already loaded
 (require 'init-interactive-defuns)
+(require-by-type "ifun")
 
+(require-by-type "hydra")
+
+(startup-message "Preparing keybindings")
+
+(require 'init-kill-keybinds)
 
 (general-auto-unbind-keys)
-
 (require-by-type "bind")
 
-(require 'init-hydra)
-(require 'init-ctrlchords)
 (require 'init-metachords)
-
 (general-auto-unbind-keys t)
+
 
 (require 'init-server)
 

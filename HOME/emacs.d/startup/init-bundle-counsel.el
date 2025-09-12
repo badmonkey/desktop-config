@@ -118,5 +118,5 @@
   )
 
 
-(provide 'init-counsel)
+(provide 'init-bundle-counsel)
 ;;; init-counsel.el ends here

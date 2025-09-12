@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-python --- Configure python
+;;; init-lang-python --- Configure python
 
 
 (when (startup? 'with-python)
@@ -132,5 +132,5 @@
   ) ;; end (when startup? 'when-python)
 
 
-(provide 'init-python)
-;;; init-python.el ends here
+(provide 'init-lang-python)
+;;; init-lang-python.el ends here

@@ -58,57 +58,7 @@
 ;;       ispell-alternate-dictionary wordlist)))
 
 
-;; (use-package keyfreq
-;;   :init
-;;   (setq keyfreq-excluded-commands
-;;         '(self-insert-command
-;;           abort-recursive-edit
-;;           forward-char
-;;           backward-char
-;;           left-char
-;;           right-char
-;;           previous-line
-;;           next-line
-;;           helm-next-line
-;;           helm-previous-line
-;;           helm-M-x
-;;           newline
-;;           proj-open-file
-;;           save-buffer
-;;           yank))
-;;   :config
-;;   (setq keyfreq-file (f-join user-emacs-directory "keyfreq.dat"))
-;;   (setq keyfreq-file-lock (f-join user-emacs-directory "keyfreq.lock"))
-;;   (keyfreq-mode nil)
-;;   (keyfreq-autosave-mode 1))
-
-
-(use-package general)
-
-(use-package key-chord
-  :init
-  (key-chord-mode 1))
-
-
-;;; Hail Hydra!
-
 (use-package posframe)
-
-(use-package hydra
-  :config
-  (use-package hydra-posframe
-    :straight (:host github :repo "Ladicle/hydra-posframe"
-               :fork (:host github :repo "jerrypnz/hydra-posframe"))
-    :custom
-    (hydra-posframe-parameters
-      '((left-fringe . 5)
-        (right-fringe . 5)))
-    ;; :custom-face
-    ;; (hydra-posframe-border-face ((t (:background "#6272a4"))))
-    :hook (after-init . hydra-posframe-enable)))
-
-(use-package major-mode-hydra
-  :after hydra)
 
 
 ;;; multi/smart selection
@@ -281,26 +231,6 @@
 ;;(require 'xclip)
 ;;(xclip-mode 1)
 ;;(turn-on-xclip)
-
-(use-package auto-complete
-  :init
-  (require 'auto-complete-config)
-  :diminish 'auto-complete-mode
-  :config
-  (ac-config-default)
-  (setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
-  (setq ac-modes '(emacs-lisp-mode
-                   c-mode
-                   cc-mode
-                   c++-mode
-                   python-mode
-                   lua-mode))
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict"))
-
-(use-package ac-emoji
-  :config
-  (add-hook 'markdown-mode-hook 'ac-emoji-setup)
-  (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
 
 (use-package dirvish
   :config

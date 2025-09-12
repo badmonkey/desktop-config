@@ -12,6 +12,8 @@
   :config
   ;; :diminish 'subword-mode
   ;; :diminish 'superword-mode
+  (diminish (list 'indent-guide-mode 'subword-mode))
+
   :diminish 'global-whitespace-mode)
 
 

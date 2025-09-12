@@ -94,9 +94,5 @@
     header-line-format mode-line-format))
 
 
-(diminish
-  (list 'indent-guide-mode 'subword-mode))
-
-
 (provide 'init-bundle-powerline)
 ;;; init-bundle-powerline.el ends here

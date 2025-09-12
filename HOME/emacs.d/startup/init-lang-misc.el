@@ -4,7 +4,6 @@
 
 
 ;;;;;;;; rust ;;;;;;;;
-(message "rust")
 (use-package rust-mode
   :if (startup? 'with-rust))
 
@@ -23,7 +22,6 @@
 
 
 ;;;;;;;; zig ;;;;;;;;
-(message "zig")
 (use-package zig-mode
   :if (startup? 'with-zig))
 
@@ -43,7 +41,6 @@
 
 
 ;;;;;;;; erlang ;;;;;;;;
-(message "erlang")
 (use-package erlang
   :if (startup? 'with-erlang)
   :init

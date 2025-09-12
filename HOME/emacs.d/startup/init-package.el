@@ -5,12 +5,12 @@
 
 (require 'package)
 
-(when (startup? with-internet)
+(when (startup? 'with-internet)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t))
 
-(unless package-use-network
+(unless (startup? 'with-internet) 
   (setq package-archives nil))
 
 (package-initialize)
@@ -27,7 +27,7 @@
 (setq use-package-always-ensure t)
 
 
-(when (startup? with-internet)
+(when (startup? 'with-internet)
   ;; Download the ELPA archive description if needed.
   ;; This informs Emacs about the latest versions of all packages, and
   ;; makes them available for download.

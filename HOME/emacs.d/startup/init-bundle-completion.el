@@ -3,6 +3,29 @@
 ;;; init-bundle-completion --- Configure lang modes - lua, erlang
 
 
+(setq ac-auto-show-menu nil)
+
+;; (use-package auto-complete
+;;   :init
+;;   (require 'auto-complete-config)
+;;   :diminish 'auto-complete-mode
+;;   :config
+;;   (ac-config-default)
+;;   (setq ac-comphist-file  "~/.emacs.d/ac-comphist.dat")
+;;   (setq ac-modes '(emacs-lisp-mode
+;;                     c-mode
+;;                     cc-mode
+;;                     c++-mode
+;;                     python-mode
+;;                     lua-mode))
+;;   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict"))
+
+;; (use-package ac-emoji
+;;   :config
+;;   (add-hook 'markdown-mode-hook 'ac-emoji-setup)
+;;   (add-hook 'git-commit-mode-hook 'ac-emoji-setup))
+
+
 ;;(use-package corfu
 ;; :custom
 ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
