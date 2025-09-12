@@ -69,7 +69,7 @@
 
 ;;;;;;;; python ;;;;;;;;
 
-(when (startup? 'start-python)
+(when (startup? 'with-python)
   (require 'init-python))
 
 
@@ -87,7 +87,7 @@
 ;;;;;;;; erlang ;;;;;;;;
 (message "erlang")
 (use-package erlang
-  :if (startup? 'start-erlang)
+  :if (startup? 'with-erlang)
   :init
   :mode (("\\.erl\\'" . erlang-mode)
           ("\\.hrl\\'" . erlang-mode)
@@ -106,7 +106,7 @@
 ;;;;;;;; pony ;;;;;;;;
 
 (use-package ponylang-mode
-  :if (startup? 'start-pony)
+  :if (startup? 'with-pony)
   :config
   (add-hook 'ponylang-mode-hook
     (lambda ()
@@ -115,13 +115,13 @@
 
 (use-package flycheck-pony
   :after (flycheck ponylang-mode)
-  :if (startup? 'start-pony))
+  :if (startup? 'with-pony))
 
 
 ;;;;;;;; rust ;;;;;;;;
 (message "rust")
 (use-package rust-mode
-  :if (startup? 'start-rust))
+  :if (startup? 'with-rust))
 
 ;;(use-package flycheck-rust)
 
@@ -129,7 +129,7 @@
 ;;;;;;;; go ;;;;;;;;
 
 (use-package go-mode
-  :if (startup? 'start-go)
+  :if (startup? 'with-go)
   :config
   (add-hook 'before-save-hook 'gofmt-before-save))
 
@@ -175,13 +175,13 @@
 ;;;;;;;; zig ;;;;;;;;
 (message "zig")
 (use-package zig-mode
-  :if (startup? 'start-zig))
+  :if (startup? 'with-zig))
 
 
 ;;;;;;;; java ;;;;;;;;
 (message "java")
 ;;(use-package google-java-format
-;;  :if (startup? 'start-java)
+;;  :if (startup? 'with-java)
 ;;  :straight (google-java-format
 ;;              :type nil
 ;;              :local-repo (expand-file-name "google-java-format" user-sitelisp-directory))

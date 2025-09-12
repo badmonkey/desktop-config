@@ -460,6 +460,16 @@ If the buffer is locked, bury it instead of attempting to kill it"
     (ediff-merge-files-with-ancestor file-a file-b file-ancestor nil file-out)
     (ediff-merge-files file-a file-b nil file-out)))
 
+(defun screenshot ()
+  "Take a SVG screenshot of the current frame."
+  (interactive)
+  (let ((filename
+          (make-temp-file
+            (concat "emacs-"
+              (format-time-string "%Y-%m-%dT%H:%M"))
+            nil
+            ".svg"
+            (x-export-frames nil 'svg))))))
 
 
 (provide 'init-interactive-defuns)

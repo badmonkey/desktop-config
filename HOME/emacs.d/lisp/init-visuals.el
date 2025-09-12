@@ -150,7 +150,7 @@
    ;; (add-hook 'after-init-hook 'global-color-identifiers-mode))
 
 (use-package beacon
-  :if (startup? 'start-heavy-visuals)
+  :if (startup? 'with-heavy-visuals)
   :init
   ;; (setq beacon-size  7
   ;;       beacon-color "#f85e9f")
@@ -181,7 +181,7 @@
 
 
 (use-package visible-mark
-  :if (startup? 'start-heavy-visuals)
+  :if (startup? 'with-heavy-visuals)
   :init
   (global-visible-mark-mode)
   :custom

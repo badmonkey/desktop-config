@@ -17,7 +17,7 @@
   (setq-default flycheck-disabled-checkers
     (-union
       '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy)
-      (if (startup-when "elisp-lint") `() `(emacs-lisp))))
+      (when (startup? 'with-elisp-lint) `(emacs-lisp))))
   (global-flycheck-mode))
 
 

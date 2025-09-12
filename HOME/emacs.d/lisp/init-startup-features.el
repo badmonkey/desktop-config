@@ -6,11 +6,13 @@
 ;;;;;;;;; user controlled settings ;;;;;;;;
 ;;
 
-;; available: start-heavy-visuals start-profile start-git start-load-custom
-;; start-debug start-elisp-lint
-;; start-erlanf start-pony start-zig start-rust start-go start-python
-(defvar user-startup-features `(start-heavy-visuals start-git start-load-custom
-                                 start-debug start-erlang start-rust start-go)
+;; available: with-heavy-visuals with-profile with-git with-load-custom
+;; with-debug with-elisp-lint with-internet
+;; lang-erlang lang-pony lang-zig lang-rust lang-go lang-python
+;; with-graphics
+(defvar user-startup-features
+  `(with-heavy-visuals with-git with-load-custom with-internet with-debug
+     lang-erlang lang-rust lang-go)
   "List of user features to process during startup")
 
 
@@ -28,11 +30,11 @@
 
 
 ;;
-;;;;;;;;; Update features depednign on platform ;;;;;;;;
+;;;;;;;;; Update features depending on platform ;;;;;;;;
 ;;
-(startup-disable `(graphics))
+(startup-disable `(with-graphics))
 (when (display-graphic-p)
-  (push 'graphics user-startup-features))
+  (push 'with-graphics user-startup-features))
 
 (pcase system-type
   ('darwin
@@ -40,7 +42,7 @@
   ((or 'ms-dos 'windows-nt 'cygwin)
     (progn
       (message "Platform windows")
-      (startup-disable `("slow-visuals"))))
+      (startup-disable `(with-heavy-visuals))))
   ('gnu/linux
     (message "Platform linux"))
   (_

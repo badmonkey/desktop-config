@@ -43,7 +43,7 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; location for local features configurations
-(setq local-startup-file (expand-file-name "local-startup.el" user-emacs-directory))
+(setq local-features-file (expand-file-name "local-features.el" user-emacs-directory))
 
 
 (defun require-by-type (which)
@@ -71,11 +71,11 @@
 ;; set up system for controlling what starts
 (require 'init-startup-features)
 
-(when (file-readable-p local-startup-file)
-  (load local-startup-file :noerror))
+(when (file-readable-p local-features-file)
+  (load local-features-file :noerror))
 
-(when (startup? 'start-debug)
-  (message "features: %s, langs: %s" user-startup-allow-features user-startup-allow-langs))
+(when (startup? 'with-debug)
+  (message "features: %s" user-startup-features))
 
 
 ;;
@@ -136,7 +136,7 @@
 
 ;; profiler
 (use-package esup
-  :if (startup? 'start-profile))
+  :if (startup? 'with-profile))
 
 ;; Load basic library packages
 (message "Loading library packages...")
@@ -188,5 +188,5 @@
 (message "Starting server...")
 (require 'init-server)
 
-(when (startup? 'start-load-custom)
+(when (startup? 'with-load-custom)
   (load custom-file :noerror))

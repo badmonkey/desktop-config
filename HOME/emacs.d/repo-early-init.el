@@ -7,4 +7,4 @@
   repo-user-init-file (expand-file-name "init" repo-emacs-directory))
 
 (message "Redirect to %s" repo-user-earlyinit-file)
-(load emacs-repo-earlyinit-file)
+(load repo-user-earlyinit-file)
