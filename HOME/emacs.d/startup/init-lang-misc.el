@@ -37,7 +37,7 @@
 
 (use-package flycheck-pony
   :after (flycheck ponylang-mode)
-  :if (startup? 'with-pony))
+  :if (startup? 'with-flycheck 'with-pony))
 
 
 ;;;;;;;; erlang ;;;;;;;;

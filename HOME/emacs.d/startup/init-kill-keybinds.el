@@ -13,6 +13,8 @@
 
   ;; Need to delete this at the source
   "C-x C-b"
+
+  "<C-next>"
   )
 
 

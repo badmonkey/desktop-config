@@ -54,6 +54,7 @@
   ;; 	       )))
 
   (use-package flycheck-virtualenv
+    :if (startup? 'with-flycheck)
     :straight (flycheck-virtualenv
                 :type nil
                 :local-repo (expand-file-name "flycheck-virtualenv" user-sitelisp-directory)))
@@ -80,54 +81,55 @@
     (add-hook 'before-save-hook 'py-isort-before-save))
 
 
-  (with-eval-after-load 'flycheck
+  (when (startup? 'with-flycheck)
+    (with-eval-after-load 'flycheck
 
-    (flycheck-def-config-file-var flycheck-pylamarc python-pylama "pylama.ini"
-      :safe #'stringp)
-    (flycheck-def-config-file-var flycheck-pylama-setuprc python-pylama "setup.cfg"
-      :safe #'stringp)
+      (flycheck-def-config-file-var flycheck-pylamarc python-pylama "pylama.ini"
+        :safe #'stringp)
+      (flycheck-def-config-file-var flycheck-pylama-setuprc python-pylama "setup.cfg"
+        :safe #'stringp)
 
-    (add-hook 'flycheck-before-syntax-check-hook
-      (lambda ()
-        (setq flycheck-python-pylama-executable (with-venv (executable-find "python")))))
+      (add-hook 'flycheck-before-syntax-check-hook
+        (lambda ()
+          (setq flycheck-python-pylama-executable (with-venv (executable-find "python")))))
 
 
-    (flycheck-define-checker python-pylama
-      "A Python syntax and style checker using pylama/pylava."
-      ;; Not calling pylama/pylava directly makes it easier to switch between different
-      ;; Python versions; see https://github.com/flycheck/flycheck/issues/1055.
-      :command ("python"
-                 (eval (flycheck-python-module-args 'python-pylama "pylamashim"))
-                 (config-file "-o" flycheck-pylamarc)
-                 (config-file "-o" flycheck-pylama-setuprc)
-                 ;; Need `source-inplace' for relative imports (e.g. `from .foo
-                 ;; import bar'), see https://github.com/flycheck/flycheck/issues/280
-                 source-inplace)
-      :error-filter
-      (lambda (errors)
-        (flycheck-sanitize-errors (flycheck-increment-error-columns errors)))
-      :error-patterns
-      ((error line-start (file-name) ":" line ":" column ":"
-         (or "E" "F") ":"
-         (id (one-or-more (not (any ":")))) ":"
-         (message) line-end)
-        (warning line-start (file-name) ":" line ":" column ":"
-          (or "W" "R") ":"
-          (id (one-or-more (not (any ":")))) ":"
-          (message) line-end)
-        (info line-start (file-name) ":" line ":" column ":"
-          (or "C" "I") ":"
-          (id (one-or-more (not (any ":")))) ":"
-          (message) line-end))
-      :enabled (lambda ()
-                 (or (not (flycheck-python-needs-module-p 'python-pylama))
-                   (flycheck-python-find-module 'python-pylama "pylamashim")))
-      :verify (lambda (_) (flycheck-python-verify-module 'python-pylama "pylamashim"))
-      :modes python-mode)
+      (flycheck-define-checker python-pylama
+        "A Python syntax and style checker using pylama/pylava."
+        ;; Not calling pylama/pylava directly makes it easier to switch between different
+        ;; Python versions; see https://github.com/flycheck/flycheck/issues/1055.
+        :command ("python"
+                   (eval (flycheck-python-module-args 'python-pylama "pylamashim"))
+                   (config-file "-o" flycheck-pylamarc)
+                   (config-file "-o" flycheck-pylama-setuprc)
+                   ;; Need `source-inplace' for relative imports (e.g. `from .foo
+                   ;; import bar'), see https://github.com/flycheck/flycheck/issues/280
+                   source-inplace)
+        :error-filter
+        (lambda (errors)
+          (flycheck-sanitize-errors (flycheck-increment-error-columns errors)))
+        :error-patterns
+        ((error line-start (file-name) ":" line ":" column ":"
+           (or "E" "F") ":"
+           (id (one-or-more (not (any ":")))) ":"
+           (message) line-end)
+          (warning line-start (file-name) ":" line ":" column ":"
+            (or "W" "R") ":"
+            (id (one-or-more (not (any ":")))) ":"
+            (message) line-end)
+          (info line-start (file-name) ":" line ":" column ":"
+            (or "C" "I") ":"
+            (id (one-or-more (not (any ":")))) ":"
+            (message) line-end))
+        :enabled (lambda ()
+                   (or (not (flycheck-python-needs-module-p 'python-pylama))
+                     (flycheck-python-find-module 'python-pylama "pylamashim")))
+        :verify (lambda (_) (flycheck-python-verify-module 'python-pylama "pylamashim"))
+        :modes python-mode)
 
-    ;; (add-to-list 'flycheck-checkers 'python-pylama))
+      ;; (add-to-list 'flycheck-checkers 'python-pylama))
 
-    ) ;; end (with-eval-after-load 'flycheck)
+      )) ;; end (with-eval-after-load 'flycheck)
 
   ) ;; end (when startup? 'when-python)
 

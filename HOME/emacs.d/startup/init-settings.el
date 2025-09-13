@@ -62,7 +62,8 @@
 ;;(setq vc-handled-backends '(Git))
 
 
-;; (setq scroll-error-top-bottom t)
+;; t so we get the extra pageup/pagedown to the first/last line
+(setq scroll-error-top-bottom t)
 
 
 (setq frame-title-format "%b%+")

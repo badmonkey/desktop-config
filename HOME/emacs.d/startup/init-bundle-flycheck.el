@@ -3,23 +3,24 @@
 ;;; init-bundle-flycheck --- Configure flycheck
 
 
-(use-package flycheck
-  :diminish 'flycheck-mode
-  :config
-  (setq-default flycheck-check-syntax-automatically '(save mode-enabled))
-  :init
-  ;; (setq flycheck-python-pylint-executable "pylint-shim-pylava")
-  ;; (setq flycheck-pylintrc "setup.cfg")
-  (setq flycheck-temp-prefix "__flycheck_")
-  (setq flycheck-indication-mode nil)
-  ;; (setq flycheck-indication-mode 'left-fringe)
-  (setq flycheck-highlighting-mode 'lines)
-  (setq-default flycheck-disabled-checkers
-    (-union
-      '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy)
-      (unless (startup? 'with-elisp-lint) `(emacs-lisp))))
-  (global-flycheck-mode))
-
+(when (startup? 'with-flycheck)
+  (use-package flycheck
+    :diminish 'flycheck-mode
+    :config
+    (setq-default flycheck-check-syntax-automatically '(save mode-enabled))
+    :init
+    ;; (setq flycheck-python-pylint-executable "pylint-shim-pylava")
+    ;; (setq flycheck-pylintrc "setup.cfg")
+    (setq flycheck-temp-prefix "__flycheck_")
+    (setq flycheck-indication-mode nil)
+    ;; (setq flycheck-indication-mode 'left-fringe)
+    (setq flycheck-highlighting-mode 'lines)
+    (setq-default flycheck-disabled-checkers
+      (-union
+        '(emacs-lisp-checkdoc python-pylint python-flake8 python-mypy)
+        (unless (startup? 'with-elisp-lint) `(emacs-lisp))))
+    (global-flycheck-mode))
+  )
 
 ;; (when (display-graphic-p)
 ;;   (use-package flycheck-posframe

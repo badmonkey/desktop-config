@@ -1,6 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 ;;;
-;;; init-ifun-movement.el --- interactive funs for cursor movements
+;;; init-ifun-movement --- interactive funs for cursor movements
 
 
 (defun switch-to-last-buffer ()
@@ -31,5 +31,5 @@
     (mc/mark-previous-like-this arg)))
 
 
-(provide 'init-ifun-movement.el)
-;;; init-ifun-movement.el.el ends here
+(provide 'init-ifun-movement)
+;;; init-ifun-movement.el ends here

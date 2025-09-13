@@ -4,20 +4,6 @@
 
 
 (use-package counsel
-  :bind (("M-x" . counsel-M-x)
-          ("C-x C-f" . counsel-find-file)
-          ("<f1> f" . counsel-describe-function)
-          ("<f1> v" . counsel-describe-variable)
-          ("<f1> l" . counsel-find-library)
-          ("<f2> i" . counsel-info-lookup-symbol)
-          ("<f2> u" . counsel-unicode-char)
-          ("C-c g" . counsel-git-grep)
-          ("C-c j" . counsel-git)
-          ("C-c k" . counsel-ag)
-          ("C-c r" . counsel-rg)
-          ("C-x l" . counsel-locate)
-          :map minibuffer-local-map
-          ("C-r" . counsel-minibuffer-add))
   :config
   (if (executable-find "rg")
     ;; use ripgrep instead of grep because it's way faster
@@ -39,9 +25,7 @@
     (declare-function counsel-etags-virtual-update-tags "counsel-etags.el")
     (declare-function counsel-etags-guess-program "counsel-etags.el")
     (declare-function counsel-etags-locate-tags-file "counsel-etags.el"))
-  :bind (("M-. t" . counsel-etags-find-tag-at-point)
-          ("M-s C-t" . counsel-etags-grep-symbol-at-point)
-          ("M-s t" . counsel-etags-find-tag))
+
   :config
   ;; Ignore files above 800kb
   (setq counsel-etags-max-file-size 800)

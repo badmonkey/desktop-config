@@ -6,9 +6,9 @@
 ;;;;;;;;; user controlled settings ;;;;;;;;
 ;;
 
-;; available: with-heavy-visuals with-profile with-git with-load-custom
-;; with-debug with-elisp-lint with-internet with-menubar with-dashboard
-;; with-keyfreq
+;; available: with-heavy-visuals with-profiler with-git with-load-custom
+;; with-debug with-trace with-elisp-lint with-internet with-menubar with-dashboard
+;; with-keyfreq with-flycheck
 ;; lang-erlang lang-pony lang-zig lang-rust lang-go lang-python
 ;; with-graphics with-macos with-windows with-linux
 (defvar user-startup-features
@@ -17,11 +17,26 @@
      lang-erlang lang-rust lang-go)
   "List of user features to process during startup")
 
+(defvar startup-failures nil
+  "List of startup files that failed to load")
 
 ;;
 ;;;;;;;;; startup functions ;;;;;;;;
 ;;
-(defun startup? (name) (seq-position user-startup-features name))
+
+;; (defmacro startup? (name &rest args)
+;;   (if (and args (listp args))
+;;     `(and
+;;        (seq-position user-startup-features ,name)
+;;        (seq-every-p #'(lambda (x) (seq-position user-startup-features x) ,@args)))
+;;     `(seq-position user-startup-features ,name)))
+
+(defun startup? (name &optional name2)
+  (if name2
+    (and
+      (seq-position user-startup-features name)
+      (seq-position user-startup-features name2))
+    (seq-position user-startup-features name)))
 
 (defun startup-unless (name) (not (seq-position user-startup-features name)))
 
@@ -37,21 +52,32 @@
 
 
 (defmacro startup-message (text &rest args)
-  (if (startup? 'with-debug)
-    `(message ,text ,@args)
-    `(ignore)))
+  `(message ,text ,@args))
+
+;; (defmacro startup-message (text &rest args)
+;;   (if (startup? 'with-debug)
+;;     `(message ,text ,@args)
+;;     `(ignore)))
 
 
-(defun require-by-type (which)
-  (startup-message "Searching for 'init-%s-*.el'" which)
-  (mapc
-    #'(lambda (x)
-        (let* ((filename (file-name-nondirectory x))
-                (filesym (intern (file-name-sans-extension filename))))
-          (startup-message "loading %s" filesym)
-          (require filesym)))
-    (file-expand-wildcards (format "%s/init-%s-*.el" user-startup-directory which))))
+(defun require-all (which)
+  (let* ((glob-pattern (format "%s/init-%s-*.el" user-startup-directory which))
+          (matching-files (file-expand-wildcards glob-pattern)))
+    (startup-message "Searching '%s'" glob-pattern)
+    (mapc
+      #'(lambda (x)
+          (let* ((filename (file-name-nondirectory x))
+                  (filesym (intern (file-name-sans-extension filename))))
+            (try-require filesym)))
+      matching-files)))
 
+(defun try-require (filesym)
+  (startup-message "loading %s" filesym)
+  (condition-case ex
+    (require filesym)
+    ('error
+      (push filesym startup-failures)
+      (message "!! failed to load %s error: %s" filesym ex))))
 
 ;;
 ;;;;;;;;; Update features depending on platform ;;;;;;;;

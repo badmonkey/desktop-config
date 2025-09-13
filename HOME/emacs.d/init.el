@@ -25,7 +25,6 @@
 
   (add-to-list 'load-path user-sitelisp-directory)
   (add-to-list 'load-path user-startup-directory)
-  (add-to-list 'load-path (expand-file-name "lisp" current-emacs-directory))
 
   (add-to-list 'custom-theme-load-path (expand-file-name "themes" current-emacs-directory))
 
@@ -74,7 +73,7 @@
 ;;
 ;;;;;;;; bootstrap straight ;;;;;;;;
 ;;
-(startup-message "Starting straight...")
+(startup-message "### Starting straight package management ###")
 (custom-set-variables
   '(straight-repository-branch "develop")
   '(straight-check-for-modifications '(check-on-save find-when-checking))
@@ -98,12 +97,22 @@
 (setq straight-use-package-by-default t)
 (setq straight-cache-autoloads t)
 
-(require 'init-package)
+;; (require 'init-package)
+
+;; clean up the status bar
+(use-package diminish
+  :config
+  :diminish 'global-whitespace-mode)
+
+;; profiler
+(use-package esup
+  :if (startup? 'with-profiler))
 
 
 ;;
 ;;;;;;;; Fiddle with the garbage collector ;;;;;;;;
 ;;
+
 
 (add-function :after
   after-focus-change-function
@@ -128,10 +137,10 @@
 ;;
 ;;;;;;;; Start normal package loading ;;;;;;;;
 ;;
-(startup-message "Loading settings")
+(startup-message "### Loading settings ###")
 
-(require 'init-settings)
-(require-by-type "settings")
+(try-require 'init-settings)
+(require-all "settings")
 
 (when (file-readable-p local-settings-file)
   (load local-settings-file :noerror))
@@ -140,39 +149,36 @@
 ;; https://github.com/zacwood9/.emacs.d/blob/master/lisp/init-package.el
 ;; https://github.com/purcell/emacs.d/blob/master/lisp/init-markdown.el
 
-;; profiler
-(use-package esup
-  :if (startup? 'with-profile))
-
-
 ;; Load library packages
-(startup-message "Loading libraries")
+(startup-message "### Loading libraries ###")
 (use-package dash)
 (use-package s)
 (use-package s-buffer)
 (use-package f)
 
-(require-by-type "defun")
+(require-all "defun")
 
-(startup-message "Loading packages")
-(require-by-type "bundle")
-(require-by-type "mode")
-(require-by-type "lang")
+(startup-message "### Loading packages ###")
+(require-all "bundle")
+(require-all "mode")
+(require-all "lang")
 
-(startup-message "Loading interactive libraries")
-(require-by-type "ifun")
-(require-by-type "hydra")
+(startup-message "### Loading interactive libraries ###")
+(require-all "ifun")
+(require-all "hydra")
 
-(startup-message "Preparing keybindings")
-
-(require 'init-kill-keybinds)
+(startup-message "### Preparing keybindings ###")
+(try-require 'init-kill-keybinds)
 
 (general-auto-unbind-keys)
-(require-by-type "bind")
+(require-all "bind")
 (general-auto-unbind-keys t)
 
+(startup-message "### Starting server mode ###")
+(unless (seq-empty-p startup-failures)
+  (message "!! Encountered errors while loading the following: %s" startup-failures))
 
-(require 'init-server)
+(try-require 'init-server)
 
 
 (when (startup? 'with-load-custom)

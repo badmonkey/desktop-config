@@ -7,15 +7,7 @@
 ;; Theme
 (load-theme 'hipster t)
 
-;; clean up the status bar
-(use-package diminish
-  :config
-  ;; :diminish 'subword-mode
-  ;; :diminish 'superword-mode
-  (diminish (list 'indent-guide-mode 'subword-mode))
-
-  :diminish 'global-whitespace-mode)
-
+(diminish (list 'indent-guide-mode 'subword-mode))
 
 (use-package fira-code-mode
   :if (startup? 'with-heavy-visuals)

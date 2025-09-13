@@ -63,9 +63,10 @@
 
 ;;; multi/smart selection
 
-(use-package region-state
-  :init
-  (region-state-mode 1))
+;; TODO
+;; (use-package region-state
+;;   :init
+;;   (region-state-mode 1))
 
 (use-package multiple-cursors)
 
