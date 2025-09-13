@@ -98,7 +98,7 @@
 (setq straight-use-package-by-default t)
 (setq straight-cache-autoloads t)
 
-;; (require 'init-package)
+(require 'init-package)
 
 
 ;;
@@ -159,9 +159,8 @@
 (require-by-type "mode")
 (require-by-type "lang")
 
-(require 'init-interactive-defuns)
+(startup-message "Loading interactive libraries")
 (require-by-type "ifun")
-
 (require-by-type "hydra")
 
 (startup-message "Preparing keybindings")
@@ -170,8 +169,6 @@
 
 (general-auto-unbind-keys)
 (require-by-type "bind")
-
-(require 'init-metachords)
 (general-auto-unbind-keys t)
 
 

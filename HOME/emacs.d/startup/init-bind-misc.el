@@ -4,6 +4,12 @@
 
 
 (general-define-key
+  :prefix "ESC"
+  "ESC" 'keyboard-quit
+  )
+
+
+(general-define-key
   "<f5>"            'projectile-compile-project
   "<backtab>"       'region-indent-left
 

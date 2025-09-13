@@ -36,14 +36,10 @@
      (seq-union ,targets user-startup-features)))
 
 
-(defmacro startup-message2 (text &rest args)
+(defmacro startup-message (text &rest args)
   (if (startup? 'with-debug)
-    `(message ,text ,args)
+    `(message ,text ,@args)
     `(ignore)))
-
-(if (startup? 'with-debug)
-  (defun startup-message (text &rest args) (message text args))
-  (defun startup-message (text &rest args) (ignore)))
 
 
 (defun require-by-type (which)
@@ -62,9 +58,6 @@
 ;;
 (when (display-graphic-p)
   (startup-enable `(with-graphics)))
-
-(message "before %s" user-startup-features)
-(startup-message "startup-before %s" user-startup-features)
 
 (pcase system-type
   ('darwin
