@@ -40,6 +40,8 @@
 ;; (use-package flycheck-indicator
 ;;   :hook (flycheck-mode . flycheck-indicator-mode))
 
+;; https://github.com/konrad1977/flyover/tree/1a3ca187d4ce8ce6d603748b88a40881e140bb1a
+
 
 (provide 'init-bundle-flycheck)
 ;;; init-bundle-flycheck.el ends here

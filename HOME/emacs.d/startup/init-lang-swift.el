@@ -5,6 +5,8 @@
 
 (use-package swift-mode)
 
+;; (use-package swift-ts-mode
+
 (when (startup? 'with-flycheck)
   (use-package flycheck-swift
     :after (swift-mode flycheck)

@@ -66,6 +66,8 @@
   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 
+;; https://github.com/ericdanan/counsel-projectile/tree/e30150792a96968f55f34638cbfe63eaa30839cc
+
 ;; https://protesilaos.com/emacs/denote
 ;; (use-package denote)
 ;;   :config

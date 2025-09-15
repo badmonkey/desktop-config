@@ -18,17 +18,6 @@
   :diminish fira-code-mode)
 
 
-(use-package highlight-indent-guides
-  :config
-  ;; (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  ;; (set-face-background 'highlight-indent-guides-even-face "darkred")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "darkred")
-  (setq highlight-indent-guides-responsive 'top)
-  (setq highlight-indent-guides-method 'bitmap)
-  (setq highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-dots)
-  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode))
-
 (use-package rainbow-delimiters
   :init
   (eval-when-compile
@@ -41,18 +30,6 @@
 ;; :diminish 'color-identifiers-mode
 ;; (add-hook 'after-init-hook 'global-color-identifiers-mode))
 
-(use-package beacon
-  :if (startup? 'with-heavy-visuals)
-  :init
-  ;; (setq beacon-size  7
-  ;;       beacon-color "#f85e9f")
-  ;; (beacon-color "#f1fa8c")
-  (beacon-mode 1)
-  :diminish beacon-mode)
-
-(use-package hl-todo
-  :config
-  (global-hl-todo-mode))
 
 (use-package indicators)
 
@@ -92,6 +69,16 @@
 ;;   (add-hook 'after-init-hook (lambda ()
 ;;   (when (fboundp 'auto-dim-other-buffers-mode)
 ;;     (auto-dim-other-buffers-mode t)))))
+
+;; https://github.com/tbanel/uniline/tree/dd4c99ef2900d366f98384c6bbb7b30c60ddbff3
+
+(use-package uniline
+  :bind ("C-<insert>" . uniline-mode))
+
+;; https://github.com/misohena/el-easydraw
+
+;; https://doc.endlessparentheses.com/Fun/artist-mode.html
+;; (artist-mode &optional ARG)
 
 
 (provide 'init-bundle-visuals)

@@ -60,11 +60,6 @@
 ;;(electric-indent-mode 1)
 
 
-;; highlight mode
-(when (display-graphic-p)
-  (global-hl-line-mode 1))
-
-
 ;; turn on highlight matching brackets when cursor is on one
 (show-paren-mode t)
 
