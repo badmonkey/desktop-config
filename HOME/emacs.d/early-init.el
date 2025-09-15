@@ -54,5 +54,9 @@
   (lambda ()
     (setq file-name-handler-alist file-name-handler-alist-old)))
 
+;;  set default line ending
+;;  even on windows we should just stick to the unix line endings
+(setq-default buffer-file-coding-system 'utf-8-unix)
+
 (provide 'early-init)
 ;;; early-init.el ends here

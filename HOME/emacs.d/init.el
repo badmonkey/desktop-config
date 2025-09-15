@@ -139,11 +139,10 @@
 ;;
 (startup-message "### Loading settings ###")
 
+;; Configuration settings for in-builtin functionality
+;; todo split init-settings into separate files
 (try-require 'init-settings)
 (require-all "settings")
-
-(when (file-readable-p local-settings-file)
-  (load local-settings-file :noerror))
 
 
 ;; https://github.com/zacwood9/.emacs.d/blob/master/lisp/init-package.el
@@ -173,6 +172,13 @@
 (general-auto-unbind-keys)
 (require-all "bind")
 (general-auto-unbind-keys t)
+
+
+;; load users custom local settings
+(when (file-readable-p local-settings-file)
+  (startup-message "### Local settings ###")
+  (load local-settings-file :noerror))
+
 
 (startup-message "### Starting server mode ###")
 (unless (seq-empty-p startup-failures)

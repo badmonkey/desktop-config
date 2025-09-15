@@ -9,6 +9,7 @@
 [pull]
     rebase = false
 [core]
+    autocrlf = input
     editor = emacsclient
 [diff]
     tool = ediff
