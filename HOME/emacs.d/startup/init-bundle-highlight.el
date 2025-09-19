@@ -18,9 +18,11 @@
   :config
 
   (add-list-to-list 'hl-todo-keyword-faces
-    '(("\\(\\w+ign\\)"  . "darkred")
-       ("teh"           . "darkred")
-       ("jsut"          . "darkred")))
+    '(("\\(\\w+ign\\)"      . "darkred")
+       ("teh"               . "darkred")
+       ("fro"               . "darkred")
+       ("jsut"              . "darkred")
+       ("\\(\\w*casue\\)"   . "darkred")))
 
   (global-hl-todo-mode))
 
