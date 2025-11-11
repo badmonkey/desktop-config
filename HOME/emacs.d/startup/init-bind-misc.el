@@ -15,6 +15,8 @@
 
   "<home>"          'crux-move-beginning-of-line
   "<end>"           'move-end-of-line
+
+  "<backspace>"     'delete-char-kill-region
   )
 
 ;; :bind (("M-x" . counsel-M-x)

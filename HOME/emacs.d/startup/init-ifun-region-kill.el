@@ -53,6 +53,14 @@
   (delete-region start end))
 
 
+(defun delete-char-kill-region (start &optional end)
+  "Delete backwards a char or if a region is selected, kill the rgion"
+  (interactive (prompt-region-or-point))
+  (if (use-region-p)
+    (kill-region start end)
+    (backward-delete-char-untabify 1)))
+
+
 (defvar box/top-left "\u256d")
 (defvar box/bot-left "\u2570")
 (defvar box/left "\u2502")
