@@ -18,7 +18,7 @@
 
   "C-k"             'region-kill-line
   "C-w"             'region-copy-line
-  ;; "C-y"           'yank
+  "C-y"             'region-yank
 
   "C-s"             'swiper-helm
   "C-o"             'imenu-anywhere

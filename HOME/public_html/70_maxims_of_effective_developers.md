@@ -32,7 +32,25 @@
 5. Fixing the error message and not the underlying issue is just kicking the can down the road to future you.
 "just fixing the error message not the actual problem"
 
+6. loop termination should be the first or last lines of a `while true` ... and then
+    you can refactor to a `while cond` or `do until` equivalant
 
+n. Things developers complicate in the pursuit of false precision.
+    + versioning
+    + milli -> micro
+    + firsts .. seconds .. thirds ... ora
+
+n. Things developers try to force order on to low entry types (that i have seen)
+    + phone numbers as strings
+    + pointers as integers
+    + version as double
+    + anything as a byte array (bad because you can pass it to any other func taking a different "struct" byte array)
+
+n. If you don't understand the why's of a bug you've only fixed the symptoms... maybe
+n. unit tests commonly test the negative side of edge cases ... you need to test the positive side as well (to catch regressions)
+
+n. Just because soemone called it a wheelbarrow doesn't mean it _is_ a wheelbarrow
+    "You keep using that word. I do not think it means what you think it means"
 
 With a sufficient number of users of an API,
 it does not matter what you promise in the contract:
@@ -68,3 +86,14 @@ There are 2 hard problems in computer science: cache invalidation, naming things
 There are only two hard problems in distributed systems: 2. Exactly-once delivery 1. Guaranteed order of messages 2. Exactly-once delivery
 
 https://en.wikipedia.org/wiki/The_Elements_of_Programming_Style
+
+
+## xkcd
+https://xkcd.com/1172/
+https://xkcd.com/1513/
+https://xkcd.com/2138/
+https://www.xkcd.com/327/
+https://xkcd.com/292/
+https://xkcd.com/2347/
+
+https://www.explainxkcd.com/wiki/index.php/Category:Programming

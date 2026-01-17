@@ -10,6 +10,26 @@
     (copy-region-as-kill start (line-end-position))))
 
 
+;; (defun region-yank (start &optional end)
+;;   (interactive (prompt-region-or-point))
+;;   (if (use-region-p)
+;;     (let ((text (buffer-substring-no-properties start end)))
+;;       (message "stash '%s'\n" text)
+;;       (delete-region start end)
+;;       (yank)
+;;       (kill-new text)
+;;       )
+;;     (yank)))
+
+(defun region-yank (start &optional end)
+  (interactive (prompt-region-or-point))
+  (if (use-region-p)
+    (progn
+      (delete-region start end)
+      (insert (current-kill 1)))
+    (yank)))
+
+
 (defun region-copy-whole-line (start end)
   (interactive (prompt-region-or-line))
   (if (use-region-p)

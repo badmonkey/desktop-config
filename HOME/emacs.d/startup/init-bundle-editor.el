@@ -27,6 +27,7 @@
 (desktop-save-mode 1)
 
 
+
 (defvar my-term-shell "/bin/bash")
 (defadvice ansi-term (before force-bash)
   (interactive (list my-term-shell)))
@@ -247,6 +248,30 @@
 ;;   (setq which-key-posframe-poshandler 'posframe-poshandler-frame-top-center)
 ;;   (which-key-posframe-mode))
 
+
+;; Also save minibuffer/variable histories.
+;; n.b. savehist-mode defaults to saving the vars listed in
+;; savehist-minibuffer-history-variables, which gets added to
+;; as individual features are utilised.
+;;(setq savehist-additional-variables
+;;  '(kill-ring
+;; You don't need to add minibuffer history variables to this
+;; list, all minibuffer histories will be saved automatically
+;; as long as `savehist-save-minibuffer-history' is non-nil.
+;;     ))
+;;(savehist-mode 1)
+
+;; n.b. Code elsewhere should use:
+;; (eval-after-load "savehist"
+;; '(add-to-list 'savehist-additional-variables 'some-var))
+
+;; Remove text properties from kill-ring before it is saved to the
+;; history file, as these bloat the file dramatically.
+;; See http://emacs.stackexchange.com/a/4191 for why this doesn't
+;; use `savehist-save-hook'.
+;;(add-hook 'kill-emacs-hook 'my-unpropertize-kill-ring)
+;;(defun my-unpropertize-kill-ring ()
+;;  (setq kill-ring (mapcar 'substring-no-properties kill-ring)))
 
 
 (provide 'init-bundle-editor)

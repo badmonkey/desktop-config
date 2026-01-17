@@ -99,8 +99,9 @@
 (fset 'yes-or-no-p #'y-or-n-p)
 
 ;; clipboard mode
-(setq select-enable-clipboard t
-      select-enable-primary t)
+(setq
+  select-enable-clipboard t
+  select-enable-primary t)
 
 
 ;; transient mode
