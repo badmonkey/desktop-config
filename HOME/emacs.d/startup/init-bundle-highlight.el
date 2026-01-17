@@ -17,6 +17,7 @@
 (use-package hl-todo
   :config
 
+  ; false positives: -sign, align, arraign, benign, campaign, deign, feign, malign, reign
   (add-list-to-list 'hl-todo-keyword-faces
     '(("\\(\\w+ign\\)"      . "darkred")
        ("teh"               . "darkred")
