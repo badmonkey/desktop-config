@@ -16,3 +16,55 @@
 15. Explicit is better than implicit.
 
 70. Failure is not an option - it is mandatory. The option is whether or not to let failure be the last thing you do.
+
+
+--------------------------
+
+
+1. code smells: using 2x booleans to describe 3 states
+2. code smells: two state variables that are almost the same but not exactly the same
+    (if they are the same, then refactor to use 1 state, if theyr'e not the same they
+    should be more clearly differentiated)
+
+3. Any sufficiently complicated state is best implemented as a state machine
+4. Errors in state management are likely because you're not managing state like a state machine
+
+5. Fixing the error message and not the underlying issue is just kicking the can down the road to future you.
+"just fixing the error message not the actual problem"
+
+
+
+With a sufficient number of users of an API,
+it does not matter what you promise in the contract:
+all observable behaviors of your system
+will be depended on by somebody.
+
+https://www.laws-of-software.com/
+
+
+scope, resources, timeline - choose two ... Agile fixes timeline (short spritns), resources (can't change much
+in a short sprint), leaving scope as the only thing that can change without degrading quality.
+
+ticket velocity is a measure never a target [1]
+
+Any sufficiently complicated C or Fortran program contains an ad hoc, informally-specified, bug-ridden, slow implementation of half of Common Lisp.
+
+
+Everyone knows that debugging is twice as hard as writing a program in the first place. So if you’re as clever as you can be when you write it, how will you ever debug it?
+
+Given enough eyeballs, all bugs are shallow.
+
+[1] goodhart's law - when a measure becomes a target, it ceases to be a good measure
+
+
+“Virding's First Rule of Programming:
+Any sufficiently complicated concurrent program in another language contains an ad hoc informally-specified bug-ridden slow implementation of half of Erlang.”
+
+
+https://martinfowler.com/bliki/TwoHardThings.html
+
+There are 2 hard problems in computer science: cache invalidation, naming things, and off-by-1 errors.
+
+There are only two hard problems in distributed systems: 2. Exactly-once delivery 1. Guaranteed order of messages 2. Exactly-once delivery
+
+https://en.wikipedia.org/wiki/The_Elements_of_Programming_Style

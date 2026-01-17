@@ -55,8 +55,8 @@
   :init
   (global-visible-mark-mode)
   :custom
-  (visible-mark-faces '(visible-mark-face2 visible-mark-face1))
-  (visible-mark-max 2))
+  (visible-mark-faces '(visible-mark-face1 visible-mark-face2))
+  (visible-mark-max 1))
 
 (use-package aggressive-indent
   :init
